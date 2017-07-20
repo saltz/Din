@@ -1,0 +1,14 @@
+﻿@{
+    if (Session["PermissionLevel"].ToString() == "admin")
+    {
+        <h2>@Session["name"]</h2>
+        //html
+    }
+    else
+    {
+        Url.Action("Index", "Home");
+    }
+}
+
+
+
