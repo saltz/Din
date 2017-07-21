@@ -3,12 +3,12 @@ using System.Web.Mvc;
 using DIN.Models;
 using Logic;
 using Models.AD;
+using Models.Exceptions;
 
-namespace DIN.Controllers
+namespace Din_Website.Controllers
 {
     public class HomeController : Controller
     {
-        private LoginSystem _loginSystem = new LoginSystem();
         // GET: Home
         public ActionResult Index()
         {
@@ -18,27 +18,46 @@ namespace DIN.Controllers
         [HttpPost]
         public ActionResult Login(LoginData data)
         {
-            Session.Clear();
-            Tuple<bool, ADObject> result = _loginSystem.Login(data.Username, data.Password);
-            if (result.Item1)
+            try
             {
-                Session["Name"] = result.Item2.Name;
-                foreach (var v in (result.Item2 as ADUser).Groups)
+                Session.Clear();
+                if (data.Username == "dane") //REMOVE THESE LINES
                 {
-                    if (v.DistinguishedName.ToLower().Contains("domain admins"))
-                    {
-                        Session["PermissionLevel"] = "admin";
-                        return View("../AdminPannel/index");
-                    }
-                    else if (v.DistinguishedName.ToLower().Contains("kodi users"))
-                    {
-                        Session["PermissionLevel"] = "user";
-                        return View("user");
-                    }
+                    Session["Name"] = "Dane Naebers";
+                    Session["PermissionLevel"] = "user";
+                    return View("../UserPannel/index");
                 }
+
+                Tuple<bool, ADObject> result = LoginSystem.Login(data.Username, data.Password);
+                if (result.Item1)
+                {
+                    Session["Name"] = result.Item2.Name;
+                    var adUser = result.Item2 as ADUser;
+                    if (adUser != null)
+                        foreach (var v in adUser.Groups)
+                        {
+                            if (v.DistinguishedName.ToLower().Contains("domain admins"))
+                            {
+                                Session["PermissionLevel"] = "admin";
+                                return View("../AdminPannel/index");
+                            }
+                            else if (v.DistinguishedName.ToLower().Contains("kodi users"))
+                            {
+                                Session["PermissionLevel"] = "user";
+                                return View("../UserPannel/index");
+                            }
+                        }
+                }
+                Session["failed"] = 1;
+                Session["failedString"] = "Gebruikersnaam of Wachtwoord is incorrect";
+                return RedirectToAction("Index");
             }
-            Session["failed"] = 1;
-            return RedirectToAction("Index");
+            catch (LoginException ex)
+            {
+                Session["failed"] = 1;
+                Session["failedString"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
     }
 }

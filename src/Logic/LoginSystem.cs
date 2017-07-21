@@ -1,24 +1,20 @@
 ﻿using System;
 using Ldap;
+using Models.Exceptions;
 using Models.AD;
 
 namespace Logic
 {
-    public class LoginSystem
+    public static class LoginSystem
     {
-        private readonly LDAPManager _ldapManager = new LDAPManager();
-        public Tuple<bool, ADObject> Login(string username, string password)
+        private static readonly LdapManager LdapManager = new LdapManager();
+        public static Tuple<bool, ADObject> Login(string username, string password)
         {
-            if (username == "kodi" || password == "kodi")
-            {
-                return new Tuple<bool, ADObject>(false, null);
-            }
-            Tuple<bool, ADObject> ldapresult = _ldapManager.AuthenticateUser(username, password);
-            if (ldapresult.Item1)
-            {
-               return new Tuple<bool, ADObject>(true, ldapresult.Item2); 
-            }
-            return new Tuple<bool, ADObject>(false, null);
+            if (username == "kodi")
+                throw new LoginException("Dit account heeft onvoldoende rechten");
+
+            var ldapresult = LdapManager.AuthenticateUser(username, password);
+            return ldapresult.Item1 ? new Tuple<bool, ADObject>(true, ldapresult.Item2) : new Tuple<bool, ADObject>(false, null);
         }
     }
 }

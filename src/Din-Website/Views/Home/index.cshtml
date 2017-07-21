@@ -3,7 +3,7 @@
     ViewBag.Title = "Home";
 }
 <head>
-    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 
@@ -28,7 +28,7 @@
                             if (Session["failed"] != null)
                             {
                                 <div class="loginFailed">
-                                    <p>Login credentials invalid!</p>
+                                    <p>@Session["failedString"]</p>
                                 </div>
                             }
                         }

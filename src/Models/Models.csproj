@@ -44,6 +44,7 @@
     <Compile Include="AD\ADGroup.cs" />
     <Compile Include="AD\ADObject.cs" />
     <Compile Include="AD\ADUser.cs" />
+    <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

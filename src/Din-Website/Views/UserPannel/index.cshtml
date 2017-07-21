@@ -1,0 +1,44 @@
+﻿@{
+    if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
+    {
+        <head>
+            <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        </head>
+
+        <div id="myCarousel" class="carousel container slide">
+            <div class="carousel-inner">
+                <div class="active item one"></div>
+                <div class="item two"></div>
+                <div class="item three"></div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <ul class="rightMenu">
+                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Uitloggen</a></li>
+            </ul>
+        </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 mainContent">
+                    <div class="welcomeText">
+                        <h2>Welkom</h2>
+                        <h3>@Session["Name"]</h3>
+                    </div>
+
+                </div>
+            </div>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.carousel').carousel({interval: 7000});
+            });
+        </script>
+        //html
+    }
+    else
+    {
+        Url.Action("Index", "Home");
+    }
+}

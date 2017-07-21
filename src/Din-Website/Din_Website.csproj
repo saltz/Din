@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Din_Website</RootNamespace>
-    <AssemblyName>Din-Website</AssemblyName>
+    <AssemblyName>Din_Website</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -94,7 +94,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\pictures\background.jpg" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\home_style.css" />
+    <Content Include="Content\UserPannelIndex_style.css" />
     <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -134,7 +135,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\AdminPannel\index.cshtml" />
-    <Content Include="Views\Home\user.cshtml" />
+    <Content Include="Views\UserPannel\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

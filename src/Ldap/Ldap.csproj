@@ -7,8 +7,8 @@
     <ProjectGuid>{AA757D57-C87F-46A6-9EF1-6FD2FD98E089}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LdapModule</RootNamespace>
-    <AssemblyName>LdapModule</AssemblyName>
+    <RootNamespace>Ldap</RootNamespace>
+    <AssemblyName>Ldap</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connectors\LDAPConnector.cs" />
-    <Compile Include="Enums\PermissionLevel.cs" />
     <Compile Include="LDAPConf.cs" />
     <Compile Include="LDAPManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
