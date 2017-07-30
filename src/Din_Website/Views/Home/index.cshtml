@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+<head>
+    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+
+<div class="banner">
+    <div class="banner-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="wrap">
+                        <div class="transparentBackground">
+                            <p class="form-title">
+                                Sign In
+                            </p>
+                            @model Din_Website.Models.LoginData
+                            <form method="post" action="@Url.Action("Login")" class="login">
+                                <input type="text" placeholder="Username" name="Username"/>
+                                <input type="password" placeholder="Password" name="Password"/>
+                                <input type="submit" value="Sign In" class="btn btn-success btn-sm"/>
+                            </form>
+                        </div>
+                        @{
+                            if (Session["failed"] != null)
+                            {
+                                <div class="loginFailed">
+                                    <p>@Session["failedString"]</p>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
