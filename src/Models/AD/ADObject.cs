@@ -1,6 +1,6 @@
 ﻿namespace Models.AD
 {
-    public abstract class ADObject
+    public abstract class AdObject
     {
         public string CN { get; private set; }
         public string DistinguishedName { get; private set; }
@@ -8,7 +8,7 @@
         public string ObjectCategory { get; private set; }
         public string SAMAccountName { get; private set; }
 
-        protected ADObject(string cn, string distinguishedname, string name,
+        protected AdObject(string cn, string distinguishedname, string name,
             string objectCategory, string sAMAAccountName)
         {
             this.CN = cn;
@@ -18,9 +18,9 @@
             this.SAMAccountName = sAMAAccountName;
         }
 
-        protected ADObject(string distinguishedname)
+        protected AdObject(string distinguishedname)
         {
-            this.DistinguishedName = distinguishedname;
+            DistinguishedName = distinguishedname;
         }
     } 
 }

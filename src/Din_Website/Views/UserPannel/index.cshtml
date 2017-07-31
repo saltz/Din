@@ -60,18 +60,36 @@
         </div>
 
         <div class="container-fluid">
+            <ul class="leftMenu">
+                <li><h3>@Session["Name"]</h3></li>
+            </ul>
             <ul class="rightMenu">
                 <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span> Uitloggen</a></li>
             </ul>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-3 mainContent">
-                    <div class="welcomeText">
-                        <h2>Welkom</h2>
-                        <h3>@Session["Name"]</h3>
+                <div class="col-md-10 col-md-offset-1 mainContent">
+                    <div class="menuPanel">
+                        <a href="#">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/account_icon.png" />
+                                <p>Account Settings</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/movie_icon.png" />
+                                <p>Add a Movie</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/tvshow_icon.png" />
+                                <p>Add a Tv Show</p>
+                            </div>
+                        </a>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -82,3 +100,4 @@
         Url.Action("Index", "Home");
     }
 }
+

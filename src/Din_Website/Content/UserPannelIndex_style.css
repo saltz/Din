@@ -38,6 +38,11 @@ html,body {
     opacity:0.85
 }
 
+.leftMenu {
+    list-style-type: none;
+    float: left;
+    color: white;
+}
 
 .rightMenu {
     margin-top: 30px;
@@ -54,13 +59,73 @@ html,body {
 }
 
 .rightMenu a:hover {
-    background-color: rgba(229, 227, 227, 0.3);
+    background-color: rgba(229, 227, 227, 0.4);
     border-radius: 10px;
 }
 
 .mainContent {
     margin-top: 10%;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.2);
+   
     border-radius: 20px;
+}
+
+.welcomeText h3 {
+    color: white;
+    text-shadow:
+               -1px -1px 0 #000,
+               1px -1px 0 #000,
+               -1px 1px 0 #000,
+               1px 1px 0 #000;  
+}
+
+.menuPanel {
+    margin-top: 10%;
+}
+
+.menuPanel .menuItem {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 0.5px #000000 solid;
+    margin: 20px;
+    border-radius: 100%;
+
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1); 
+}
+
+.menuPanel a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.menuPanel .menuItem img {
+    width: 40px;
+    margin-top: calc(50% - 40px);
+}
+
+.menuPanel .menuItem p {
+    padding-top: 10px;
+}
+
+.menuPanel .menuItem:hover {
+    background-color: rgba(255, 177, 33, 0.5);
+
+    z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.2);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.2);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.2);
+    transition: all 200ms ease-in;
+    transform: scale(1.2);
 }

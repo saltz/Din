@@ -39,11 +39,11 @@ namespace Din_Website.Controllers
                     return View("../UserPannel/index");
                 }
 
-                Tuple<bool, ADObject> result = LoginSystem.Login(data.Username, data.Password);
+                Tuple<bool, AdObject> result = LoginSystem.Login(data.Username, data.Password);
                 if (result.Item1)
                 {
                     Session["Name"] = result.Item2.Name;
-                    var adUser = result.Item2 as ADUser;
+                    var adUser = result.Item2 as AdUser;
                     if (adUser != null)
                         foreach (var v in adUser.Groups)
                         {

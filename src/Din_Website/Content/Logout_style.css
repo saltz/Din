@@ -32,7 +32,6 @@ html,body {
     width: 500px;
     margin-left: calc(50% - 250px);
     -webkit-transform: scale(2.0);
-    -moz-transform-scale(2.0);
     text-align: center;
 }
 

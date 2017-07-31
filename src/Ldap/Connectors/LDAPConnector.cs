@@ -6,10 +6,10 @@ namespace Ldap.Connectors
     public class LDAPConnector
     {
         private LdapConnection _ldapConnection;
-        private readonly LDAPConf _ldapConfiguration;
+        private readonly LdapConf _ldapConfiguration;
 
         
-        public LDAPConnector(LDAPConf conf)
+        public LDAPConnector(LdapConf conf)
         {
             this._ldapConfiguration = conf;
         }

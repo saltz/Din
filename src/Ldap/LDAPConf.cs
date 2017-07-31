@@ -2,14 +2,14 @@
 
 namespace Ldap
 {
-    public class LDAPConf
+    public class LdapConf
     {
         //private ConnectMode _mode;
         private readonly LdapDirectoryIdentifier _server;
 
-        public LDAPConf()
+        public LdapConf()
         {
-            this._server = new LdapDirectoryIdentifier("localhost");
+            _server = new LdapDirectoryIdentifier("localhost");
         }
 
         public LdapDirectoryIdentifier GetServer()

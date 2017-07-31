@@ -16,10 +16,10 @@ namespace Ldap
 
         public LdapManager()
         {
-            _connector = new LDAPConnector(new LDAPConf());
+            _connector = new LDAPConnector(new LdapConf());
         }
 
-        public Tuple<bool, ADObject> AuthenticateUser(string username, string password)
+        public Tuple<bool, AdObject> AuthenticateUser(string username, string password)
         {
             if (ValidateUserByBind(new NetworkCredential(username, password, Domain)))
             {
@@ -33,14 +33,14 @@ namespace Ldap
                         {
                             if (e.Attributes["sAmAccountName"][0].ToString().ToLower().Contains(username.ToLower()))
                             {
-                                List<ADGroup> groups = new List<ADGroup>();
+                                List<AdGroup> groups = new List<AdGroup>();
                                 for (var index = 0; index < e.Attributes["memberOf"].Count; index++)
                                 {
                                     var g = e.Attributes["memberOf"][index].ToString();
-                                    groups.Add(new ADGroup(g));
+                                    groups.Add(new AdGroup(g));
                                 }
 
-                                ADUser user = new ADUser(
+                                AdUser user = new AdUser(
                                     e.Attributes["cn"][0].ToString(),
                                     e.Attributes["distinguishedName"][0].ToString(),
                                     e.Attributes["name"][0].ToString(),
@@ -49,10 +49,10 @@ namespace Ldap
                                     groups,
                                     e.Attributes["userPrincipalName"][0].ToString());
 
-                                return new Tuple<bool, ADObject>(true, user);
+                                return new Tuple<bool, AdObject>(true, user);
                             }
                         }
-                    return new Tuple<bool, ADObject>(true, null);
+                    return new Tuple<bool, AdObject>(true, null);
                 }
                 catch (NullReferenceException)
                 {
@@ -63,7 +63,7 @@ namespace Ldap
             else
             {
                 //unsuccesful login attempt
-                return new Tuple<bool, ADObject>(false, null);
+                return new Tuple<bool, AdObject>(false, null);
             }
         }
 

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Models.AD
 {
-    public class ADUser : ADObject
+    public class AdUser : AdObject
     {
-        public List<ADGroup> Groups { get; private set; }
+        public List<AdGroup> Groups { get; private set; }
         public string UserPrincipalName { get; private set; }
 
-        public ADUser(string cn, string distinguishedname,
-            string name, string objectCategory, string sAMAAccountName, List<ADGroup> memberOf,
+        public AdUser(string cn, string distinguishedname,
+            string name, string objectCategory, string sAMAAccountName, List<AdGroup> memberOf,
             string userPrincipalName) : base(cn,
             distinguishedname, name, objectCategory, sAMAAccountName)
         {
-            this.Groups = memberOf;
-            this.UserPrincipalName = userPrincipalName;
+            Groups = memberOf;
+            UserPrincipalName = userPrincipalName;
         }
     }
 }
