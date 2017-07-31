@@ -1,0 +1,42 @@
+﻿body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+html,body {
+    height:100%;
+    width:100%;
+    position:relative;
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    background-color: #eaeaea;
+}
+
+.gif {
+    width: 100%;
+    height: 0
+}
+
+.gif h3 {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.gif-border {
+    position: relative;
+    margin-top: 10%;
+    width: 500px;
+    margin-left: calc(50% - 250px);
+    -webkit-transform: scale(2.0);
+    -moz-transform-scale(2.0);
+    text-align: center;
+}
+
+.gif-border img {
+    position: inherit;
+    border-radius: 15px;
+}

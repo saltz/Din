@@ -12,7 +12,18 @@ namespace Din_Website.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            if (Session["PermissionLevel"] != null)
+            {
+                if ((string)Session["PermissionLevel"] == "admin")
+                {
+                    return View("../AdminPannel/index");
+                }
+                else if((string)Session["PermissionLevel"] == "user")
+                {
+                    return View("../UserPannel/index");
+                }
+            }
+            return View("index");
         }
 
         [HttpPost]
@@ -49,7 +60,7 @@ namespace Din_Website.Controllers
                         }
                 }
                 Session["failed"] = 1;
-                Session["failedString"] = "Gebruikersnaam of Wachtwoord is incorrect";
+                Session["failedString"] = "Username or Password is incorrect";
                 return RedirectToAction("Index");
             }
             catch (LoginException ex)
@@ -57,6 +68,19 @@ namespace Din_Website.Controllers
                 Session["failed"] = 1;
                 Session["failedString"] = ex.Message;
                 return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            try
+            {
+                Session.Clear();
+                return View("Logout");
+            }
+            catch
+            {
+                return View("index");
             }
         }
     }

@@ -1,19 +1,46 @@
 ﻿@section scripts
 {
     <script type="text/javascript">
-        var currentSlide;
-        var rand;
-        $(document).ready(function() {
-            currentSlide = Math.floor((Math.random() * $('.item').length));
-            rand = currentSlide;
-            $('#myCarousel').carousel(currentSlide);
-            setInterval(function(){ 
-                while(rand == currentSlide){
-                    rand = Math.floor((Math.random() * $('.item').length));
+        jQuery(document).ready(function ($) {
+            var images = [{
+                url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/2.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/3.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/4.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/5.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/6.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/7.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/8.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/9.jpg")"
+            }, {
+                url: "@Url.Content("~/content/pictures/carousel/10.jpg")"
+            }];
+
+            // http://css-tricks.com/snippets/javascript/shuffle-array/
+            images.sort(function () { return 0.5 - Math.random(); });
+
+            $.each(images, function (index, image) {
+
+                var element = $('<div class="item"><a href="#"><img src="' + image.url + '" alt="' + image.alt + '" /></a></div>')
+
+                if (index === 0) {
+                    element.addClass("active");
                 }
-                currentSlide = rand;
-                $('#myCarousel').carousel(rand);
-            },3000);
+
+                element.appendTo("div.carousel-inner");
+            });
+
+            $('.carousel').carousel({
+                interval: 1000 * 10,
+            })
         });
     </script>
 }
@@ -28,24 +55,13 @@
 
         <div id="background-carousel">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="50000">
-                <div class="carousel-inner">
-                    <div class="item active" style="background-image:url(/Content/pictures/carousel/1.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/2.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/3.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/4.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/5.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/7.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/8.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/9.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/10.jpg)"></div>
-                    <div class="item" style="background-image:url(/Content/pictures/carousel/11.jpg)"></div>
-                </div>
+                <div class="carousel-inner"></div>
             </div>
         </div>
 
         <div class="container-fluid">
             <ul class="rightMenu">
-                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Uitloggen</a></li>
+                <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span> Uitloggen</a></li>
             </ul>
         </div>
         <div class="container">

@@ -92,17 +92,28 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Logout_style.css" />
     <Content Include="Content\pictures\background.jpg" />
     <Content Include="Content\pictures\carousel\1.jpg" />
+    <Content Include="Content\pictures\carousel\9.jpg" />
     <Content Include="Content\pictures\carousel\10.jpg" />
-    <Content Include="Content\pictures\carousel\11.jpg" />
     <Content Include="Content\pictures\carousel\2.jpg" />
     <Content Include="Content\pictures\carousel\3.jpg" />
     <Content Include="Content\pictures\carousel\4.jpg" />
     <Content Include="Content\pictures\carousel\5.jpg" />
+    <Content Include="Content\pictures\carousel\6.jpg" />
     <Content Include="Content\pictures\carousel\7.jpg" />
     <Content Include="Content\pictures\carousel\8.jpg" />
-    <Content Include="Content\pictures\carousel\9.jpg" />
+    <Content Include="Content\pictures\logout\1.gif" />
+    <Content Include="Content\pictures\logout\10.gif" />
+    <Content Include="Content\pictures\logout\2.gif" />
+    <Content Include="Content\pictures\logout\3.gif" />
+    <Content Include="Content\pictures\logout\4.gif" />
+    <Content Include="Content\pictures\logout\5.gif" />
+    <Content Include="Content\pictures\logout\6.gif" />
+    <Content Include="Content\pictures\logout\7.gif" />
+    <Content Include="Content\pictures\logout\8.gif" />
+    <Content Include="Content\pictures\logout\9.gif" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />
@@ -146,6 +157,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\AdminPannel\index.cshtml" />
     <Content Include="Views\UserPannel\index.cshtml" />
+    <Content Include="Views\Home\Logout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
