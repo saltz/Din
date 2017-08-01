@@ -68,7 +68,7 @@ namespace Ldap
             }
         }
 
-        public static bool ChangePassword(string username, string newpassword)
+        public bool ChangePassword(string username, string newpassword)
         {
             const AuthenticationTypes authenticationTypes = AuthenticationTypes.Secure |
                                                             AuthenticationTypes.Sealing | AuthenticationTypes.ServerBind;

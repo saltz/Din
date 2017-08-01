@@ -18,7 +18,7 @@ namespace Din_Website.Controllers
                 {
                     return View("../AdminPannel/index");
                 }
-                else if((string)Session["PermissionLevel"] == "user")
+                else if ((string)Session["PermissionLevel"] == "user")
                 {
                     return View("../UserPannel/index");
                 }
@@ -32,13 +32,13 @@ namespace Din_Website.Controllers
             try
             {
                 Session.Clear();
-                if (data.Username == "dane") //REMOVE THESE LINES
+                /*if (data.Username == "dane") //REMOVE THESE LINES
                 {
                     Session["UserData"] = 
                     Session["Name"] = "Dane Naebers";
                     Session["PermissionLevel"] = "user";
                     return View("../UserPannel/index");
-                }
+                }*/
 
                 Tuple<bool, AdObject> result = LoginSystem.Login(data.Username, data.Password);
                 if (result.Item1)
@@ -75,15 +75,8 @@ namespace Din_Website.Controllers
 
         public ActionResult Logout()
         {
-            try
-            {
-                Session.Clear();
-                return View("Logout");
-            }
-            catch
-            {
-                return View("index");
-            }
+            Session.Clear();
+            return View("Logout");
         }
     }
 }
