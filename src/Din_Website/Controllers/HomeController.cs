@@ -34,6 +34,7 @@ namespace Din_Website.Controllers
                 Session.Clear();
                 if (data.Username == "dane") //REMOVE THESE LINES
                 {
+                    Session["UserData"] = 
                     Session["Name"] = "Dane Naebers";
                     Session["PermissionLevel"] = "user";
                     return View("../UserPannel/index");
@@ -42,6 +43,7 @@ namespace Din_Website.Controllers
                 Tuple<bool, AdObject> result = LoginSystem.Login(data.Username, data.Password);
                 if (result.Item1)
                 {
+                    Session["UserData"] = result.Item2;
                     Session["Name"] = result.Item2.Name;
                     var adUser = result.Item2 as AdUser;
                     if (adUser != null)

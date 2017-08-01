@@ -1,7 +1,15 @@
-﻿@section scripts
+﻿@using Models.AD
+@section scripts
 {
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
+
+            if($('.menuPanel').is(':visible')){
+                $('.accountPanel').toggle();
+                $('.moviePanel').toggle();
+                $('.tvshowPanel').toggle();
+            }
+
             var images = [{
                 url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
             }, {
@@ -29,7 +37,11 @@
 
             $.each(images, function (index, image) {
 
-                var element = $('<div class="item"><a href="#"><img src="' + image.url + '" alt="' + image.alt + '" /></a></div>')
+                var element = $('<div class="item"><a href="#"><img src="' +
+                    image.url +
+                    '" alt="' +
+                    image.alt +
+                    '" /></a></div>');
 
                 if (index === 0) {
                     element.addClass("active");
@@ -39,8 +51,17 @@
             });
 
             $('.carousel').carousel({
-                interval: 1000 * 10,
-            })
+                interval: 1000 * 10
+            });
+
+            $('.menuButton').click(function () {
+                var selection = $(this).data('selection');
+                $('.menuPanel').slideToggle();
+                if (selection === "account") {
+
+                    $('.accountPanel').toggle();
+                }
+            });
         });
     </script>
 }
@@ -48,6 +69,8 @@
 @{
     if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
     {
+        var CN = (Session["UserData"] as AdUser).CN;
+
         <head>
             <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
             <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -67,33 +90,56 @@
                 <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span> Uitloggen</a></li>
             </ul>
         </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 mainContent">
+                    <!--menu-->
                     <div class="menuPanel">
-                        <a href="#">
+                        <a href="#" class="menuButton" data-selection="account">
                             <div class="menuItem">
                                 <img src="~/Content/pictures/menuIcons/account_icon.png" />
                                 <p>Account Settings</p>
                             </div>
                         </a>
-                        <a href="">
+                        <a href="#" class="menuButton" data-selection="movie">
                             <div class="menuItem">
                                 <img src="~/Content/pictures/menuIcons/movie_icon.png" />
                                 <p>Add a Movie</p>
                             </div>
                         </a>
-                        <a href="">
+                        <a href="#" class="menuButton" data-selection="tvshow">
                             <div class="menuItem">
                                 <img src="~/Content/pictures/menuIcons/tvshow_icon.png" />
                                 <p>Add a Tv Show</p>
                             </div>
                         </a>
                     </div>
+                    <!--account-->
+                    <div class="accountPanel">
+                        <h2>Account Settings</h2>
+                        <div class="accountInfo">
+                            <div class="form-group row">
+                                <label for="fullName" class="col-md-2 col-md-offset-2">Full Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="fullName" value="@CN" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!--movie-->
+                    <div class="moviePanel">
+                        
+                    </div>
+                    
+                    <!--tvshow-->
+                    <div class="tvshowPanel">
+                        
+                    </div>
                 </div>
             </div>
         </div>
-
     }
     else
     {

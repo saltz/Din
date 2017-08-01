@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.Protocols;
 using System.Net;
 using Ldap.Connectors;
@@ -64,6 +65,49 @@ namespace Ldap
             {
                 //unsuccesful login attempt
                 return new Tuple<bool, AdObject>(false, null);
+            }
+        }
+
+        public static bool ChangePassword(string username, string newpassword)
+        {
+            const AuthenticationTypes authenticationTypes = AuthenticationTypes.Secure |
+                                                            AuthenticationTypes.Sealing | AuthenticationTypes.ServerBind;
+            DirectoryEntry searchRoot = null;
+            DirectorySearcher searcher = null;
+            DirectoryEntry userEntry = null;
+
+            try
+            {
+                searchRoot = new DirectoryEntry(String.Format("LDAP://{0}/{1}",
+                        "Newton", "DC=din,DC=nl"),
+                    "padmin", "PASSWORDRESETTER12", authenticationTypes);
+
+                searcher = new DirectorySearcher(searchRoot);
+                searcher.Filter = String.Format("sAMAccountName={0}", username);
+                searcher.SearchScope = (System.DirectoryServices.SearchScope)SearchScope.Subtree;
+                searcher.CacheResults = false;
+
+                SearchResult searchResult = searcher.FindOne();
+                if (searchResult == null) return false;
+
+                userEntry = searchResult.GetDirectoryEntry();
+
+                userEntry.Invoke("SetPassword", new object[] { newpassword });
+                userEntry.CommitChanges();
+
+                //password has been changed
+                return true;
+            }
+            catch
+            {
+                //somethng went wrong password had not been chnaged
+                return false;
+            }
+            finally
+            {
+                userEntry?.Dispose();
+                searcher?.Dispose();
+                searchRoot?.Dispose();
             }
         }
 
