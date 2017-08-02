@@ -38,7 +38,6 @@
 
             //first time initalization
             if ($('.menuPanel').is(':visible')) {
-                console.log("menu is visable");
                 $('.accountPanel').toggle();
                 $('.pwdChangeContainer').toggle();
                 $('.moviePanel').toggle();
@@ -86,12 +85,49 @@
             });
 
             //password change button
-            $('.pwdButton').click(function() {
-                $('.pwdChangeContainer').slideToggle();
+            $('.pwdButton').click(function () {
+                $('#passwordSubmit').prop("disabled", true);
+                $('#password1').val("");
+                $('#password2').val("");
+                $('.pwdChangeContainer').toggle();
             });
 
             $('.pwdChangeBackButton').click(function() {
-                $('.pwdChangeContainer').slideToggle();
+                $('.pwdChangeContainer').toggle();
+            });
+
+            //password validation
+            $('.form-control').keyup(function () {
+                var count = 0;
+                var pass1 = $('#password1').val();
+                var pass2 = $('#password2').val();
+
+                if (pass1.length >= 8) {
+                    $('#length').removeClass('invalid').addClass('valid');
+                    count++;
+                } else {
+                    $('#length').removeClass('valid').addClass('invalid');
+                    count--;
+                }
+
+                if (pass1.match(/\d/)) {
+                    $('#number').removeClass('invalid').addClass('valid');
+                    count++;
+                } else {
+                    $('#number').removeClass('valid').addClass('invalid');
+                    count--;
+                }
+  
+                if (pass1 === pass2 && count === 2) {
+                    console.log("pass1    " + pass1 + "    pass2    " + pass2);
+                    $('#passwordSubmit').prop("disabled", false);
+                } else {
+                    $('#passwordSubmit').prop("disabled", true);
+                }
+            }).focus(function() {
+                $('#pswd_info').show();
+            }).blur(function() {
+                $('#pswd_info').hide();
             });
         });
     </script>
@@ -177,6 +213,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="pwdChangeContainer col-md-8 col-md-offset-2">
                         <div class="pwdChangeBackButton">
                             <a href="#">
@@ -189,19 +226,30 @@
                             <div class="form-group row">
                                 <label for="password1" class="col-md-3 col-md-offset-2">New password</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" id="password1" name="Password1" value=""/>
+                                    <input type="password" class="form-control" id="password1" name="Password1" value=""/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="password2" class="col-md-3 col-md-offset-2">Repeat password</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" id="password2" name="Password2" value=""/>
+                                    <input type="password" class="form-control" id="password2" name="Password2" value=""/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit"/>
                             </div>
                         </form>
+                        <div class="col-md-4">
+                            <div class="aro-pswd_info">
+                                <div id="pswd_info">
+                                    <h4>A password requires</h4>
+                                    <ul>
+                                        <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+                                        <li id="number" class="invalid">At least <strong>one number</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!--movie-->

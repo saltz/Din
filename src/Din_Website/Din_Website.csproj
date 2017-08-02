@@ -117,6 +117,8 @@
     <Content Include="Content\pictures\menuIcons\account_icon.png" />
     <Content Include="Content\pictures\menuIcons\movie_icon.png" />
     <Content Include="Content\pictures\menuIcons\tvshow_icon.png" />
+    <Content Include="Content\pictures\pwdVer\check.png" />
+    <Content Include="Content\pictures\pwdVer\cross.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />

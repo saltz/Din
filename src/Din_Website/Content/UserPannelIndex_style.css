@@ -132,12 +132,6 @@ html,body {
     transform: scale(1.2);
 }
 
-.accountPanel {
-    background-color: rgba(255, 255, 255, 0.5);
-    border: #ffffff 2px solid;
-    border-radius: 15px;
-}
-
 .accountPanel .backButton {
     text-decoration: none;
 }
@@ -150,7 +144,7 @@ html,body {
     text-decoration: none;
 }
 
- .backButtonContainer {
+.backButtonContainer {
     margin-top: 20px;
     margin-left: 10px;
     width: 100px;
@@ -166,6 +160,15 @@ html,body {
     color: #ffb121;
     text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
     padding: 10px;
+}
+.backButtonContainer p:hover {
+    color: #961212;
+}
+
+.accountPanel {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: #ffffff 2px solid;
+    border-radius: 15px;
 }
 
 .accountPanel h2 {
@@ -210,4 +213,84 @@ html,body {
     background-color: rgba(255, 255, 255, 0.9);
     border: rgba(255, 177, 33, 0.7) 2px solid;
     border-radius: 15px;
+}
+
+.pwdChangeBackButton {
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.pwdChangeBackButton span {
+    color: #000000;
+}
+
+.pwdChangeBackButton span:hover {
+    color: #961212;
+}
+
+.pwdChangeContainer h2 {
+    margin-bottom: 50px;
+}
+
+/*passwd validator css*/
+
+#pswd_info {
+    background: #dfdfdf none repeat scroll 0 0;
+    color: #fff;
+    left: 250%;
+    width: 300px;
+    position: absolute;
+    z-index: 12;
+    top: -200px;
+}
+
+#pswd_info h4 {
+    background: black none repeat scroll 0 0;
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0;
+    padding: 17px 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#pswd_info ul {
+    list-style: outside none none;
+}
+
+#pswd_info ul li {
+    padding: 10px 45px;
+}
+
+.valid {
+    background: rgba(0, 0, 0, 0) url(pictures/pwdVer/check.png) no-repeat scroll 2px 6px;
+    color: green;
+    line-height: 21px;
+    padding-left: 22px;
+}
+
+.invalid {
+    background: rgba(0, 0, 0, 0) url(pictures/pwdVer/cross.png) no-repeat scroll 2px 6px;
+    color: red;
+    line-height: 21px;
+    padding-left: 22px;
+}
+
+#pswd_info::before {
+    background: #dfdfdf none repeat scroll 0 0;
+    content: "";
+    height: 25px;
+    left: -13px;
+    margin-top: -12.5px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 25px;
+}
+
+#pswd_info {
+    display: none;
 }
