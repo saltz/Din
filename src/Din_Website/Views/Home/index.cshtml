@@ -27,8 +27,14 @@
                         @{
                             if (Session["failed"] != null)
                             {
-                                <div class="loginFailed">
+                                <div class="failed">
                                     <p>@Session["failedString"]</p>
+                                </div>
+                            }
+                            else if (Session["success"] != null)
+                            {
+                                <div class="success">
+                                    <p>@Session["successString"]</p>
                                 </div>
                             }
                         }

@@ -4,12 +4,48 @@
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
 
-            if($('.menuPanel').is(':visible')){
+            //menu items clicked
+            $('.menuButton').click(function () {
+                $('.menuPanel').slideToggle();
+                switch ($(this).data("selection")) {
+                    case "account":
+                        $('.accountPanel').slideToggle();
+                        break;
+                    case "movie":
+                        $('.moviePanel').slideToggle();
+                        break;
+                    case "tvshow":
+                        $('.tvshowPanel').slideToggle();
+                        break;
+                }
+            });
+
+            //backbuttons clicked
+            $('.backButton').click(function () {
+                switch ($(this).data('bckbtn')) {
+                    case "account":
+                        $('.accountPanel').slideToggle();
+                        break;
+                    case "movie":
+                        $('.moviePanel').slideToggle();
+                        break;
+                    case "tvshow":
+                        $('.tvshowPanel').slideToggle();
+                        break;
+                }
+                $('.menuPanel').slideToggle();
+            });
+
+            //first time initalization
+            if ($('.menuPanel').is(':visible')) {
+                console.log("menu is visable");
                 $('.accountPanel').toggle();
+                $('.pwdChangeContainer').toggle();
                 $('.moviePanel').toggle();
                 $('.tvshowPanel').toggle();
             }
 
+            //initlizaing and randomizing the background images
             var images = [{
                 url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
             }, {
@@ -31,12 +67,8 @@
             }, {
                 url: "@Url.Content("~/content/pictures/carousel/10.jpg")"
             }];
-
-            // http://css-tricks.com/snippets/javascript/shuffle-array/
             images.sort(function () { return 0.5 - Math.random(); });
-
             $.each(images, function (index, image) {
-
                 var element = $('<div class="item"><a href="#"><img src="' +
                     image.url +
                     '" alt="' +
@@ -46,21 +78,20 @@
                 if (index === 0) {
                     element.addClass("active");
                 }
-
                 element.appendTo("div.carousel-inner");
             });
-
+            //interval speed
             $('.carousel').carousel({
                 interval: 1000 * 10
             });
 
-            $('.menuButton').click(function () {
-                var selection = $(this).data('selection');
-                $('.menuPanel').slideToggle();
-                if (selection === "account") {
+            //password change button
+            $('.pwdButton').click(function() {
+                $('.pwdChangeContainer').slideToggle();
+            });
 
-                    $('.accountPanel').toggle();
-                }
+            $('.pwdChangeBackButton').click(function() {
+                $('.pwdChangeContainer').slideToggle();
             });
         });
     </script>
@@ -70,6 +101,7 @@
     if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
     {
         var CN = (Session["UserData"] as AdUser).CN;
+        var Username = (Session["UserData"] as AdUser).SAMAccountName;
 
         <head>
             <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
@@ -117,25 +149,79 @@
                     </div>
                     <!--account-->
                     <div class="accountPanel">
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="account">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
                         <h2>Account Settings</h2>
                         <div class="accountInfo">
                             <div class="form-group row">
-                                <label for="fullName" class="col-md-2 col-md-offset-2">Full Name</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="fullName" value="@CN" readonly/>
+                                <label for="fullName" class="col-md-2 col-md-offset-3">Full Name</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="fullName" value="@CN" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="username" class="col-md-2 col-md-offset-3">Username</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="username" value="@Username" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="pwdButtonContainer">
+                                    <a href="#" class="pwdButton">
+                                        <p>Change Password</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        
+                    <div class="pwdChangeContainer col-md-8 col-md-offset-2">
+                        <div class="pwdChangeBackButton">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </div>
+                        <h2>Change Password</h2>
+                        @model Din_Website.Models.NewPasswordData
+                        <form method="post" action="@Url.Action("ChangePassword", "Main")">
+                            <div class="form-group row">
+                                <label for="password1" class="col-md-3 col-md-offset-2">New password</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="password1" name="Password1" value=""/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="password2" class="col-md-3 col-md-offset-2">Repeat password</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="password2" name="Password2" value=""/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                            </div>
+                        </form>
+                    </div>
+
                     <!--movie-->
                     <div class="moviePanel">
-                        
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="movie">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
+                        <h1>MOVIE PANEL</h1>
                     </div>
-                    
+
                     <!--tvshow-->
                     <div class="tvshowPanel">
-                        
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="tvshow">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
+                        <h1>TVSHOW PANEL</h1>
                     </div>
                 </div>
             </div>

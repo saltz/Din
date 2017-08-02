@@ -8,9 +8,12 @@ namespace Logic
     {
         private static readonly LdapManager LdapManager = new LdapManager();
 
-        public static bool ChangePassword(string username, string newpassword)
+        public static bool ChangePassword(string username, string newPassword1, string newPassword2)
         {
-            return LdapManager.ChangePassword(username, newpassword);
+            if(newPassword1 == newPassword2)
+                return LdapManager.ChangePassword(username, newPassword1);
+
+            return false;
         }
 
     }

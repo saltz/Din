@@ -42,6 +42,7 @@ html,body {
     list-style-type: none;
     float: left;
     color: white;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
 }
 
 .rightMenu {
@@ -56,6 +57,7 @@ html,body {
     padding: 20px;
     color: #961212;
     font-size: 20px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
 }
 
 .rightMenu a:hover {
@@ -136,9 +138,39 @@ html,body {
     border-radius: 15px;
 }
 
+.accountPanel .backButton {
+    text-decoration: none;
+}
+
+.moviePanel .backButton {
+    text-decoration: none;
+}
+
+.tvshowPanel .backButton {
+    text-decoration: none;
+}
+
+ .backButtonContainer {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.backButtonContainer:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.backButtonContainer p {
+    font-size: 17px;
+    color: #ffb121;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+    padding: 10px;
+}
+
 .accountPanel h2 {
-    padding-top: 10px;
     color: #000000;
+    margin-bottom: 5%;
 }
 
 .accountPanel .accountInfo {
@@ -146,4 +178,36 @@ html,body {
     margin-top: 20px;
     margin-left: 10%;
     padding: 10px;
+}
+
+.accountPanel .accountInfo .pwdButton {
+    text-decoration: none;
+}
+
+.accountPanel .accountInfo .pwdButtonContainer {
+    margin-top: 10px;
+    border: 1px #ffb121 solid;
+    border-radius: 5px;
+    background-color: rgba(255, 177, 33, 0.6);
+    width: 300px;
+    height: 30px;
+    margin-left: calc(50% - 150px);
+}
+.accountPanel .accountInfo .pwdButtonContainer:hover {
+    border: 1px #ff8d1c solid;
+    background-color: rgba(255, 177, 33, 0.9);
+    }
+
+.pwdButtonContainer p {
+    color: #000000;
+    padding-top: 4px;
+}
+
+.pwdChangeContainer {
+    margin-top: -30%;
+    z-index: 10;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: rgba(255, 177, 33, 0.7) 2px solid;
+    border-radius: 15px;
 }
