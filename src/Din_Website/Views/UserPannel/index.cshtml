@@ -2,140 +2,62 @@
 @section scripts
 {
     <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-
-            //menu items clicked
-            $('.menuButton').click(function () {
-                $('.menuPanel').slideToggle();
-                switch ($(this).data("selection")) {
-                    case "account":
-                        $('.accountPanel').slideToggle();
-                        break;
-                    case "movie":
-                        $('.moviePanel').slideToggle();
-                        break;
-                    case "tvshow":
-                        $('.tvshowPanel').slideToggle();
-                        break;
-                }
-            });
-
-            //backbuttons clicked
-            $('.backButton').click(function () {
-                switch ($(this).data('bckbtn')) {
-                    case "account":
-                        $('.accountPanel').slideToggle();
-                        break;
-                    case "movie":
-                        $('.moviePanel').slideToggle();
-                        break;
-                    case "tvshow":
-                        $('.tvshowPanel').slideToggle();
-                        break;
-                }
-                $('.menuPanel').slideToggle();
-            });
-
-            //first time initalization
-            if ($('.menuPanel').is(':visible')) {
-                $('.accountPanel').toggle();
-                $('.pwdChangeContainer').toggle();
-                $('.moviePanel').toggle();
-                $('.tvshowPanel').toggle();
-            }
-
+        $(document).ready(function($) {
             //initlizaing and randomizing the background images
-            var images = [{
-                url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/2.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/3.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/4.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/5.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/6.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/7.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/8.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/9.jpg")"
-            }, {
-                url: "@Url.Content("~/content/pictures/carousel/10.jpg")"
-            }];
-            images.sort(function () { return 0.5 - Math.random(); });
-            $.each(images, function (index, image) {
-                var element = $('<div class="item"><a href="#"><img src="' +
-                    image.url +
-                    '" alt="' +
-                    image.alt +
-                    '" /></a></div>');
-
-                if (index === 0) {
-                    element.addClass("active");
+            var images = [
+                {
+                    url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/2.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/3.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/4.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/5.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/6.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/7.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/8.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/9.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/10.jpg")"
                 }
-                element.appendTo("div.carousel-inner");
-            });
+            ];
+            images.sort(function() { return 0.5 - Math.random(); });
+            $.each(images,
+                function(index, image) {
+                    var element = $('<div class="item"><a href="#"><img src="' +
+                        image.url +
+                        '" alt="' +
+                        image.alt +
+                        '" /></a></div>');
+
+                    if (index === 0) {
+                        element.addClass("active");
+                    }
+                    element.appendTo("div.carousel-inner");
+                });
             //interval speed
             $('.carousel').carousel({
                 interval: 1000 * 10
             });
-
-            //password change button
-            $('.pwdButton').click(function () {
-                $('#passwordSubmit').prop("disabled", true);
-                $('#password1').val("");
-                $('#password2').val("");
-                $('.pwdChangeContainer').toggle();
-            });
-
-            $('.pwdChangeBackButton').click(function() {
-                $('.pwdChangeContainer').toggle();
-            });
-
-            //password validation
-            $('.form-control').keyup(function () {
-                var count = 0;
-                var pass1 = $('#password1').val();
-                var pass2 = $('#password2').val();
-
-                if (pass1.length >= 8) {
-                    $('#length').removeClass('invalid').addClass('valid');
-                    count++;
-                } else {
-                    $('#length').removeClass('valid').addClass('invalid');
-                    count--;
-                }
-
-                if (pass1.match(/\d/)) {
-                    $('#number').removeClass('invalid').addClass('valid');
-                    count++;
-                } else {
-                    $('#number').removeClass('valid').addClass('invalid');
-                    count--;
-                }
-  
-                if (pass1 === pass2 && count === 2) {
-                    console.log("pass1    " + pass1 + "    pass2    " + pass2);
-                    $('#passwordSubmit').prop("disabled", false);
-                } else {
-                    $('#passwordSubmit').prop("disabled", true);
-                }
-            }).focus(function() {
-                $('#pswd_info').show();
-            }).blur(function() {
-                $('#pswd_info').hide();
-            });
         });
     </script>
+    <script src="~/Content/scripts/MenuNavigation.js"></script>
+    <script src="~/Content/scripts/PasswordValidator.js"></script>
 }
 
 @{
     if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
     {
+        HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
+        HttpContext.Current.Response.AddHeader("Expires", "0");
+
         var CN = (Session["UserData"] as AdUser).CN;
         var Username = (Session["UserData"] as AdUser).SAMAccountName;
 
@@ -213,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pwdChangeContainer col-md-8 col-md-offset-2">
                         <div class="pwdChangeBackButton">
                             <a href="#">
@@ -226,17 +148,17 @@
                             <div class="form-group row">
                                 <label for="password1" class="col-md-3 col-md-offset-2">New password</label>
                                 <div class="col-md-4">
-                                    <input type="password" class="form-control" id="password1" name="Password1" value=""/>
+                                    <input type="password" class="form-control" id="password1" name="Password1" value="" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="password2" class="col-md-3 col-md-offset-2">Repeat password</label>
                                 <div class="col-md-4">
-                                    <input type="password" class="form-control" id="password2" name="Password2" value=""/>
+                                    <input type="password" class="form-control" id="password2" name="Password2" value="" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit"/>
+                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit" />
                             </div>
                         </form>
                         <div class="col-md-4">

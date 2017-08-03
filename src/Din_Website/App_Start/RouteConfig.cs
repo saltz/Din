@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Din_Website
@@ -12,6 +8,18 @@ namespace Din_Website
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "login",
+                url: "Home",
+                defaults: new {controller = "Home", action = "Login"}
+            );
+
+            routes.MapRoute(
+                name: "logout",
+                url: "Logout",
+                defaults: new { controller = "Home", action = "Logout" }
+            );
 
             routes.MapRoute(
                 name: "Default",
