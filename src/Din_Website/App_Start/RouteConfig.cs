@@ -12,7 +12,7 @@ namespace Din_Website
             routes.MapRoute(
                 name: "login",
                 url: "Home",
-                defaults: new {controller = "Home", action = "Login"}
+                defaults: new { controller = "Home", action = "Login" }
             );
 
             routes.MapRoute(

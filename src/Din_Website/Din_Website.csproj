@@ -124,8 +124,6 @@
     <Content Include="Content\pictures\menuIcons\tvshow_icon.png" />
     <Content Include="Content\pictures\pwdVer\check.png" />
     <Content Include="Content\pictures\pwdVer\cross.png" />
-    <Content Include="Content\scripts\MenuNavigation.js" />
-    <Content Include="Content\scripts\PasswordValidator.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />
@@ -142,6 +140,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -208,7 +207,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50872</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50872/</IISUrl>
+          <IISUrl>http://localhost:4567</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

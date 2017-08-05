@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using Din_Website.Models;
 using Logic;
@@ -69,6 +68,7 @@ namespace Din_Website.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            Session.Abandon();
             return View("Logout");
         }
     }

@@ -98,8 +98,9 @@ namespace Ldap
                 //password has been changed
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                var exception = e;
                 //somethng went wrong password had not been chnaged
                 return false;
             }
