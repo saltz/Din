@@ -1,4 +1,11 @@
 ﻿@using Models.AD
+
+@section CSS
+{
+    <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+}
+
 @section scripts
 {
     <script type="text/javascript">
@@ -117,7 +124,7 @@
                     $('#number').removeClass('valid').addClass('invalid');
                     count--;
                 }
-  
+
                 if (pass1 === pass2 && count === 2) {
                     console.log("pass1    " + pass1 + "    pass2    " + pass2);
                     $('#passwordSubmit').prop("disabled", false);
@@ -143,13 +150,8 @@
         var CN = (Session["UserData"] as AdUser).CN;
         var Username = (Session["UserData"] as AdUser).SAMAccountName;
 
-        <head>
-            <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        </head>
-
         <div id="background-carousel">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="50000">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner"></div>
             </div>
         </div>
@@ -217,7 +219,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="pwdChangeContainer col-md-8 col-md-offset-2">
                         <div class="pwdChangeBackButton">
                             <a href="#">
@@ -230,17 +232,17 @@
                             <div class="form-group row">
                                 <label for="password1" class="col-md-3 col-md-offset-2">New password</label>
                                 <div class="col-md-4">
-                                    <input type="password" class="form-control" id="password1" name="Password1" value=""/>
+                                    <input type="password" class="form-control" id="password1" name="Password1" value="" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="password2" class="col-md-3 col-md-offset-2">Repeat password</label>
                                 <div class="col-md-4">
-                                    <input type="password" class="form-control" id="password2" name="Password2" value=""/>
+                                    <input type="password" class="form-control" id="password2" name="Password2" value="" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit"/>
+                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit" />
                             </div>
                         </form>
                         <div class="col-md-4">

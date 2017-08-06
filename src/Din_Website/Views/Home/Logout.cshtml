@@ -3,16 +3,18 @@
     ViewBag.Title = "Logout";
 }
 
+@section CSS
+{
+    <link href="~/Content/Logout_style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta http-equiv="refresh" content="3;url=https://thedin.nl/" />
+}
+
 @{
     Random rand = new Random();
     int nmbr = rand.Next(1, 15);
     string gif = nmbr.ToString() + ".gif";
 }
-<head>
-    <link href="~/Content/Logout_style.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <meta http-equiv="refresh" content="3;url=https://thedin.nl/" />
-</head>
 
 <div class="container">
 
