@@ -45,6 +45,24 @@ html,body {
     text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
 }
 
+.leftMenu .downloadBtn {
+    margin-top: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.leftMenu .downloadBtn a {
+    text-decoration: none;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.leftMenu .downloadBtn a:hover {
+    border-radius: 10px;
+    background-color: rgba(255, 177, 33, 0.5);
+    border: 1px rgba(255, 255 , 255, 0.6) solid;
+}
+
 .rightMenu {
     margin-top: 30px;
     margin-right: 10px;
@@ -70,15 +88,6 @@ html,body {
     text-align: center;
    
     border-radius: 20px;
-}
-
-.welcomeText h3 {
-    color: white;
-    text-shadow:
-               -1px -1px 0 #000,
-               1px -1px 0 #000,
-               -1px 1px 0 #000,
-               1px 1px 0 #000;  
 }
 
 .menuPanel {

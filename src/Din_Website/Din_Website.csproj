@@ -127,6 +127,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />
+    <Content Include="error_pages\404.html" />
     <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
