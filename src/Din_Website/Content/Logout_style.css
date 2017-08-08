@@ -29,9 +29,7 @@ html,body {
 .gif-border {
     position: relative;
     margin-top: 10%;
-    width: 500px;
-    margin-left: calc(50% - 250px);
-    -webkit-transform: scale(2.0);
+    -webkit-transform: scale(1.5);
     text-align: center;
 }
 
