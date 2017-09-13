@@ -80,7 +80,7 @@ namespace Ldap
             {
                 searchRoot = new DirectoryEntry(String.Format("LDAP://{0}/{1}",
                         "Newton", "DC=din,DC=nl"),
-                    "padmin", "PASSWORDRESETTER12", authenticationTypes);
+                    "", "", authenticationTypes);
 
                 searcher = new DirectorySearcher(searchRoot);
                 searcher.Filter = String.Format("sAMAccountName={0}", username);
