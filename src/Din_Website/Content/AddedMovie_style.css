@@ -1,0 +1,39 @@
+﻿body {
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #e5e5e5;
+}
+
+.message {
+    margin-top: 10%;
+    text-align: center;
+
+}
+
+.message h2 {
+    font-weight: bold;
+    color: #ffb121;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+
+.message p {
+    margin-top: 2%;
+}
+
+.confirm-button {
+    margin-top: 5%;
+}
+
+.confirm-button button {
+    width: 100px;
+}
+
+#rooje {
+    color: #961212;
+}
+
+#title {
+    float: left;
+}

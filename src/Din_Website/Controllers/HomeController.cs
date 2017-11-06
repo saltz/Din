@@ -20,7 +20,7 @@ namespace Din_Website.Controllers
                 }
                 else if ((string)Session["PermissionLevel"] == "user")
                 {
-                    return View("../UserPannel/index");
+                    return View("../UserPanel/index");
                 }
             }
             return View("index");
@@ -49,7 +49,7 @@ namespace Din_Website.Controllers
                             else if (v.DistinguishedName.ToLower().Contains("kodi users"))
                             {
                                 Session["PermissionLevel"] = "user";
-                                return View("../UserPannel/index");
+                                return View("../UserPanel/index");
                             }
                         }
                 }

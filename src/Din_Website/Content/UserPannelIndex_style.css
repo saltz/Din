@@ -1,4 +1,6 @@
-﻿body {
+﻿/*background*/
+
+body {
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -38,6 +40,8 @@ html,body {
     opacity:0.85
 }
 
+/*left menu download button*/
+
 .leftMenu {
     list-style-type: none;
     float: left;
@@ -63,6 +67,8 @@ html,body {
     border: 1px rgba(255, 255 , 255, 0.6) solid;
 }
 
+/*right menu logout*/
+
 .rightMenu {
     margin-top: 30px;
     margin-right: 10px;
@@ -82,6 +88,8 @@ html,body {
     background-color: rgba(229, 227, 227, 0.4);
     border-radius: 10px;
 }
+
+/*main panel*/
 
 .mainContent {
     margin-top: 10%;
@@ -140,6 +148,8 @@ html,body {
     transition: all 200ms ease-in;
     transform: scale(1.2);
 }
+
+/*account panel*/
 
 .accountPanel .backButton {
     text-decoration: none;
@@ -302,4 +312,37 @@ html,body {
 
 #pswd_info {
     display: none;
+}
+
+/* movie panel */
+
+.moviePanel {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: #ffffff 2px solid;
+    border-radius: 15px;
+    padding-bottom: 100px;
+}
+
+.panel-header {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 10%;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+
+.search-text {
+    float: left;
+    width: 65%;
+    margin-left: 13%;
+}
+
+.search-button {
+    float: left;
+    width: 10%;
+}
+
+.search-button input {
+    width: 90% !important;
+    margin-left: 5%;
+    border-radius: 6px !important;
 }
