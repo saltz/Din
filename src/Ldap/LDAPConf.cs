@@ -9,7 +9,7 @@ namespace Ldap
 
         public LdapConf()
         {
-            _server = new LdapDirectoryIdentifier("localhost"); //chnage this to localhost
+            _server = new LdapDirectoryIdentifier("localhost");
         }
 
         public LdapDirectoryIdentifier GetServer()
