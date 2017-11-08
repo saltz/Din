@@ -338,11 +338,71 @@ html,body {
 
 .search-button {
     float: left;
-    width: 10%;
 }
 
 .search-button input {
     width: 90% !important;
     margin-left: 5%;
     border-radius: 6px !important;
+}
+
+/* CSS For mobile devices */
+@media only screen and (max-width: 500px) {
+
+    #background-carousel {
+        display: none;
+    }
+
+    body {
+        background: url(pictures/carousel/7.jpg);
+        background-position: -600px;
+    }
+
+    .leftMenu {
+        margin-left: -10%;
+        width: 50%;
+        margin-top: 10px;
+    }
+
+    .leftMenu li h3 {
+        font-size: 15px;
+    }
+
+    .downloadBtn {
+        display: none;
+    }
+
+    .rightMenu {
+        margin-right: -2%;
+    }
+
+    .rightMenu a {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .menuPanel .menuItem {
+        width: 170px;
+        height: 170px;
+    }
+
+    /* Movie Panel */
+    .moviePanel {
+        margin-top: 40%;
+    }
+
+    div.input-group.input-group-lg.search-text {
+        width: 70%;
+        height: 10px;
+        margin-left: 5%;
+    }
+
+    input.form-control.movie-search {
+        font-size: 12px;
+    }
+
+    div.search-button.input-group.input-group-lg input {
+        font-size: 12px;
+        width: initial;
+    }
 }

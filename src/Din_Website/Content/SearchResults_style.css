@@ -20,10 +20,15 @@
     color: #961212;
 }
 
+.card-frame {
+    width: 90%;
+    margin-left: 8%;
+}
+
 .card {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    margin-left: 30px;
+    margin-right: 30px;
     border: 5px solid rgba(0, 0, 0, 0.0);
     border-radius: 5px;
 }
@@ -144,4 +149,44 @@ div.item.card p.overview {
 .selected-movie {
     display: none !important;
 }
+
+/* CSS For mobile devices */
+@media only screen and (max-width: 500px) {
+
+    .card-frame {
+        width: 100%;
+        margin: 0;
+    }
+
+    .results h2 {
+        margin-top: 10%;
+    }
+
+    div.item.card {
+        width: 100%;
+        margin: 0;
+    }
+
+    .image_content {
+        width: 50%
+    }
+
+    div.image_content img.poster {
+        width: 100%;
+        height: 275px;
+    }
+
+    div.item.poster.card div.info {
+        width: 50%;
+    }
+
+    .item .info .flex .vote_avarage {
+        display: none;
+    }
+
+    .item .info .flex a {
+        font-size: 11px;
+    }
+}
+
 

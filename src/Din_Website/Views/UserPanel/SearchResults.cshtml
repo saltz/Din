@@ -52,67 +52,69 @@
                     <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
                 </a>
             </div>
-            <div class="results col-md-10 col-md-offset-1">
+            <div class="results col-md-12">
                 <h2>Search Results</h2>
-                @foreach (SearchMovie movie in (List<SearchMovie>)Session["MovieResults"])
-                {
-                    int date = Convert.ToDateTime(movie.ReleaseDate).Year;
+                <div class="card-frame">
+                    @foreach (SearchMovie movie in (List<SearchMovie>)Session["MovieResults"])
+                    {
+                        int date = Convert.ToDateTime(movie.ReleaseDate).Year;
 
-                    string posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
+                        string posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
 
-                    <div movie-id="@movie.Id" class="item poster card">
-                        <div class="image_content">
-                            @{
-                                if (string.IsNullOrEmpty(movie.PosterPath))
-                                {
-                                    <img class="poster" sizes="185px" src="@Url.Content("~/Content/Pictures/not-found.png")" />
-                                }
-                                else
-                                {
-                                    <img class="poster" sizes="185px" src="@posterPath" />
-                                }
-                            }
-                        </div>
-                        <div class="info">
-                            <p class="flex">
-                                <a class="title result" title="@movie.Title">@movie.Title</a>
-                                <span class="vote_avarage">
-                                    @movie.VoteAverage
-                                    <span class="glyphicon glyphicon-star rating movie"></span>
-                                </span>
-                            </p>
-                            <p class="meta flex">
-                                <span class="release_date">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                    @date.ToString()
-                                </span>
-                            </p>
-                            <p class="overview">
-                                @movie.Overview
-                            </p>
-                            <div class="add-button">
+                        <div movie-id="@movie.Id" class="item poster card">
+                            <div class="image_content">
                                 @{
-                                    if (movieIds.Contains(movie.Id))
+                                    if (string.IsNullOrEmpty(movie.PosterPath))
                                     {
-                                        <button disabled type="button" class="btn btn-default">Already Exists</button>
+                                        <img class="poster" sizes="185px" src="@Url.Content("~/Content/Pictures/not-found.png")" />
                                     }
                                     else
                                     {
-                                        <form method="post" action="@Url.Action("AddMovie", "Main")">
-                                            <button id="@movie.Id" type="submit" class="btn btn-primary add-movie">Add Movie</button>
-                                            <input class="selected-movie" name="selected-movie" />
-                                        </form>
+                                        <img class="poster" sizes="185px" src="@posterPath" />
                                     }
                                 }
                             </div>
-                        </div>
-                    </div>
-                                    }
-            </div>
+                            <div class="info">
+                                <p class="flex">
+                                    <a class="title result" title="@movie.Title">@movie.Title</a>
+                                    <span class="vote_avarage">
+                                        @movie.VoteAverage
+                                        <span class="glyphicon glyphicon-star rating movie"></span>
+                                    </span>
+                                </p>
+                                <p class="meta flex">
+                                    <span class="release_date">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        @date.ToString()
+                                    </span>
+                                </p>
+                                <p class="overview">
+                                    @movie.Overview
+                                </p>
+                                <div class="add-button">
+                                    @{
+                                        if (movieIds.Contains(movie.Id))
+                                        {
+                                            <button disabled type="button" class="btn btn-default">Already Exists</button>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" action="@Url.Action("AddMovie", "Main")">
+                                                <button id="@movie.Id" type="submit" class="btn btn-primary add-movie">Add Movie</button>
+                                                <input class="selected-movie" name="selected-movie" />
+                                            </form>
                                         }
                                     }
-                                    else
-                                    {
-                                        Url.Action("Index", "Home");
-                                    }
+                                </div>
+                            </div>
+                        </div>
+                                        }
+                </div>
+            </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Url.Action("Index", "Home");
+                                        }
 }

@@ -9,6 +9,7 @@ namespace Models.RadarrMovie
     public class Movie
     {
         public string title { get; set; }
+        public int year { get; set; }
         public int qualityProfileId { get; set; }
         public string profileId { get; set; }
         public string titleslug { get; set; }
@@ -23,6 +24,7 @@ namespace Models.RadarrMovie
         public Movie(string title, List<Image> images, int tmdbid, DateTime date)
         {
             this.title = title;
+            this.year = date.Year;
             this.qualityProfileId = 0;
             this.profileId = "6";
             this.titleslug = GenerateTitleSlug(title, date);

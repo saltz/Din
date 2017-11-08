@@ -47,7 +47,7 @@ namespace Din_Website.Controllers
                 {
                     if (s.Id == movieId)
                     {
-                        switch (MovieManager.AddMovie(s, (Session["UserData"] as AdObject).SAMAccountName).ToLower())
+                        switch (MovieManager.AddMovie(s, (Session["UserData"] as AdObject)).ToLower())
                         {
                             case "created":
                                 Session["AddStatus"] = "success";

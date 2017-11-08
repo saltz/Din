@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
+using Database;
+using Models.AD;
 using Models.RadarrMovie;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
@@ -23,7 +22,7 @@ namespace Logic
             return movies.Results;
         }
 
-        public static string AddMovie(SearchMovie movie, string username)
+        public static string AddMovie(SearchMovie movie, AdObject userAdObject)
         {
             List<Image> images = new List<Image>();
             images.Add(new Image(movie.PosterPath));
@@ -41,12 +40,12 @@ namespace Logic
             try
             {
                 var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-                ReportEvent(username, movie.Title, "successfull added");
+                ReportEvent(userAdObject, movie.Title, "added");
                 return httpResponse.StatusDescription;
             }
             catch (WebException)
             {
-                ReportEvent(username,movie.Title, "failed");
+                ReportEvent(userAdObject,movie.Title, "failed to add");
                 return "error";
             }
         }
@@ -72,25 +71,10 @@ namespace Logic
             return movieIds;
         }
 
-        private static void ReportEvent(string user, string movieTitle, string status)
+        private static void ReportEvent(AdObject userAdObject, string movieTitle, string status)
         {
-            string path = @"C:\Users\dane\Documents\AddedMovieLogs\" + user + ".txt";
-            if (!File.Exists(path))
-            {
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine(movieTitle + " Toegevoegd door: " + user + " datum: " + DateTime.Now + " Status: " +
-                                 status);
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(movieTitle + " Toegevoegd door: " + user + " datum: " + DateTime.Now + " Status: " +
-                                 status);
-                }
-            }
+            ContentMovie contentMovie = new ContentMovie();
+            contentMovie.InsertMovieAddedData(userAdObject, movieTitle, status);
         }
     }
 }
