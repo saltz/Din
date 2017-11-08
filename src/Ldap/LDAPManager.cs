@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.Protocols;
+using System.IO;
+using System.Linq;
 using System.Net;
 using Ldap.Connectors;
 using Models.AD;
@@ -11,13 +13,15 @@ namespace Ldap
 {
     public class LdapManager
     {
-        private readonly LDAPConnector _connector;
+        private readonly LdapConnector _connector;
         private NetworkCredential _credential;
         private const string Domain = "din.nl";
+        private readonly string _accOperatorName = File.ReadLines("C:/din_properties/acc_operator").First();
+        private readonly string _accOperatorPwd = File.ReadLines("C:/din_properties/acc_operator").ElementAt(1);
 
         public LdapManager()
         {
-            _connector = new LDAPConnector(new LdapConf());
+            _connector = new LdapConnector(new LdapConf());
         }
 
         public Tuple<bool, AdObject> AuthenticateUser(string username, string password)
@@ -80,7 +84,7 @@ namespace Ldap
             {
                 searchRoot = new DirectoryEntry(String.Format("LDAP://{0}/{1}",
                         "Newton", "DC=din,DC=nl"),
-                    "padmin", "PASSWORDRESETTER12", authenticationTypes);
+                    _accOperatorName, _accOperatorPwd, authenticationTypes);
 
                 searcher = new DirectorySearcher(searchRoot);
                 searcher.Filter = String.Format("sAMAccountName={0}", username);

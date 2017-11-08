@@ -7,7 +7,7 @@ namespace Database
 {
     public static class Database
     {
-        private static readonly string ConnectionString = File.ReadLines("C:/Users/dane/documents/dblogin").First();
+        private static readonly string ConnectionString = File.ReadLines("C:/din_properties/dblogin").First();
 
         public static MySqlConnection Connection
         {

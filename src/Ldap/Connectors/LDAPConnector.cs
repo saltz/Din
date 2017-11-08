@@ -3,13 +3,13 @@ using System.Net;
 
 namespace Ldap.Connectors
 {
-    public class LDAPConnector
+    public class LdapConnector
     {
         private LdapConnection _ldapConnection;
         private readonly LdapConf _ldapConfiguration;
 
         
-        public LDAPConnector(LdapConf conf)
+        public LdapConnector(LdapConf conf)
         {
             this._ldapConfiguration = conf;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Database;
 using Models.AD;
@@ -14,7 +15,8 @@ namespace Logic
 {
     public static class MovieManager
     {
-        private static readonly TMDbClient Client = new TMDbClient("33ed603b677a2046b0f3286e83a2253d");
+        private static readonly TMDbClient Client = new TMDbClient(File.ReadLines("C:/din_properties/api_key").First());
+        private static readonly string ApiMovieRequest = File.ReadLines("C:/din_properties/api_movie").First();
 
         public static List<SearchMovie> SearchMovie(string searchQuery)
         {
@@ -27,8 +29,7 @@ namespace Logic
             List<Image> images = new List<Image>();
             images.Add(new Image(movie.PosterPath));
             var payload = new Movie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
-            var result = "";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:7878/api/movie?apikey=814b8903f6394ef49c0665715a8ae2fb");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiMovieRequest);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
@@ -53,9 +54,9 @@ namespace Logic
         public static List<int> GetCurrentMovies()
         {
             List<int> movieIds = new List<int>();
-            var webResult = "";
+            string webResult;
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:7878/api/movie?apikey=814b8903f6394ef49c0665715a8ae2fb");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiMovieRequest);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
@@ -73,8 +74,8 @@ namespace Logic
 
         private static void ReportEvent(AdObject userAdObject, string movieTitle, string status)
         {
-            ContentMovie contentMovie = new ContentMovie();
-            contentMovie.InsertMovieAddedData(userAdObject, movieTitle, status);
+            DatabaseContent databaseContent = new DatabaseContent();
+            databaseContent.InsertMovieAddedData(userAdObject, movieTitle, status);
         }
     }
 }

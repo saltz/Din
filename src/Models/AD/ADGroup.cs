@@ -2,7 +2,7 @@
 {
     public class AdGroup : AdObject
     {
-        public string Description { get; private set; }
+        private string Description { get; }
         public AdGroup(string cn, string distinguishedname, string name, string objectCategory, string sAmaAccountName,
             string description) : base(cn, distinguishedname, name, objectCategory, sAmaAccountName)
         {

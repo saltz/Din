@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace Database
 {
-    public class ContentMovie
+    public class DatabaseContent
     {
         public void InsertMovieAddedData(AdObject userAdObject, string movieTitle, string status)
         {
