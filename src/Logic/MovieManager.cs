@@ -24,7 +24,7 @@ namespace Logic
             return movies.Results;
         }
 
-        public static string AddMovie(SearchMovie movie, AdObject userAdObject)
+        public static string AddMovie(SearchMovie movie, ADObject userAdObject)
         {
             List<Image> images = new List<Image>();
             images.Add(new Image(movie.PosterPath));
@@ -72,7 +72,7 @@ namespace Logic
             return movieIds;
         }
 
-        private static void ReportEvent(AdObject userAdObject, string movieTitle, string status)
+        private static void ReportEvent(ADObject userAdObject, string movieTitle, string status)
         {
             DatabaseContent databaseContent = new DatabaseContent();
             databaseContent.InsertMovieAddedData(userAdObject, movieTitle, status);

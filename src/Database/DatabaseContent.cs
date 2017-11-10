@@ -7,7 +7,7 @@ namespace Database
 {
     public class DatabaseContent
     {
-        public void InsertMovieAddedData(AdObject userAdObject, string movieTitle, string status)
+        public void InsertMovieAddedData(ADObject userAdObject, string movieTitle, string status)
         {
             try
             {

@@ -7,14 +7,14 @@ namespace Logic
 {
     public static class LoginSystem
     {
-        private static readonly LdapManager LdapManager = new LdapManager();
-        public static Tuple<bool, AdObject> Login(string username, string password)
+        private static readonly LDAPManager LdapManager = new LDAPManager();
+        public static Tuple<bool, ADObject> Login(string username, string password)
         {
             if (username == "kodi")
                 throw new LoginException("This account does not have the required permissions");
 
             var ldapresult = LdapManager.AuthenticateUser(username, password);
-            return ldapresult.Item1 ? new Tuple<bool, AdObject>(true, ldapresult.Item2) : new Tuple<bool, AdObject>(false, null);
+            return ldapresult.Item1 ? new Tuple<bool, ADObject>(true, ldapresult.Item2) : new Tuple<bool, ADObject>(false, null);
         }
     }
 }

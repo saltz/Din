@@ -1,6 +1,6 @@
 ﻿namespace Models.AD
 {
-    public class AdGroup : AdObject
+    public class AdGroup : ADObject
     {
         private string Description { get; }
         public AdGroup(string cn, string distinguishedname, string name, string objectCategory, string sAmaAccountName,

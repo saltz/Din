@@ -12,7 +12,7 @@ namespace Din_Website.Controllers
     {
         public ActionResult ChangePassword(NewPasswordData data)
         {
-            if (AccountManagment.ChangePassword((Session["UserData"] as AdObject).SAMAccountName, data.Password1,
+            if (AccountManagment.ChangePassword((Session["UserData"] as ADObject).SAMAccountName, data.Password1,
                 data.Password2))
             {
                 Session.Clear();
@@ -47,7 +47,7 @@ namespace Din_Website.Controllers
                 {
                     if (s.Id == movieId)
                     {
-                        switch (MovieManager.AddMovie(s, (Session["UserData"] as AdObject)).ToLower())
+                        switch (MovieManager.AddMovie(s, (Session["UserData"] as ADObject)).ToLower())
                         {
                             case "created":
                                 Session["AddStatus"] = "success";
