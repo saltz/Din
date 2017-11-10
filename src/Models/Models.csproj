@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AD\AdGroup.cs" />
-    <Compile Include="AD\AdObject.cs" />
-    <Compile Include="AD\AdUser.cs" />
+    <Compile Include="AD\ADGroup.cs" />
+    <Compile Include="AD\ADObject.cs" />
+    <Compile Include="AD\ADUser.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadarrMovie\AddOptions.cs" />
