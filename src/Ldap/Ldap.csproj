@@ -48,8 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connectors\LDAPConnector.cs" />
-    <Compile Include="LdapConf.cs" />
-    <Compile Include="LdapManager.cs" />
+    <Compile Include="LDAPConf.cs" />
+    <Compile Include="LDAPManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
