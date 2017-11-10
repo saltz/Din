@@ -2,12 +2,12 @@
 
 namespace Models.AD
 {
-    public class AdUser : AdObject
+    public class ADUser : ADObject
     {
         public List<AdGroup> Groups { get; private set; }
         public string UserPrincipalName { get; private set; }
 
-        public AdUser(string cn, string distinguishedname,
+        public ADUser(string cn, string distinguishedname,
             string name, string objectCategory, string sAMAAccountName, List<AdGroup> memberOf,
             string userPrincipalName) : base(cn,
             distinguishedname, name, objectCategory, sAMAAccountName)

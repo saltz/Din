@@ -24,7 +24,7 @@ namespace Ldap
             _connector = new LdapConnector(new LdapConf());
         }
 
-        public Tuple<bool, AdObject> AuthenticateUser(string username, string password)
+        public Tuple<bool, ADObject> AuthenticateUser(string username, string password)
         {
             if (ValidateUserByBind(new NetworkCredential(username, password, Domain)))
             {
@@ -45,7 +45,7 @@ namespace Ldap
                                     groups.Add(new AdGroup(g));
                                 }
 
-                                AdUser user = new AdUser(
+                                ADUser user = new ADUser(
                                     e.Attributes["cn"][0].ToString(),
                                     e.Attributes["distinguishedName"][0].ToString(),
                                     e.Attributes["name"][0].ToString(),
@@ -54,10 +54,10 @@ namespace Ldap
                                     groups,
                                     e.Attributes["userPrincipalName"][0].ToString());
 
-                                return new Tuple<bool, AdObject>(true, user);
+                                return new Tuple<bool, ADObject>(true, user);
                             }
                         }
-                    return new Tuple<bool, AdObject>(true, null);
+                    return new Tuple<bool, ADObject>(true, null);
                 }
                 catch (NullReferenceException)
                 {
@@ -68,7 +68,7 @@ namespace Ldap
             else
             {
                 //unsuccesful login attempt
-                return new Tuple<bool, AdObject>(false, null);
+                return new Tuple<bool, ADObject>(false, null);
             }
         }
 

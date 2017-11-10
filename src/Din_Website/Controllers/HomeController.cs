@@ -32,12 +32,12 @@ namespace Din_Website.Controllers
             try
             {
                 Session.Clear();
-                Tuple<bool, AdObject> result = LoginSystem.Login(data.Username, data.Password);
+                Tuple<bool, ADObject> result = LoginSystem.Login(data.Username, data.Password);
                 if (result.Item1)
                 {
                     Session["UserData"] = result.Item2;
                     Session["Name"] = result.Item2.Name;
-                    var adUser = result.Item2 as AdUser;
+                    var adUser = result.Item2 as ADUser;
                     if (adUser != null)
                         foreach (var v in adUser.Groups)
                         {
