@@ -7,7 +7,7 @@ namespace Logic
 {
     public static class LoginSystem
     {
-        private static readonly LdapManager LdapManager = new LdapManager();
+        private static readonly LDAPManager LdapManager = new LDAPManager();
         public static Tuple<bool, ADObject> Login(string username, string password)
         {
             if (username == "kodi")

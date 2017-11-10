@@ -11,7 +11,7 @@ using SearchScope = System.DirectoryServices.Protocols.SearchScope;
 
 namespace Ldap
 {
-    public class LdapManager
+    public class LDAPManager
     {
         private readonly LdapConnector _connector;
         private NetworkCredential _credential;
@@ -19,7 +19,7 @@ namespace Ldap
         private readonly string _accOperatorName = File.ReadLines("C:/din_properties/acc_operator").First();
         private readonly string _accOperatorPwd = File.ReadLines("C:/din_properties/acc_operator").ElementAt(1);
 
-        public LdapManager()
+        public LDAPManager()
         {
             _connector = new LdapConnector(new LdapConf());
         }

@@ -4,7 +4,7 @@ namespace Logic
 {
     public static class AccountManagment
     {
-        private static readonly LdapManager LdapManager = new LdapManager();
+        private static readonly LDAPManager LdapManager = new LDAPManager();
 
         public static bool ChangePassword(string username, string newPassword1, string newPassword2)
         {
