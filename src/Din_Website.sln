@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Din_Website", "Din_Website\Din_Website.csproj", "{425E48B7-FF0C-444F-B5F7-84A4CB812FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{59EF24B4-C14A-4E02-88E7-9CEAC6A12608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Din_WebsiteTest", "UnitTests\Din_WebsiteTest.csproj", "{59EF24B4-C14A-4E02-88E7-9CEAC6A12608}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{93AA44D5-3170-4EA7-8CB8-41B5A130EDD9}"
 EndProject

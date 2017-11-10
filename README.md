@@ -1,3 +1,2 @@
-# Din_Website [![Build status](https://ci.appveyor.com/api/projects/status/muoyl7suy26189xk?svg=true)](https://ci.appveyor.com/project/DaneNaebers/din-website)
-
+# Din_Website [![Build Status](https://travis-ci.org/D4N3-777/Din_Website.svg?branch=master)](https://travis-ci.org/D4N3-777/Din_Website)
 A portal for active DIN users.

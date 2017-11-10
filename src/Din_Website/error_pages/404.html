@@ -11,6 +11,7 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
+            background-color: #e5e5e5;
         }
 
         .message {
@@ -18,9 +19,37 @@
             text-align: center;
         }
 
+        .message h1 {
+            font-weight: bold;
+            color: #ffb121;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+
         .gifContainer {
             margin-top: 5%;
+            width: 30%;
+            margin-left: 35%;
         }
+
+        .gifContainer img {
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .message h2 {
+                font-size: 18px;
+            }
+
+            .gifContainer {
+                width: 80%;
+                margin-left: 10%;
+            }
+
+            .gifContainer img {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 
@@ -34,19 +63,6 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
-    <script>
-        $('body').toggle();
-        $(window).on("load", function () {
-            var image = document.getElementById('catGif');
-            var width = (image.width / 2) + "px";
-
-            var string = "calc(50% - " + width + ")";
-            $('.gifContainer').css({
-                'margin-left': string
-            });
-            $('body').toggle();
-        });
-    </script>
 </body>
 
 </html>

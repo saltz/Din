@@ -13,7 +13,7 @@ html,body {
     width: 100%;
     height: 100%;
     left: 0;
-    background-color: #eaeaea;
+    background-color: #e5e5e5;
 }
 
 .gif {
@@ -21,10 +21,13 @@ html,body {
     height: 0
 }
 
-.gif h3 {
-    margin-top: 10%;
-    text-align: center;
-}
+    .gif h3 {
+        margin-top: 10%;
+        text-align: center;
+        font-weight: bold;
+        color: #ffb121;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+    }
 
 .gif-border {
     position: relative;
@@ -36,4 +39,18 @@ html,body {
 .gif-border img {
     position: inherit;
     border-radius: 15px;
+}
+
+/* CSS For mobile devices */
+@media only screen and (max-width: 500px) {
+    .gif-border {
+        width: 60%;
+        margin-left: 20%;
+        margin-top: 30%;
+    }
+
+    .gif-border img {
+        width: 100%;
+    }
+
 }
