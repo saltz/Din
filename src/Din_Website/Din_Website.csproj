@@ -155,6 +155,7 @@
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />
     <Content Include="error_pages\403.html" />
+    <Content Include="error_pages\500.html" />
     <Content Include="error_pages\404.html" />
     <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -171,6 +172,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using Database;
 using Models.AD;
 using Models.Content;
@@ -100,11 +101,8 @@ namespace Logic
             {
                 foreach (var dItem in downloadClientItems)
                 {
-                    if (dItem.Name.Contains("1080p"))
-                        dItem.Name = dItem.Name.Substring(0, dItem.Name.IndexOf("1080p", StringComparison.Ordinal));
-                    if (dItem.Name.Contains("720p"))
-                        dItem.Name = dItem.Name.Substring(0, dItem.Name.IndexOf("720p", StringComparison.Ordinal));
-                    if (!(item.Title.CalculateSimilarity(dItem.Name) > 0.5)) continue;
+                    string[] titles = FixNames(item.Title, dItem.Name);
+                    if (!(titles[0].CalculateSimilarity(titles[1]) > 0.4)) continue;
                     item.Eta = DownloadClient.GetItemEta(dItem.Hash);
                     databaseContent.SetItemEta(item);
                     break;
@@ -138,6 +136,20 @@ namespace Logic
                 }
             }
             return items;
+        }
+
+        private static string[] FixNames(string title1, string title2)
+        {
+            title1 = title1.Replace(" ", ".");
+            if (title2.Contains("1080p"))
+                title2 = title2.Substring(0, title2.IndexOf("1080p", StringComparison.Ordinal));
+
+            if (title2.Contains("720p"))
+                title2 = title2.Substring(0,title2.IndexOf("720p", StringComparison.Ordinal));
+
+            title1 = Regex.Replace(title1, @"[\d-]", string.Empty);
+            title2 = Regex.Replace(title2, @"[\d-]", string.Empty);
+            return new[] {title1, title2};
         }
     }
 }

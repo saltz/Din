@@ -4,7 +4,7 @@ namespace Models.Content
 {
     public class ContentStatusObject
     {
-        public string Title { get; private set; }
+        public string Title { get;  set; }
         public string Status { get;  set; }
         public string AccountName { get; private set; }
         public int Eta { get; set; }
