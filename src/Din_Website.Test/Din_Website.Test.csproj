@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D024C029-5FC8-4DAA-9AD4-03A86A90CFAA}</ProjectGuid>
+    <ProjectGuid>{C236C0C5-D96E-401F-B156-072C674A7584}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Models</RootNamespace>
-    <AssemblyName>Models</AssemblyName>
+    <RootNamespace>Din_Website.Test</RootNamespace>
+    <AssemblyName>Din_Website.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,12 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,25 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AD\ADGroup.cs" />
-    <Compile Include="AD\ADObject.cs" />
-    <Compile Include="AD\ADUser.cs" />
-    <Compile Include="Content\ContentStatusObject.cs" />
-    <Compile Include="DownloadClient\DownloadClientRequestObject2.cs" />
-    <Compile Include="DownloadClient\DownloadClientResponseObject.cs" />
-    <Compile Include="DownloadClient\DownloadClientResult.cs" />
-    <Compile Include="DownloadClient\DownloadClientItem.cs" />
-    <Compile Include="Exceptions\DownloadClientException.cs" />
-    <Compile Include="DownloadClient\DownloadClient.cs" />
-    <Compile Include="DownloadClient\DownloadClientRequestObject1.cs" />
-    <Compile Include="Exceptions\DatabaseException.cs" />
-    <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Logic\ContentManagerTestFixture.cs" />
+    <Compile Include="Models\DownloadClientTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Movie\AddOptions.cs" />
-    <Compile Include="Movie\Image.cs" />
-    <Compile Include="Movie\Movie.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{93aa44d5-3170-4ea7-8cb8-41b5a130edd9}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Din_Website\Din_Website.csproj">
+      <Project>{425e48b7-ff0c-444f-b5f7-84a4cb812ff1}</Project>
+      <Name>Din_Website</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ldap\Ldap.csproj">
+      <Project>{aa757d57-c87f-46a6-9ef1-6fd2fd98e089}</Project>
+      <Name>Ldap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logic\Logic.csproj">
+      <Project>{f5572ea8-7040-458d-9266-ae61e1e12f33}</Project>
+      <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{d024c029-5fc8-4daa-9ad4-03a86a90cfaa}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

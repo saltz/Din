@@ -111,7 +111,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AddedMovie_style.css" />
+    <Content Include="Content\AddedMovies_style.css" />
+    <Content Include="Content\MovieAdded_style.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -153,6 +154,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\home_style.css" />
     <Content Include="Content\UserPannelIndex_style.css" />
+    <Content Include="error_pages\403.html" />
     <Content Include="error_pages\404.html" />
     <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -199,7 +201,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\UserPanel\SearchResults.cshtml" />
-    <Content Include="Views\UserPanel\AddedMovie.cshtml" />
+    <Content Include="Views\UserPanel\MovieAdded.cshtml" />
+    <Content Include="Views\UserPanel\AddedMovies.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

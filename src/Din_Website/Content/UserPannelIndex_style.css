@@ -330,6 +330,10 @@ html,body {
     text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
 }
 
+.search-bar {
+    height: 50px;
+}
+
 .search-text {
     float: left;
     width: 65%;
@@ -344,6 +348,28 @@ html,body {
     width: 90% !important;
     margin-left: 5%;
     border-radius: 6px !important;
+}
+
+.added-movies {
+    margin-top: 50px;
+    overflow: hidden;
+}
+
+.added-movies a {
+    line-height: 30px;
+    text-decoration: none;
+    color: black;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+    font-size: 18px;
+    -webkit-transition: color 0.5s, font-size 0.5s;
+    -moz-transition: color 0.5s, font-size 0.5s;
+    -o-transition: color 0.5s,font-size 0.5s;
+    transition: color 0.5s, font-size 0.5s;
+}
+
+.added-movies a:hover {
+    color: #ff8d1c;
+    font-size: 20px;
 }
 
 /* CSS For mobile devices */
@@ -388,7 +414,7 @@ html,body {
 
     /* Movie Panel */
     .moviePanel {
-        margin-top: 40%;
+        margin-top: 35%;
     }
 
     div.input-group.input-group-lg.search-text {
@@ -404,5 +430,21 @@ html,body {
     div.search-button.input-group.input-group-lg input {
         font-size: 12px;
         width: initial;
+    }
+
+    .added-movies {
+        margin-bottom: -70px;
+    }
+
+    .added-movies a {
+        font-size: 14px;
+        -webkit-transition: 0s;
+        -moz-transition: 0s;
+        -o-transition: 0s;
+        transition: 0s;
+    }
+
+    .added-movies a:hover {
+        font-size: 14px;
     }
 }

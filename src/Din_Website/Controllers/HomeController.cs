@@ -16,7 +16,7 @@ namespace Din_Website.Controllers
             {
                 if ((string)Session["PermissionLevel"] == "admin")
                 {
-                    return View("../AdminPannel/index");
+                    return View("../UserPanel/index");
                 }
                 else if ((string)Session["PermissionLevel"] == "user")
                 {
@@ -44,7 +44,7 @@ namespace Din_Website.Controllers
                             if (v.DistinguishedName.ToLower().Contains("domain admins"))
                             {
                                 Session["PermissionLevel"] = "admin";
-                                return View("../AdminPannel/index");
+                                return View("../UserPanel/index");
                             }
                             else if (v.DistinguishedName.ToLower().Contains("kodi users"))
                             {

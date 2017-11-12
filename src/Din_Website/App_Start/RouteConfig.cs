@@ -34,6 +34,12 @@ namespace Din_Website
             );
 
             routes.MapRoute(
+                name: "MovieInfo",
+                url: "MovieInfo",
+                defaults: new { controller = "Main", action = "GetMovieStatus" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

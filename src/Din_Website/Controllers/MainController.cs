@@ -31,8 +31,8 @@ namespace Din_Website.Controllers
             if (!string.IsNullOrEmpty(Request.Form["searchQuery"]))
             {
                 string searchQuery = Request.Form["searchQuery"];
-                Session["MovieResults"] = MovieManager.SearchMovie(searchQuery);
-                Session["CurrentMovies"] = MovieManager.GetCurrentMovies();
+                Session["MovieResults"] = ContentManager.SearchMovie(searchQuery);
+                Session["CurrentMovies"] = ContentManager.GetCurrentMovies();
                 return View("../UserPanel/SearchResults");
             }
             return RedirectToAction("Index", "Home");
@@ -47,20 +47,26 @@ namespace Din_Website.Controllers
                 {
                     if (s.Id == movieId)
                     {
-                        switch (MovieManager.AddMovie(s, (Session["UserData"] as ADObject)).ToLower())
+                        switch (ContentManager.AddMovie(s, (Session["UserData"] as ADObject)).ToLower())
                         {
                             case "created":
                                 Session["AddStatus"] = "success";
-                                return View("../UserPanel/AddedMovie");
+                                return View("../UserPanel/MovieAdded");
                             case "error":
                                 Session["AddStatus"] = "failed";
-                                return View("../UserPanel/AddedMovie");
+                                return View("../UserPanel/MovieAdded");
                         }
                     }
                 }
             }
             Session["AddStatus"] = "failed";
-            return View("../UserPanel/AddedMovie");
+            return View("../UserPanel/MovieAdded");
+        }
+
+        public ActionResult GetMovieStatus()
+        {
+            Session["AddedContent"] = ContentManager.GetContentStatus((Session["UserData"] as ADObject));
+            return View("../UserPanel/AddedMovies");
         }
     }
 }

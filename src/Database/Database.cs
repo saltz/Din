@@ -1,5 +1,4 @@
-﻿using System.Data.SqlClient;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using MySql.Data.MySqlClient;
 

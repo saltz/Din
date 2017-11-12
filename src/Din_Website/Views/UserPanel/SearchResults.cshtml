@@ -33,7 +33,7 @@
         HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
-        var userData = (Session["UserData"] as AdUser);
+        var userData = (Session["UserData"] as ADUser);
         if ((Session["MovieResults"] as List<SearchMovie>).Count == 0)
         {
             <div class="backButtonContainer">

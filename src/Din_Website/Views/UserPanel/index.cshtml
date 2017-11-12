@@ -155,7 +155,7 @@
         HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
-        var userData = (Session["UserData"] as AdUser);
+        var userData = (Session["UserData"] as ADUser);
 
         <div id="background-carousel">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -280,15 +280,20 @@
                         <div class="panel-header">
                             <h2>Add a movie</h2>
                         </div>
-                        <form method="post" action="@Url.Action("SearchMovie", "Main")">
-                            <div class="input-group input-group-lg search-text">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control movie-search" name="searchQuery" placeholder="Type the name of the movie you want to add ..." type="text">
-                            </div>
-                            <div class="search-button input-group input-group-lg">
-                                <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
-                            </div>
-                        </form>
+                        <div class="search-bar">
+                            <form method="post" action="@Url.Action("SearchMovie", "Main")">
+                                <div class="input-group input-group-lg search-text">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                    <input class="form-control movie-search" name="searchQuery" placeholder="Type the name of the movie you want to add ..." type="text">
+                                </div>
+                                <div class="search-button input-group input-group-lg">
+                                    <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="added-movies">
+                            <a href="#" onclick="location.href='@Url.Action("GetMovieStatus", "Main")'">Check the status of your added movies</a>
+                        </div>
                     </div>
 
                     <!--tvshow-->
