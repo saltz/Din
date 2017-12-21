@@ -1,0 +1,49 @@
+﻿@using System.Runtime.InteropServices
+@section CSS
+{
+    <link href="~/Content/MovieAdded_style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+        });
+    </script>
+}
+
+@{
+    if (Session["PermissionLevel"] == null)
+    {
+        Url.Action("Index", "Home");
+    }
+
+    if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
+    {
+        HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
+        HttpContext.Current.Response.AddHeader("Expires", "0");
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="message">
+                    @if ((string)Session["AddStatus"] == "success")
+                    {
+                        <h2>The Movie had been added    🎉</h2>
+                        <p>Normaly it takes about 30 minutes to show up on
+                        <br/>
+                        kodi/ plex</p>
+                    }
+                    else if ((string)Session["AddStatus"] == "failed")
+                    {
+                        <h2>Something went wrong :(</h2>
+                        <p>Try again later or <b id="rooje">"vraag die rooje"</b></p>
+                    }
+                    <div class="confirm-button">
+                        <button onclick="location.href = '@Url.Action("Index", "Home")'" type="button" class="btn btn-success">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,315 @@
+﻿@section CSS
+{
+    <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+
+            //menu items clicked
+            $('.menuButton').click(function() {
+                $('.menuPanel').slideToggle();
+                switch ($(this).data("selection")) {
+                case "account":
+                    $('.accountPanel').slideToggle();
+                    break;
+                case "movie":
+                    $('.moviePanel').slideToggle();
+                    break;
+                case "tvshow":
+                    $('.tvshowPanel').slideToggle();
+                    break;
+                }
+            });
+
+            //backbuttons clicked
+            $('.backButton').click(function() {
+                switch ($(this).data('bckbtn')) {
+                case "account":
+                    $('.accountPanel').slideToggle();
+                    break;
+                case "movie":
+                    $('.moviePanel').slideToggle();
+                    break;
+                case "tvshow":
+                    $('.tvshowPanel').slideToggle();
+                    break;
+                }
+                $('.menuPanel').slideToggle();
+            });
+
+            //first time initalization
+            if ($('.menuPanel').is(':visible')) {
+                $('.accountPanel').toggle();
+                $('.pwdChangeContainer').toggle();
+                $('.moviePanel').toggle();
+                $('.tvshowPanel').toggle();
+            }
+
+            //getting the screen height and width
+            var width = $(window).width();
+
+            //initlizaing and randomizing the background images
+            var images = [
+                {
+                    url: "@Url.Content("~/content/pictures/carousel/1.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/2.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/3.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/4.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/5.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/6.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/7.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/8.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/9.jpg")"
+                }, {
+                    url: "@Url.Content("~/content/pictures/carousel/10.jpg")"
+                }
+            ];
+            images.sort(function() { return 0.5 - Math.random(); });
+            $.each(images,
+                function(index, image) {
+                    var element = $('<div class="item"><img src="' +
+                        image.url +
+                        '" alt="' +
+                        image.alt +
+                        '" width="' +
+                        width +
+                        'px" height="auto"/></div>');
+
+                    if (index === 0) {
+                        element.addClass("active");
+                    }
+                    element.appendTo("div.carousel-inner");
+                });
+            //interval speed
+            $('.carousel').carousel({
+                interval: 1000 * 10
+            });
+
+            //password change button
+            $('.pwdButton').click(function() {
+                $('#passwordSubmit').prop("disabled", true);
+                $('#password1').val("");
+                $('#password2').val("");
+                $('.pwdChangeContainer').toggle();
+            });
+
+            $('.pwdChangeBackButton').click(function() {
+                $('.pwdChangeContainer').toggle();
+            });
+
+            //password validation
+            $('.form-control').keyup(function() {
+                var count = 0;
+                var pass1 = $('#password1').val();
+                var pass2 = $('#password2').val();
+
+                if (pass1.length >= 8) {
+                    $('#length').removeClass('invalid').addClass('valid');
+                    count++;
+                } else {
+                    $('#length').removeClass('valid').addClass('invalid');
+                    count--;
+                }
+
+                if (pass1.match(/\d/)) {
+                    $('#number').removeClass('invalid').addClass('valid');
+                    count++;
+                } else {
+                    $('#number').removeClass('valid').addClass('invalid');
+                    count--;
+                }
+
+                if (pass1 === pass2 && count === 2) {
+                    console.log("pass1    " + pass1 + "    pass2    " + pass2);
+                    $('#passwordSubmit').prop("disabled", false);
+                } else {
+                    $('#passwordSubmit').prop("disabled", true);
+                }
+            }).focus(function() {
+                $('#pswd_info').show();
+            }).blur(function() {
+                $('#pswd_info').hide();
+            });
+        });
+    </script>
+}
+
+@{
+    if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
+    {
+        HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
+        HttpContext.Current.Response.AddHeader("Expires", "0");
+
+        var userData = (Session["UserData"] as ADUser);
+
+        <div id="background-carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner"></div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <ul class="leftMenu">
+                <li><h3>@Session["Name"]</h3></li>
+                <li>
+                    <div class="downloadBtn">
+                        <a href="https://thedin.nl/client/Din%20Installer.msi"><span class="glyphicon glyphicon-save"></span>  Download Client</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="rightMenu">
+                <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 mainContent">
+                    <!--menu-->
+                    <div class="menuPanel">
+                        <a href="#" class="menuButton" data-selection="account">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/account_icon.png" />
+                                <p>Account Settings</p>
+                            </div>
+                        </a>
+                        <a href="#" class="menuButton" data-selection="movie">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/movie_icon.png" />
+                                <p>Add a Movie</p>
+                            </div>
+                        </a>
+                        <a href="#" class="menuButton" data-selection="tvshow">
+                            <div class="menuItem">
+                                <img src="~/Content/pictures/menuIcons/tvshow_icon.png" />
+                                <p>Add a Tv Show</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!--account-->
+                    <div class="accountPanel">
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="account">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
+                        <h2>Account Settings</h2>
+                        <div class="accountInfo">
+                            <div class="form-group row">
+                                <label for="fullName" class="col-md-2 col-md-offset-3">Full Name</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="fullName" value="@userData.CN" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="username" class="col-md-2 col-md-offset-3">Username</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="username" value="@userData.SAMAccountName" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="pwdButtonContainer">
+                                    <a href="#" class="pwdButton">
+                                        <p>Change Password</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pwdChangeContainer col-md-8 col-md-offset-2">
+                        <div class="pwdChangeBackButton">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </div>
+                        <h2>Change Password</h2>
+                        @using DinWebsite.Models.AD                        @model DinWebsite.Models.NewPasswordData
+                        <form method="post" action="@Url.Action("ChangePassword", "Main")">
+                            <div class="form-group row">
+                                <label for="password1" class="col-md-3 col-md-offset-2">New password</label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" id="password1" name="Password1" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="password2" class="col-md-3 col-md-offset-2">Repeat password</label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" id="password2" name="Password2" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input type="submit" value="Save" class="btn btn-success btn-sm" id="passwordSubmit" />
+                            </div>
+                        </form>
+                        <div class="col-md-4">
+                            <div class="aro-pswd_info">
+                                <div id="pswd_info">
+                                    <h4>A password requires</h4>
+                                    <ul>
+                                        <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+                                        <li id="number" class="invalid">At least <strong>one number</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--movie-->
+                    <div class="moviePanel">
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="movie">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
+                        <div class="panel-header">
+                            <h2>Add a movie</h2>
+                        </div>
+                        <div class="search-bar">
+                            <form method="post" action="@Url.Action("SearchMovie", "Main")">
+                                <div class="input-group input-group-lg search-text">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                    <input class="form-control movie-search" name="searchQuery" placeholder="Type the name of the movie you want to add ..." type="text">
+                                </div>
+                                <div class="search-button input-group input-group-lg">
+                                    <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="added-movies">
+                            <a href="#" onclick="location.href = '@Url.Action("GetMovieStatus", "Main")'">Check the status of your added movies</a>
+                        </div>
+                    </div>
+
+                    <!--tvshow-->
+                    <div class="tvshowPanel">
+                        <div class="backButtonContainer">
+                            <a href="#" class="backButton" data-bckbtn="tvshow">
+                                <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                            </a>
+                        </div>
+                        <h1>TVSHOW PANEL</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        Url.Action("Index", "Home");
+    }
+}
+
