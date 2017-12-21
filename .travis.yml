@@ -1,2 +1,2 @@
 language: csharp
-solution: ./src/Din_Website.sln
+solution: ./src/DinWebsite.sln
