@@ -1,20 +1,20 @@
 ﻿body {
+    background-color: #e5e5e5;
     font-family: 'Open Sans', sans-serif;
     height: 100%;
-    width: 100%;
     position: relative;
-    background-color: #e5e5e5;
+    width: 100%;
 }
 
 
 
 #title {
-    font-weight: bold;
     color: #ffb121;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-    margin-top: 5%;
+    font-weight: bold;
     margin-bottom: 5%;
+    margin-top: 5%;
     text-align: center;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
 }
 
 .confirm-button {
@@ -23,6 +23,7 @@
 }
 
 /* CSS For mobile devices */
+
 @media only screen and (max-width: 500px) {
     #title {
         font-size: 18px;
@@ -34,16 +35,9 @@
         margin-right: 2%;
     }
 
-    th {
-        font-size: 9px;
-    }
+    th { font-size: 9px; }
 
-    td {
-        font-size: 7px;
-    }
+    td { font-size: 7px; }
 
-    .confirm-button {
-        margin-top: 10%;
-    }
+    .confirm-button { margin-top: 10%; }
 }
-

@@ -2,18 +2,18 @@
 using System.IO;
 using System.Linq;
 using System.Net;
-using DinWebsite.Models.Exceptions;
+using DinWebsite.ExternalModels.Exceptions;
 using Newtonsoft.Json;
 
-namespace DinWebsite.Models.DownloadClient
+namespace DinWebsite.ExternalModels.DownloadClient
 {
     public class DownloadClient
     {
-        private readonly string _url;
         private readonly CookieContainer _cookies;
-        private HttpWebRequest _request;
         private readonly string _pwd;
+        private readonly string _url;
         private bool _authenticated;
+        private HttpWebRequest _request;
 
         public DownloadClient()
         {
@@ -25,30 +25,30 @@ namespace DinWebsite.Models.DownloadClient
 
         public bool Authenticate()
         {
-            var payload = new DownloadClientRequestObject1("auth.login", new List<string> { _pwd }, 1);
+            var payload = new DownloadClientRequestObject1("auth.login", new List<string> {_pwd}, 1);
 
-            _request = (HttpWebRequest)WebRequest.Create(_url);
+            _request = (HttpWebRequest) WebRequest.Create(_url);
             _request.ContentType = "application/json";
             _request.Method = "POST";
             _request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             _request.CookieContainer = _cookies;
             using (var streamWriter = new StreamWriter(_request.GetRequestStream()))
             {
-                string json = JsonConvert.SerializeObject(payload);
+                var json = JsonConvert.SerializeObject(payload);
                 streamWriter.Write(json);
             }
             try
             {
                 string webResult;
-                var httpResponse = (HttpWebResponse)_request.GetResponse();
+                var httpResponse = (HttpWebResponse) _request.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     webResult = streamReader.ReadToEnd();
                 }
                 var jsonResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(webResult);
-                if ((bool)jsonResponse["result"])
+                if ((bool) jsonResponse["result"])
                     _authenticated = true;
-                return (bool)jsonResponse["result"];
+                return (bool) jsonResponse["result"];
             }
             catch
             {
@@ -61,7 +61,7 @@ namespace DinWebsite.Models.DownloadClient
             if (!_authenticated) throw new DownloadClientException("Not Authenticated");
             var payload = new DownloadClientRequestObject1("webapi.get_torrents", new List<string>(), 1);
 
-            _request = (HttpWebRequest)WebRequest.Create(_url);
+            _request = (HttpWebRequest) WebRequest.Create(_url);
             _request.ContentType = "application/json";
             _request.Method = "POST";
             _request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -69,13 +69,13 @@ namespace DinWebsite.Models.DownloadClient
 
             using (var streamWriter = new StreamWriter(_request.GetRequestStream()))
             {
-                string json = JsonConvert.SerializeObject(payload);
+                var json = JsonConvert.SerializeObject(payload);
                 streamWriter.Write(json);
             }
             try
             {
                 string webResult;
-                var httpResponse = (HttpWebResponse)_request.GetResponse();
+                var httpResponse = (HttpWebResponse) _request.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     webResult = streamReader.ReadToEnd();
@@ -104,7 +104,7 @@ namespace DinWebsite.Models.DownloadClient
                 }
             }, 1);
 
-            _request = (HttpWebRequest)WebRequest.Create(_url);
+            _request = (HttpWebRequest) WebRequest.Create(_url);
             _request.ContentType = "application/json";
             _request.Method = "POST";
             _request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -112,13 +112,13 @@ namespace DinWebsite.Models.DownloadClient
 
             using (var streamWriter = new StreamWriter(_request.GetRequestStream()))
             {
-                string json = JsonConvert.SerializeObject(payload);
+                var json = JsonConvert.SerializeObject(payload);
                 streamWriter.Write(json);
             }
             try
             {
                 string webResult;
-                var httpResponse = (HttpWebResponse)_request.GetResponse();
+                var httpResponse = (HttpWebResponse) _request.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     webResult = streamReader.ReadToEnd();

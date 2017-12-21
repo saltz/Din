@@ -1,16 +1,14 @@
-﻿@using System.Runtime.InteropServices
-@using DinWebsite.Models.Content
-@using TMDbLib.Objects.Lists
+﻿@using DinWebsite.ExternalModels.Content
 @section CSS
 {
-    <link href="~/Content/AddedMovies_style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AddedMovies_style.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 }
 
 @section scripts
 {
     <script type="text/javascript">
-        jQuery(document).ready(function () {
+        jQuery(document).ready(function() {
         });
     </script>
 }
@@ -27,7 +25,7 @@
         HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
-        List<ContentStatusObject> content = (List<ContentStatusObject>)Session["AddedContent"];
+        List<ContentStatusObject> content = (List<ContentStatusObject>) Session["AddedContent"];
 
 
         <div class="row">
@@ -50,11 +48,11 @@
                                 @{
                                     foreach (ContentStatusObject item in content)
                                     {
-                                        TimeSpan eta = TimeSpan.FromSeconds(item.Eta);
+                                        var eta = TimeSpan.FromSeconds(item.Eta);
                                         <tr>
                                             <td>@item.Title</td>
                                             <td>@item.Status</td>
-                                            @if (@item.Status.Equals("downloaded"))
+                                            @if (item.Status.Equals("downloaded"))
                                             {
                                                 <td>It's done go watch it! 🔥</td>
                                             }
@@ -74,16 +72,15 @@
                             </table>
                         </div>
                     </div>
-
-                                    }
-                                    else
-                                    {
-                                        <h2 id="title">Add some movies first 🙄</h2>
-                                    }
+                }
+                else
+                {
+                    <h2 id="title">Add some movies first 🙄</h2>
+                }
                 <div class="confirm-button">
                     <button onclick="location.href = '@Url.Action("Index", "Home")'" type="button" class="btn btn-success">Cool cool, take me back</button>
                 </div>
             </div>
         </div>
-                                    }
+    }
 }

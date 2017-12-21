@@ -220,9 +220,9 @@
       <Project>{f5572ea8-7040-458d-9266-ae61e1e12f33}</Project>
       <Name>DinWebsite.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DinWebsite.Models\DinWebsite.Models.csproj">
+    <ProjectReference Include="..\DinWebsite.Models\DinWebsite.ExternalModels.csproj">
       <Project>{d024c029-5fc8-4daa-9ad4-03a86a90cfaa}</Project>
-      <Name>DinWebsite.Models</Name>
+      <Name>DinWebsite.ExternalModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

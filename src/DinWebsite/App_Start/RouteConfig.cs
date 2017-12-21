@@ -10,39 +10,39 @@ namespace DinWebsite
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "login",
-                url: "Home",
-                defaults: new { controller = "Home", action = "Login" }
+                "login",
+                "Home",
+                new {controller = "Home", action = "Login"}
             );
 
             routes.MapRoute(
-                name: "logout",
-                url: "Logout",
-                defaults: new { controller = "Home", action = "Logout" }
+                "logout",
+                "Logout",
+                new {controller = "Home", action = "Logout"}
             );
 
             routes.MapRoute(
-                name: "searchResults",
-                url: "Results",
-                defaults: new { controller = "Main", action = "SearchMovie" }
+                "searchResults",
+                "Results",
+                new {controller = "Main", action = "SearchMovie"}
             );
 
             routes.MapRoute(
-                name: "addMovie",
-                url: "AddMovie",
-                defaults: new { controller = "Main", action = "AddMovie" }
+                "addMovie",
+                "AddMovie",
+                new {controller = "Main", action = "AddMovie"}
             );
 
             routes.MapRoute(
-                name: "MovieInfo",
-                url: "MovieInfo",
-                defaults: new { controller = "Main", action = "GetMovieStatus" }
+                "MovieInfo",
+                "MovieInfo",
+                new {controller = "Main", action = "GetMovieStatus"}
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                "Default",
+                "{controller}/{action}/{id}",
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
             );
         }
     }

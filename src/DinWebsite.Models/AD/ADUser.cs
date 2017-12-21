@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace DinWebsite.Models.AD
+namespace DinWebsite.ExternalModels.AD
 {
     public class ADUser : ADObject
     {
-        public List<AdGroup> Groups { get; private set; }
-        public string UserPrincipalName { get; private set; }
-
         public ADUser(string cn, string distinguishedname,
             string name, string objectCategory, string sAMAAccountName, List<AdGroup> memberOf,
             string userPrincipalName) : base(cn,
@@ -15,5 +12,8 @@ namespace DinWebsite.Models.AD
             Groups = memberOf;
             UserPrincipalName = userPrincipalName;
         }
+
+        public List<AdGroup> Groups { get; }
+        public string UserPrincipalName { get; }
     }
 }

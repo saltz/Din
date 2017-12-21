@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DinWebsite.Models\DinWebsite.Models.csproj">
+    <ProjectReference Include="..\DinWebsite.Models\DinWebsite.ExternalModels.csproj">
       <Project>{d024c029-5fc8-4daa-9ad4-03a86a90cfaa}</Project>
-      <Name>DinWebsite.Models</Name>
+      <Name>DinWebsite.ExternalModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

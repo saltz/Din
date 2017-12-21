@@ -10,6 +10,5 @@ namespace DinWebsite.Logic
         {
             return newPassword1 == newPassword2 && LdapManager.ChangePassword(username, newPassword1);
         }
-
     }
 }

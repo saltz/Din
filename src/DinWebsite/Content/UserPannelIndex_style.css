@@ -1,87 +1,87 @@
 ﻿/*background*/
 
-body {
-    font-family: 'Open Sans', sans-serif;
+body { font-family: 'Open Sans', sans-serif; }
+
+html, body {
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
-html,body {
-    height:100%;
-	width:100%;
-	position:relative;
+#background-carousel {
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: -1;
 }
-#background-carousel{
-	position:fixed;
-	width:100%;
-	height:100%;
-	z-index:-1;
-}
+
 .carousel,
 .carousel-inner {
-	width:100%;
-	height:100%;
-	z-index:0;
-	overflow:hidden;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    z-index: 0;
 }
+
 .item {
-	width:100%;
-	height:100%;
-	background-position:center center;
-	background-size:cover;
-	z-index:0;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
 }
- 
+
 #content-wrapper {
-	position:absolute;
-	z-index:1 !important;
-	min-width:100%;
-	min-height:100%;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    z-index: 1 !important;
 }
-.well {
-    opacity:0.85
-}
+
+.well { opacity: 0.85 }
 
 /*left menu download button*/
 
 .leftMenu {
-    list-style-type: none;
-    float: left;
     color: white;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    float: left;
+    list-style-type: none;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .leftMenu .downloadBtn {
     margin-top: 20px;
     text-align: center;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .leftMenu .downloadBtn a {
-    text-decoration: none;
-    padding: 10px;
     color: #ffffff;
+    padding: 10px;
+    text-decoration: none;
 }
 
 .leftMenu .downloadBtn a:hover {
-    border-radius: 10px;
     background-color: rgba(255, 177, 33, 0.5);
-    border: 1px rgba(255, 255 , 255, 0.6) solid;
+    border: 1px rgba(255, 255, 255, 0.6) solid;
+    border-radius: 10px;
 }
 
 /*right menu logout*/
 
 .rightMenu {
-    margin-top: 30px;
-    margin-right: 10px;
     float: right;
     list-style-type: none;
+    margin-right: 10px;
+    margin-top: 30px;
 }
 
 .rightMenu a {
-    text-decoration: none;
-    padding: 20px;
     color: #961212;
     font-size: 20px;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    padding: 20px;
+    text-decoration: none;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .rightMenu a:hover {
@@ -92,97 +92,84 @@ html,body {
 /*main panel*/
 
 .mainContent {
-    margin-top: 10%;
-    text-align: center;
-   
     border-radius: 20px;
+    margin-top: 10%;
+   
+    text-align: center;
 }
 
-.menuPanel {
-    margin-top: 10%;
-}
+.menuPanel { margin-top: 10%; }
 
 .menuPanel .menuItem {
-    display: inline-block;
-    width: 200px;
-    height: 200px;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 0.5px #000000 solid;
-    margin: 20px;
-    border-radius: 100%;
-
-    -webkit-transition: all 200ms ease-in;
-    -webkit-transform: scale(1); 
-    -ms-transition: all 200ms ease-in;
-    -ms-transform: scale(1); 
-    -moz-transition: all 200ms ease-in;
     -moz-transform: scale(1);
+    -moz-transition: all 200ms ease-in;
+    -ms-transform: scale(1);
+    -ms-transition: all 200ms ease-in;
+    -webkit-transform: scale(1);
+    -webkit-transition: all 200ms ease-in;
+    background-color: rgba(255, 255, 255, 0.4);
+
+    border: 0.5px #000000 solid;
+    border-radius: 100%;
+    display: inline-block;
+    height: 200px;
+    margin: 20px;
+    transform: scale(1);
     transition: all 200ms ease-in;
-    transform: scale(1); 
+    width: 200px;
 }
 
 .menuPanel a {
-    text-decoration: none;
     color: #000000;
+    text-decoration: none;
 }
 
 .menuPanel .menuItem img {
-    width: 40px;
     margin-top: calc(50% - 40px);
+    width: 40px;
 }
 
-.menuPanel .menuItem p {
-    padding-top: 10px;
-}
+.menuPanel .menuItem p { padding-top: 10px; }
 
 .menuPanel .menuItem:hover {
-    background-color: rgba(255, 177, 33, 0.5);
-
-    z-index: 2;
-    -webkit-transition: all 200ms ease-in;
-    -webkit-transform: scale(1.2);
-    -ms-transition: all 200ms ease-in;
-    -ms-transform: scale(1.2);   
-    -moz-transition: all 200ms ease-in;
     -moz-transform: scale(1.2);
-    transition: all 200ms ease-in;
+
+    -moz-transition: all 200ms ease-in;
+    -ms-transform: scale(1.2);
+    -ms-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.2);
+    -webkit-transition: all 200ms ease-in;
+    background-color: rgba(255, 177, 33, 0.5);
     transform: scale(1.2);
+    transition: all 200ms ease-in;
+    z-index: 2;
 }
 
 /*account panel*/
 
-.accountPanel .backButton {
-    text-decoration: none;
-}
+.accountPanel .backButton { text-decoration: none; }
 
-.moviePanel .backButton {
-    text-decoration: none;
-}
+.moviePanel .backButton { text-decoration: none; }
 
-.tvshowPanel .backButton {
-    text-decoration: none;
-}
+.tvshowPanel .backButton { text-decoration: none; }
 
 .backButtonContainer {
-    margin-top: 20px;
-    margin-left: 10px;
-    width: 100px;
     border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 20px;
+    width: 100px;
 }
 
-.backButtonContainer:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
+.backButtonContainer:hover { background-color: rgba(255, 255, 255, 0.3); }
 
 .backButtonContainer p {
-    font-size: 17px;
     color: #ffb121;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+    font-size: 17px;
     padding: 10px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
 }
-.backButtonContainer p:hover {
-    color: #961212;
-}
+
+.backButtonContainer p:hover { color: #961212; }
 
 .accountPanel {
     background-color: rgba(255, 255, 255, 0.5);
@@ -196,29 +183,28 @@ html,body {
 }
 
 .accountPanel .accountInfo {
-    width: 80%;
-    margin-top: 20px;
     margin-left: 10%;
+    margin-top: 20px;
     padding: 10px;
+    width: 80%;
 }
 
-.accountPanel .accountInfo .pwdButton {
-    text-decoration: none;
-}
+.accountPanel .accountInfo .pwdButton { text-decoration: none; }
 
 .accountPanel .accountInfo .pwdButtonContainer {
-    margin-top: 10px;
+    background-color: rgba(255, 177, 33, 0.6);
     border: 1px #ffb121 solid;
     border-radius: 5px;
-    background-color: rgba(255, 177, 33, 0.6);
-    width: 300px;
     height: 30px;
     margin-left: calc(50% - 150px);
+    margin-top: 10px;
+    width: 300px;
 }
+
 .accountPanel .accountInfo .pwdButtonContainer:hover {
-    border: 1px #ff8d1c solid;
     background-color: rgba(255, 177, 33, 0.9);
-    }
+    border: 1px #ff8d1c solid;
+}
 
 .pwdButtonContainer p {
     color: #000000;
@@ -226,33 +212,27 @@ html,body {
 }
 
 .pwdChangeContainer {
-    margin-top: -30%;
-    z-index: 10;
-    height: 250px;
     background-color: rgba(255, 255, 255, 0.9);
     border: rgba(255, 177, 33, 0.7) 2px solid;
     border-radius: 15px;
+    height: 250px;
+    margin-top: -30%;
+    z-index: 10;
 }
 
 .pwdChangeBackButton {
     float: left;
-    margin-top: 20px;
-    margin-left: 10px;
-    width: 20px;
     height: 20px;
+    margin-left: 10px;
+    margin-top: 20px;
+    width: 20px;
 }
 
-.pwdChangeBackButton span {
-    color: #000000;
-}
+.pwdChangeBackButton span { color: #000000; }
 
-.pwdChangeBackButton span:hover {
-    color: #961212;
-}
+.pwdChangeBackButton span:hover { color: #961212; }
 
-.pwdChangeContainer h2 {
-    margin-bottom: 50px;
-}
+.pwdChangeContainer h2 { margin-bottom: 50px; }
 
 /*passwd validator css*/
 
@@ -260,10 +240,10 @@ html,body {
     background: #dfdfdf none repeat scroll 0 0;
     color: #fff;
     left: 250%;
-    width: 300px;
     position: absolute;
-    z-index: 12;
     top: -200px;
+    width: 300px;
+    z-index: 12;
 }
 
 #pswd_info h4 {
@@ -276,13 +256,9 @@ html,body {
     text-transform: uppercase;
 }
 
-#pswd_info ul {
-    list-style: outside none none;
-}
+#pswd_info ul { list-style: outside none none; }
 
-#pswd_info ul li {
-    padding: 10px 45px;
-}
+#pswd_info ul li { padding: 10px 45px; }
 
 .valid {
     background: rgba(0, 0, 0, 0) url(pictures/pwdVer/check.png) no-repeat scroll 2px 6px;
@@ -310,9 +286,7 @@ html,body {
     width: 25px;
 }
 
-#pswd_info {
-    display: none;
-}
+#pswd_info { display: none; }
 
 /* movie panel */
 
@@ -327,27 +301,23 @@ html,body {
     color: black;
     font-weight: bold;
     margin-bottom: 10%;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
 }
 
-.search-bar {
-    height: 50px;
-}
+.search-bar { height: 50px; }
 
 .search-text {
     float: left;
-    width: 65%;
     margin-left: 13%;
+    width: 65%;
 }
 
-.search-button {
-    float: left;
-}
+.search-button { float: left; }
 
 .search-button input {
-    width: 90% !important;
-    margin-left: 5%;
     border-radius: 6px !important;
+    margin-left: 5%;
+    width: 90% !important;
 }
 
 .added-movies {
@@ -356,14 +326,14 @@ html,body {
 }
 
 .added-movies a {
+    -moz-transition: color 0.5s, font-size 0.5s;
+    -o-transition: color 0.5s, font-size 0.5s;
+    -webkit-transition: color 0.5s, font-size 0.5s;
+    color: black;
+    font-size: 18px;
     line-height: 30px;
     text-decoration: none;
-    color: black;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-    font-size: 18px;
-    -webkit-transition: color 0.5s, font-size 0.5s;
-    -moz-transition: color 0.5s, font-size 0.5s;
-    -o-transition: color 0.5s,font-size 0.5s;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
     transition: color 0.5s, font-size 0.5s;
 }
 
@@ -373,11 +343,9 @@ html,body {
 }
 
 /* CSS For mobile devices */
-@media only screen and (max-width: 500px) {
 
-    #background-carousel {
-        display: none;
-    }
+@media only screen and (max-width: 500px) {
+    #background-carousel { display: none; }
 
     body {
         background: url(pictures/carousel/7.jpg);
@@ -386,21 +354,15 @@ html,body {
 
     .leftMenu {
         margin-left: -10%;
-        width: 50%;
         margin-top: 10px;
+        width: 50%;
     }
 
-    .leftMenu li h3 {
-        font-size: 15px;
-    }
+    .leftMenu li h3 { font-size: 15px; }
 
-    .downloadBtn {
-        display: none;
-    }
+    .downloadBtn { display: none; }
 
-    .rightMenu {
-        margin-right: -2%;
-    }
+    .rightMenu { margin-right: -2%; }
 
     .rightMenu a {
         font-size: 16px;
@@ -408,43 +370,35 @@ html,body {
     }
 
     .menuPanel .menuItem {
-        width: 170px;
         height: 170px;
+        width: 170px;
     }
 
     /* Movie Panel */
-    .moviePanel {
-        margin-top: 35%;
-    }
+    .moviePanel { margin-top: 35%; }
 
     div.input-group.input-group-lg.search-text {
-        width: 70%;
         height: 10px;
         margin-left: 5%;
+        width: 70%;
     }
 
-    input.form-control.movie-search {
-        font-size: 12px;
-    }
+    input.form-control.movie-search { font-size: 12px; }
 
     div.search-button.input-group.input-group-lg input {
         font-size: 12px;
         width: initial;
     }
 
-    .added-movies {
-        margin-bottom: -70px;
-    }
+    .added-movies { margin-bottom: -70px; }
 
     .added-movies a {
-        font-size: 14px;
-        -webkit-transition: 0s;
         -moz-transition: 0s;
         -o-transition: 0s;
+        -webkit-transition: 0s;
+        font-size: 14px;
         transition: 0s;
     }
 
-    .added-movies a:hover {
-        font-size: 14px;
-    }
+    .added-movies a:hover { font-size: 14px; }
 }

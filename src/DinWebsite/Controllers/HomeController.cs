@@ -1,9 +1,8 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using DinWebsite.ExternalModels.AD;
+using DinWebsite.ExternalModels.Exceptions;
 using DinWebsite.Logic;
 using DinWebsite.Models;
-using DinWebsite.Models.AD;
-using DinWebsite.Models.Exceptions;
 
 namespace DinWebsite.Controllers
 {
@@ -13,16 +12,10 @@ namespace DinWebsite.Controllers
         public ActionResult Index()
         {
             if (Session["PermissionLevel"] != null)
-            {
-                if ((string)Session["PermissionLevel"] == "admin")
-                {
+                if ((string) Session["PermissionLevel"] == "admin")
                     return View("../UserPanel/index");
-                }
-                else if ((string)Session["PermissionLevel"] == "user")
-                {
+                else if ((string) Session["PermissionLevel"] == "user")
                     return View("../UserPanel/index");
-                }
-            }
             return View("index");
         }
 
@@ -32,7 +25,7 @@ namespace DinWebsite.Controllers
             try
             {
                 Session.Clear();
-                Tuple<bool, ADObject> result = LoginSystem.Login(data.Username, data.Password);
+                var result = LoginSystem.Login(data.Username, data.Password);
                 if (result.Item1)
                 {
                     Session["UserData"] = result.Item2;
@@ -40,7 +33,6 @@ namespace DinWebsite.Controllers
                     var adUser = result.Item2 as ADUser;
                     if (adUser != null)
                         foreach (var v in adUser.Groups)
-                        {
                             if (v.DistinguishedName.ToLower().Contains("domain admins"))
                             {
                                 Session["PermissionLevel"] = "admin";
@@ -51,7 +43,6 @@ namespace DinWebsite.Controllers
                                 Session["PermissionLevel"] = "user";
                                 return View("../UserPanel/index");
                             }
-                        }
                 }
                 Session["failed"] = 1;
                 Session["failedString"] = "Username or Password is incorrect";

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Ldap", "DinWebsi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Logic", "DinWebsite.Logic\DinWebsite.Logic.csproj", "{F5572EA8-7040-458D-9266-AE61E1E12F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Models", "DinWebsite.Models\DinWebsite.Models.csproj", "{D024C029-5FC8-4DAA-9AD4-03A86A90CFAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.ExternalModels", "DinWebsite.Models\DinWebsite.ExternalModels.csproj", "{D024C029-5FC8-4DAA-9AD4-03A86A90CFAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Test", "DinWebsite.Test\DinWebsite.Test.csproj", "{C236C0C5-D96E-401F-B156-072C674A7584}"
 EndProject

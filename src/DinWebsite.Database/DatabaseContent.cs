@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using DinWebsite.Models.AD;
-using DinWebsite.Models.Content;
-using DinWebsite.Models.Exceptions;
-using MySql.Data.MySqlClient;
+using DinWebsite.ExternalModels.AD;
+using DinWebsite.ExternalModels.Content;
+using DinWebsite.ExternalModels.Exceptions;
 
 namespace DinWebsite.Database
 {
@@ -14,10 +13,11 @@ namespace DinWebsite.Database
         {
             try
             {
-                using (MySqlCommand cmd = Database.Connection.CreateCommand())
+                using (var cmd = Database.Connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO movies (movie_name, person_name, person_accountname, date_added, status)" +
-                                      " VALUES (@movie_name, @person_name, @person_accountname, @date_added, @status);";
+                    cmd.CommandText =
+                        "INSERT INTO movies (movie_name, person_name, person_accountname, date_added, status)" +
+                        " VALUES (@movie_name, @person_name, @person_accountname, @date_added, @status);";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@movie_name", movieTitle);
                     cmd.Parameters.AddWithValue("@person_name", userAdObject.Name);
@@ -35,34 +35,29 @@ namespace DinWebsite.Database
 
         public List<ContentStatusObject> GetMoviesByAccountname(string accountName)
         {
-            List<ContentStatusObject> movies = new List<ContentStatusObject>();
+            var movies = new List<ContentStatusObject>();
             try
             {
-                using (MySqlCommand cmd = Database.Connection.CreateCommand())
+                using (var cmd = Database.Connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT movie_name, status, person_accountname, eta, date_added FROM movies WHERE person_accountname = @accountname;";
+                    cmd.CommandText =
+                        "SELECT movie_name, status, person_accountname, eta, date_added FROM movies WHERE person_accountname = @accountname;";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@accountname", accountName);
-                    using (MySqlDataReader dataReader = cmd.ExecuteReader())
+                    using (var dataReader = cmd.ExecuteReader())
                     {
                         while (dataReader.Read())
-                        {
                             if (dataReader["eta"] != DBNull.Value)
-                            {
                                 movies.Add(new ContentStatusObject(Convert.ToString(dataReader["movie_name"]),
                                     Convert.ToString(dataReader["status"]),
                                     Convert.ToString(dataReader["person_accountname"]),
                                     Convert.ToInt32(dataReader["eta"]),
                                     Convert.ToDateTime(dataReader["date_added"])));
-                            }
                             else
-                            {
                                 movies.Add(new ContentStatusObject(Convert.ToString(dataReader["movie_name"]),
                                     Convert.ToString(dataReader["status"]),
                                     Convert.ToString(dataReader["person_accountname"]),
                                     Convert.ToDateTime(dataReader["date_added"])));
-                            }
-                        }
                     }
                 }
                 return movies;
@@ -77,7 +72,7 @@ namespace DinWebsite.Database
         {
             try
             {
-                using (MySqlCommand cmd = Database.Connection.CreateCommand())
+                using (var cmd = Database.Connection.CreateCommand())
                 {
                     cmd.CommandText =
                         "UPDATE movies SET status = @status WHERE movie_name = @movieName AND person_accountname = @accountName;";
@@ -98,7 +93,7 @@ namespace DinWebsite.Database
         {
             try
             {
-                using (MySqlCommand cmd = Database.Connection.CreateCommand())
+                using (var cmd = Database.Connection.CreateCommand())
                 {
                     cmd.CommandText =
                         "UPDATE movies SET eta = @eta WHERE movie_name = @movieName AND person_accountname = @accountName;";

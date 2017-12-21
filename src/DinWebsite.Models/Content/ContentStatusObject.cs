@@ -1,16 +1,9 @@
 ﻿using System;
 
-namespace DinWebsite.Models.Content
+namespace DinWebsite.ExternalModels.Content
 {
     public class ContentStatusObject
     {
-        public string Title { get;  set; }
-        public string Status { get;  set; }
-        public string AccountName { get; private set; }
-        public int Eta { get; set; }
-        public DateTime DateAdded { get; private set; }
-
-
         public ContentStatusObject(string title, string status, string accountName, DateTime dateAdded)
         {
             Title = title;
@@ -27,5 +20,11 @@ namespace DinWebsite.Models.Content
             Eta = eta;
             DateAdded = dateAdded;
         }
+
+        public string Title { get; set; }
+        public string Status { get; set; }
+        public string AccountName { get; }
+        public int Eta { get; set; }
+        public DateTime DateAdded { get; }
     }
 }

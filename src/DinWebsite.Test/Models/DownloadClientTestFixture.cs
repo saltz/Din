@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Din_Website.Test.Models
+namespace DinWebsite.Test.Models
 {
     [TestFixture]
     public class DownloadClientTestFixture

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace DinWebsite.Models.DownloadClient
+namespace DinWebsite.ExternalModels.DownloadClient
 {
     public class DownloadClientResult
     {

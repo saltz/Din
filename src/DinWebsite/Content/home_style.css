@@ -1,180 +1,159 @@
 ﻿.banner {
-    background: url(pictures/background.jpg) no-repeat center center fixed;
-    background-color: #001922;
-    width: 100%;
-    height: 100vh;
-    background-blend-mode: lighten;
-    -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
+    -webkit-background-size: cover;
+    background: url(pictures/background.jpg) no-repeat center center fixed;
+    background-blend-mode: lighten;
+    background-color: #001922;
     background-size: cover;
+    height: 100vh;
+    width: 100%;
 }
 
-.wrap
-{
-    width: 100%;
+.wrap {
     height: 100%;
+    left: 0;
+    margin-top: 25%;
     min-height: 100%;
     position: absolute;
-    margin-top: 25%;
-    left: 0;
+    width: 100%;
     z-index: 99;
 }
 
 .transparentBackground {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 20px;
+    margin: 0 auto;
     padding-bottom: 15px;
     padding-top: 10px;
     width: 300px;
-    margin: 0 auto;
 }
 
 p.form-title {
+    color: #FFFFFF;
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: 600;
-    text-align: center;
-    color: #FFFFFF;
-    margin-top: 5%;
-    text-transform: uppercase;
     letter-spacing: 4px;
-    text-shadow: 0px 4px 3px rgba(0,0,0,0.6),
-                 0px 8px 13px rgba(0,0,0,0.4),
-                 0px 18px 23px rgba(0,0,0,0.4);
+    margin-top: 5%;
+    text-align: center;
+    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.6),
+                 0px 8px 13px rgba(0, 0, 0, 0.4),
+                 0px 18px 23px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
 }
 
-form
-{
-    width: 250px;
+form {
     margin: 0 auto;
+    width: 250px;
 }
 
-form.login input[type="text"], form.login input[type="password"]
-{
-    width: 100%;
-    margin: 0;
-    padding: 5px 10px;
+form.login input[type="text"], form.login input[type="password"] {
     background: 0;
     border: 0;
     border-bottom: 1px solid #FFFFFF;
-    outline: 0;
-    font-style: italic;
+    color: #FFFFFF;
     font-size: 12px;
+    font-style: italic;
     font-weight: 400;
     letter-spacing: 1px;
+    margin: 0;
     margin-bottom: 5px;
-    color: #FFFFFF;
     outline: 0;
+    outline: 0;
+    padding: 5px 10px;
+    width: 100%;
 }
 
-form.login input[type="submit"]
-{
-    width: 100%;
+form.login input[type="submit"] {
+    cursor: pointer;
     font-size: 14px;
-    text-transform: uppercase;
     font-weight: 500;
+    letter-spacing: 1px;
     margin-top: 16px;
     outline: 0;
-    cursor: pointer;
-    letter-spacing: 1px;
-}
-
-form.login input[type="submit"]:hover
-{
-    transition: background-color 0.5s ease;
-}
-
-form.login .remember-forgot
-{
-    float: left;
+    text-transform: uppercase;
     width: 100%;
+}
+
+form.login input[type="submit"]:hover { transition: background-color 0.5s ease; }
+
+form.login .remember-forgot {
+    float: left;
     margin: 10px 0 0 0;
+    width: 100%;
 }
-form.login .forgot-pass-content
-{
-    min-height: 20px;
-    margin-top: 10px;
+
+form.login .forgot-pass-content {
     margin-bottom: 10px;
+    margin-top: 10px;
+    min-height: 20px;
 }
-form.login label, form.login a
-{
+
+form.login label, form.login a {
+    color: #FFFFFF;
     font-size: 12px;
     font-weight: 400;
-    color: #FFFFFF;
 }
 
-form.login a
-{
-    transition: color 0.5s ease;
-}
+form.login a { transition: color 0.5s ease; }
 
-form.login a:hover
-{
-    color: #2ecc71;
-}
+form.login a:hover { color: #2ecc71; }
 
 .failed {
-    position: absolute;
-    top: 30%;
+    background-color: rgba(150, 18, 18, 0.7);
+    border: 1px solid rgba(150, 18, 18, 0.9);
+    border-radius: 10px;
+    height: 120px;
     left: calc(50% - 175px);
     margin-top: 40px;
-    width: 350px;
-    height: 120px;
     padding: 10px;
+    position: absolute;
     text-align: center;
-    border-radius: 10px;
-    background-color: rgba(150, 18, 18, 0.7);
-    border: 1px solid rgba(150, 18, 18,0.9);
+    top: 30%;
+    width: 350px;
 }
 
 .failed p {
-    margin-top: 30px;
     color: #fff;
+    font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: bold;
-    font-family: 'Open Sans', sans-serif;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    margin-top: 30px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .success {
-    position: absolute;
-    top: 30%;
-    left: calc(50% - 175px);
-    margin-top: 40px;
-    width: 350px;
-    height: 120px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
     background-color: rgba(66, 244, 161, 0.8);
     border: 1px solid rgba(66, 244, 161, 1);
+    border-radius: 10px;
+    height: 120px;
+    left: calc(50% - 175px);
+    margin-top: 40px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 30%;
+    width: 350px;
 }
 
 .success p {
-    margin-top: 30px;
     color: #fff;
+    font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: bold;
-    font-family: 'Open Sans', sans-serif;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    margin-top: 30px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-.messageCloseBtn {
-    float: left;
-}
+.messageCloseBtn { float: left; }
 
-.messageCloseBtn span {
-    color: #ffffff;
-}
+.messageCloseBtn span { color: #ffffff; }
 
-.messageCloseBtn span:hover {
-    transform: scale(1.2);
-}
+.messageCloseBtn span:hover { transform: scale(1.2); }
 
 /* CSS For mobile devices */
+
 @media only screen and (max-width: 500px) {
-    .transparentBackground {
-        margin-top: 30%;
-    }
+    .transparentBackground { margin-top: 30%; }
 }

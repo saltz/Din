@@ -1,17 +1,16 @@
-﻿@using DinWebsite.Models.AD
+﻿@using DinWebsite.ExternalModels.AD
 @using TMDbLib.Objects.Search
-
 @section CSS
 {
-    <link href="~/Content/SearchResults_style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/SearchResults_style.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 }
 
 @section scripts
 {
     <script type="text/javascript">
-        jQuery(document).ready(function () {
-            $('.add-movie').click(function () {
+        jQuery(document).ready(function() {
+            $('.add-movie').click(function() {
                 console.log("test");
                 $('.selected-movie').attr('value', $(this).attr('id'));
             });
@@ -25,7 +24,7 @@
         Url.Action("Index", "Home");
     }
 
-    List<int> movieIds = (List<int>)Session["CurrentMovies"];
+    var movieIds = (List<int>) Session["CurrentMovies"];
 
     if (Session["PermissionLevel"].ToString() == "user" || Session["PermissionLevel"].ToString() == "admin")
     {
@@ -33,12 +32,14 @@
         HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
-        var userData = (Session["UserData"] as ADUser);
+        var userData = Session["UserData"] as ADUser;
         if ((Session["MovieResults"] as List<SearchMovie>).Count == 0)
         {
             <div class="backButtonContainer">
                 <a href="@Url.Action("Index", "Home")" class="backButton" data-bckbtn="account">
-                    <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                    <p>
+                        <span class="glyphicon glyphicon-chevron-left"></span>Back
+                    </p>
                 </a>
             </div>
             <div class="results col-md-10 col-md-offset-1">
@@ -49,28 +50,30 @@
         {
             <div class="backButtonContainer">
                 <a href="@Url.Action("Index", "Home")" class="backButton" data-bckbtn="account">
-                    <p><span class="glyphicon glyphicon-chevron-left"></span>Back</p>
+                    <p>
+                        <span class="glyphicon glyphicon-chevron-left"></span>Back
+                    </p>
                 </a>
             </div>
             <div class="results col-md-12">
                 <h2>Search Results</h2>
                 <div class="card-frame">
-                    @foreach (SearchMovie movie in (List<SearchMovie>)Session["MovieResults"])
+                    @foreach (var movie in (List<SearchMovie>) Session["MovieResults"])
                     {
-                        int date = Convert.ToDateTime(movie.ReleaseDate).Year;
+                        var date = Convert.ToDateTime(movie.ReleaseDate).Year;
 
-                        string posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
+                        var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
 
                         <div movie-id="@movie.Id" class="item poster card">
                             <div class="image_content">
                                 @{
                                     if (string.IsNullOrEmpty(movie.PosterPath))
                                     {
-                                        <img class="poster" sizes="185px" src="@Url.Content("~/Content/Pictures/not-found.png")" />
+                                        <img class="poster" sizes="185px" src="@Url.Content("~/Content/Pictures/not-found.png")"/>
                                     }
                                     else
                                     {
-                                        <img class="poster" sizes="185px" src="@posterPath" />
+                                        <img class="poster" sizes="185px" src="@posterPath"/>
                                     }
                                 }
                             </div>
@@ -101,20 +104,20 @@
                                         {
                                             <form method="post" action="@Url.Action("AddMovie", "Main")">
                                                 <button id="@movie.Id" type="submit" class="btn btn-primary add-movie">Add Movie</button>
-                                                <input class="selected-movie" name="selected-movie" />
+                                                <input class="selected-movie" name="selected-movie"/>
                                             </form>
                                         }
                                     }
                                 </div>
                             </div>
                         </div>
-                                        }
+                    }
                 </div>
             </div>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Url.Action("Index", "Home");
-                                        }
+        }
+    }
+    else
+    {
+        Url.Action("Index", "Home");
+    }
 }

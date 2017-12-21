@@ -7,8 +7,8 @@
     <ProjectGuid>{D024C029-5FC8-4DAA-9AD4-03A86A90CFAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DinWebsite.Models</RootNamespace>
-    <AssemblyName>DinWebsite.Models</AssemblyName>
+    <RootNamespace>DinWebsite.ExternalModels</RootNamespace>
+    <AssemblyName>DinWebsite.ExternalModels</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

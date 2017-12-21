@@ -1,56 +1,52 @@
-﻿body {
-    font-family: 'Open Sans', sans-serif;
-}
+﻿body { font-family: 'Open Sans', sans-serif; }
 
-html,body {
-    height:100%;
-    width:100%;
-    position:relative;
+html, body {
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .background {
-    position: absolute;
-    width: 100%;
+    background-color: #e5e5e5;
     height: 100%;
     left: 0;
-    background-color: #e5e5e5;
+    position: absolute;
+    width: 100%;
 }
 
 .gif {
+    height: 0;
     width: 100%;
-    height: 0
 }
 
-    .gif h3 {
-        margin-top: 10%;
-        text-align: center;
-        font-weight: bold;
-        color: #ffb121;
-        text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-    }
+.gif h3 {
+    color: #ffb121;
+    font-weight: bold;
+    margin-top: 10%;
+    text-align: center;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
 
 .gif-border {
-    position: relative;
-    margin-top: 10%;
     -webkit-transform: scale(1.5);
+    margin-top: 10%;
+    position: relative;
     text-align: center;
 }
 
 .gif-border img {
-    position: inherit;
     border-radius: 15px;
+    position: inherit;
 }
 
 /* CSS For mobile devices */
+
 @media only screen and (max-width: 500px) {
     .gif-border {
-        width: 60%;
         margin-left: 20%;
         margin-top: 30%;
+        width: 60%;
     }
 
-    .gif-border img {
-        width: 100%;
-    }
-
+    .gif-border img { width: 100%; }
 }

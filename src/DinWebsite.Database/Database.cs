@@ -12,7 +12,7 @@ namespace DinWebsite.Database
         {
             get
             {
-                MySqlConnection connection = new MySqlConnection(ConnectionString);
+                var connection = new MySqlConnection(ConnectionString);
                 connection.Open();
                 return connection;
             }

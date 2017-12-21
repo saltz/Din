@@ -1,19 +1,18 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Home";
 }
 
 @section CSS
 {
-    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 }
 
 @section scripts
 {
     <script>
-        $(document).ready(function () {
-            $('.messageCloseBtn').click(function () {
+        $(document).ready(function() {
+            $('.messageCloseBtn').click(function() {
                 if ($('.messageCloseBtn').data('type') == "failed") {
                     $('.failed').slideToggle();
                 } else {
@@ -34,11 +33,10 @@
                             <p class="form-title">
                                 Sign In
                             </p>
-                            @model DinWebsite.Models.LoginData
                             <form method="post" action="@Url.Action("Login")" class="login">
-                                <input type="text" placeholder="Username" name="Username" />
-                                <input type="password" placeholder="Password" name="Password" />
-                                <input type="submit" value="Sign In" class="btn btn-success btn-sm" />
+                                <input type="text" placeholder="Username" name="Username"/>
+                                <input type="password" placeholder="Password" name="Password"/>
+                                <input type="submit" value="Sign In" class="btn btn-success btn-sm"/>
                             </form>
                         </div>
                         @{
@@ -71,5 +69,3 @@
         </div>
     </div>
 </div>
-
-

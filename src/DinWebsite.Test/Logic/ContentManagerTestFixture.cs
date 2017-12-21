@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Din_Website.Test.Logic
+namespace DinWebsite.Test.Logic
 {
     [TestFixture]
     public class ContentManagerTestFixture

@@ -1,9 +1,11 @@
 ﻿using System;
 
-namespace DinWebsite.Models.Exceptions
+namespace DinWebsite.ExternalModels.Exceptions
 {
     public class DatabaseException : Exception
     {
-        public DatabaseException(string message) : base(message) { }
+        public DatabaseException(string message) : base(message)
+        {
+        }
     }
 }

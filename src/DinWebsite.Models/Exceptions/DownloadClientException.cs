@@ -1,9 +1,11 @@
 ﻿using System;
 
-namespace DinWebsite.Models.Exceptions
+namespace DinWebsite.ExternalModels.Exceptions
 {
     public class DownloadClientException : Exception
     {
-        public DownloadClientException(string message) : base(message) { }
+        public DownloadClientException(string message) : base(message)
+        {
+        }
     }
 }

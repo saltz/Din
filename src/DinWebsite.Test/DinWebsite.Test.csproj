@@ -7,8 +7,8 @@
     <ProjectGuid>{C236C0C5-D96E-401F-B156-072C674A7584}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Din_Website.Test</RootNamespace>
-    <AssemblyName>Din_Website.Test</AssemblyName>
+    <RootNamespace>DinWebsite.Test</RootNamespace>
+    <AssemblyName>DinWebsite.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
