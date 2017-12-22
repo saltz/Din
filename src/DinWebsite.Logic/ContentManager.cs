@@ -31,8 +31,7 @@ namespace DinWebsite.Logic
 
         public static string AddMovie(SearchMovie movie, ADObject userAdObject)
         {
-            var images = new List<Image>();
-            images.Add(new Image(movie.PosterPath));
+            var images = new List<Image> {new Image(movie.PosterPath)};
             var payload = new Movie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
             var httpWebRequest = (HttpWebRequest) WebRequest.Create(ApiMovieRequest);
             httpWebRequest.ContentType = "application/json";
@@ -65,7 +64,7 @@ namespace DinWebsite.Logic
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
             var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
             {
                 webResult = streamReader.ReadToEnd();
             }
@@ -94,14 +93,16 @@ namespace DinWebsite.Logic
             var movies = databaseContent.GetMoviesByAccountname(user.SAMAccountName);
             var itemsToCheck = movies.Where(cso => !cso.Status.Equals("downloaded")).ToList();
             itemsToCheck = CheckIfItemIsCompleted(itemsToCheck);
-            DownloadClient.Authenticate();
+            if (!DownloadClient.Authenticate()) return;
             var downloadClientItems = DownloadClient.GetAllItems();
             foreach (var item in itemsToCheck)
             foreach (var dItem in downloadClientItems)
             {
                 var titles = FixNames(item.Title, dItem.Name);
                 if (!(titles[0].CalculateSimilarity(titles[1]) > 0.4)) continue;
-                item.Eta = DownloadClient.GetItemEta(dItem.Hash);
+                var responseItem = DownloadClient.GetItemStatus(dItem.Hash);
+                item.Eta = responseItem.Eta;
+                item.Percentage = CalculateItemPercentage(responseItem.Files, responseItem.FileProgress);
                 databaseContent.SetItemEta(item);
                 break;
             }
@@ -116,7 +117,7 @@ namespace DinWebsite.Logic
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
             var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
             {
                 webResult = streamReader.ReadToEnd();
             }
@@ -145,6 +146,11 @@ namespace DinWebsite.Logic
             title1 = Regex.Replace(title1, @"[\d-]", string.Empty);
             title2 = Regex.Replace(title2, @"[\d-]", string.Empty);
             return new[] {title1, title2};
+        }
+
+        private static double CalculateItemPercentage(IReadOnlyCollection<DownloadClientFile> files, IEnumerable<double> fileStatus)
+        {
+            return (fileStatus.Sum()) / files.Count;
         }
     }
 }

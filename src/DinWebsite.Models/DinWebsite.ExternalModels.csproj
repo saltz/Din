@@ -51,12 +51,13 @@
     <Compile Include="AD\ADObject.cs" />
     <Compile Include="AD\ADUser.cs" />
     <Compile Include="Content\ContentStatusObject.cs" />
+    <Compile Include="DownloadClient\DownloadClient.cs" />
+    <Compile Include="DownloadClient\DownloadClientFile.cs" />
     <Compile Include="DownloadClient\DownloadClientRequestObject2.cs" />
     <Compile Include="DownloadClient\DownloadClientResponseObject.cs" />
     <Compile Include="DownloadClient\DownloadClientResult.cs" />
     <Compile Include="DownloadClient\DownloadClientItem.cs" />
     <Compile Include="Exceptions\DownloadClientException.cs" />
-    <Compile Include="DownloadClient\DownloadClient.cs" />
     <Compile Include="DownloadClient\DownloadClientRequestObject1.cs" />
     <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />

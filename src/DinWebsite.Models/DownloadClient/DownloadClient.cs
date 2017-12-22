@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -41,7 +42,7 @@ namespace DinWebsite.ExternalModels.DownloadClient
             {
                 string webResult;
                 var httpResponse = (HttpWebResponse) _request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     webResult = streamReader.ReadToEnd();
                 }
@@ -76,7 +77,7 @@ namespace DinWebsite.ExternalModels.DownloadClient
             {
                 string webResult;
                 var httpResponse = (HttpWebResponse) _request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     webResult = streamReader.ReadToEnd();
                 }
@@ -89,7 +90,7 @@ namespace DinWebsite.ExternalModels.DownloadClient
             }
         }
 
-        public int GetItemEta(string itemHash)
+        public DownloadClientItem GetItemStatus(string itemHash)
         {
             if (!_authenticated) throw new DownloadClientException("Not Authenticated");
             var payload = new DownloadClientRequestObject2("webapi.get_torrents", new List<List<string>>
@@ -100,7 +101,9 @@ namespace DinWebsite.ExternalModels.DownloadClient
                 },
                 new List<string>
                 {
-                    "eta"
+                    "eta",
+                    "files",
+                    "file_progress"
                 }
             }, 1);
 
@@ -119,16 +122,15 @@ namespace DinWebsite.ExternalModels.DownloadClient
             {
                 string webResult;
                 var httpResponse = (HttpWebResponse) _request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     webResult = streamReader.ReadToEnd();
                 }
-                var response = JsonConvert.DeserializeObject<DownloadClientResponseObject>(webResult);
-                return response.Result.Items[0].Eta;
+                return JsonConvert.DeserializeObject<DownloadClientResponseObject>(webResult).Result.Items[0];
             }
             catch
             {
-                throw new DownloadClientException("Failed to get all items");
+                throw new DownloadClientException("Failed to get item status");
             }
         }
     }

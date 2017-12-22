@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using DinWebsite.ExternalModels.AD;
 using DinWebsite.ExternalModels.Content;
 using DinWebsite.ExternalModels.Exceptions;
@@ -41,13 +42,20 @@ namespace DinWebsite.Database
                 using (var cmd = Database.Connection.CreateCommand())
                 {
                     cmd.CommandText =
-                        "SELECT movie_name, status, person_accountname, eta, date_added FROM movies WHERE person_accountname = @accountname;";
+                        "SELECT movie_name, status, person_accountname, eta, percentage, date_added FROM movies WHERE person_accountname = @accountname;";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@accountname", accountName);
                     using (var dataReader = cmd.ExecuteReader())
                     {
                         while (dataReader.Read())
-                            if (dataReader["eta"] != DBNull.Value)
+                            if (dataReader["eta"] != DBNull.Value && dataReader["percentage"] != DBNull.Value)
+                                movies.Add(new ContentStatusObject(Convert.ToString(dataReader["movie_name"]),
+                                    Convert.ToString(dataReader["status"]),
+                                    Convert.ToString(dataReader["person_accountname"]),
+                                    Convert.ToInt32(dataReader["eta"]),
+                                    Convert.ToDouble(dataReader["percentage"]),
+                                    Convert.ToDateTime(dataReader["date_added"])));
+                            else if (dataReader["eta"] != DBNull.Value)
                                 movies.Add(new ContentStatusObject(Convert.ToString(dataReader["movie_name"]),
                                     Convert.ToString(dataReader["status"]),
                                     Convert.ToString(dataReader["person_accountname"]),
@@ -96,9 +104,10 @@ namespace DinWebsite.Database
                 using (var cmd = Database.Connection.CreateCommand())
                 {
                     cmd.CommandText =
-                        "UPDATE movies SET eta = @eta WHERE movie_name = @movieName AND person_accountname = @accountName;";
+                        "UPDATE movies SET eta = @eta, percentage = @percentage WHERE movie_name = @movieName AND person_accountname = @accountName;";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@eta", item.Eta);
+                    cmd.Parameters.AddWithValue("@percentage", item.Percentage.Equals(Double.NaN) ? 0.00 : item.Percentage);
                     cmd.Parameters.AddWithValue("@movieName", item.Title);
                     cmd.Parameters.AddWithValue("@accountName", item.AccountName);
                     cmd.ExecuteNonQuery();

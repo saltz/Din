@@ -1,14 +1,14 @@
 ﻿@using DinWebsite.ExternalModels.Content
 @section CSS
 {
-    <link href="~/Content/AddedMovies_style.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/AddedMovies_style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 }
 
 @section scripts
 {
     <script type="text/javascript">
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
         });
     </script>
 }
@@ -25,7 +25,7 @@
         HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
-        List<ContentStatusObject> content = (List<ContentStatusObject>) Session["AddedContent"];
+        List<ContentStatusObject> content = (List<ContentStatusObject>)Session["AddedContent"];
 
 
         <div class="row">
@@ -37,50 +37,62 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                <tr>
-                                    <th>Movie Title</th>
-                                    <th>Status</th>
-                                    <th>Time Left</th>
-                                    <th>Date Added</th>
-                                </tr>
+                                    <tr>
+                                        <th>Movie Title</th>
+                                        <th>Status</th>
+                                        <th>Time Left</th>
+                                        <th>Percentage Done</th>
+                                        <th>Date Added</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @{
-                                    foreach (ContentStatusObject item in content)
-                                    {
-                                        var eta = TimeSpan.FromSeconds(item.Eta);
-                                        <tr>
-                                            <td>@item.Title</td>
-                                            <td>@item.Status</td>
-                                            @if (item.Status.Equals("downloaded"))
-                                            {
-                                                <td>It's done go watch it! 🔥</td>
-                                            }
-                                            else if (eta == TimeSpan.Zero)
-                                            {
-                                                <td>It's Probably too early for me to download 🤔</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@eta</td>
-                                            }
-                                            <td>@item.DateAdded.ToShortDateString()</td>
-                                        </tr>
+                                    @{
+                                        foreach (ContentStatusObject item in content)
+                                        {
+                                            var eta = TimeSpan.FromSeconds(item.Eta);
+                                            var percentage = String.Format("{0:P2}", item.Percentage);
+                                            <tr>
+                                                <td>@item.Title</td>
+                                                <td>@item.Status</td>
+                                                @if (item.Status.Equals("downloaded"))
+                                                {
+                                                    <td>It's done go watch it! 🔥</td>
+                                                    <td>100 %</td>
+                                                }
+                                                else if (item.Percentage > 0.01)
+                                                {
+                                                    if (@eta == TimeSpan.Zero)
+                                                    {
+                                                        <td>The download is either stuck or in queue 😭</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@eta</td>
+                                                    }
+                                                    <td>@percentage</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>It's Probably too early for me to download 🤔</td>
+                                                    <td>0 %</td>
+                                                }
+                                                <td>@item.DateAdded.ToShortDateString()</td>
+                                            </tr>
+                                        }
                                     }
-                                }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <h2 id="title">Add some movies first 🙄</h2>
-                }
+                                        }
+                                        else
+                                        {
+                                            <h2 id="title">Add some movies first 🙄</h2>
+                                        }
                 <div class="confirm-button">
                     <button onclick="location.href = '@Url.Action("Index", "Home")'" type="button" class="btn btn-success">Cool cool, take me back</button>
                 </div>
             </div>
         </div>
-    }
+                                        }
 }
