@@ -2,7 +2,6 @@
 using DinWebsite.ExternalModels.AD;
 using DinWebsite.ExternalModels.Exceptions;
 using DinWebsite.Logic;
-using DinWebsite.Models;
 
 namespace DinWebsite.Controllers
 {
@@ -20,12 +19,12 @@ namespace DinWebsite.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginData data)
+        public ActionResult Login()
         {
             try
             {
                 Session.Clear();
-                var result = LoginSystem.Login(data.Username, data.Password);
+                var result = LoginSystem.Login(Request.Form["username"], Request.Form["password"]);
                 if (result.Item1)
                 {
                     Session["UserData"] = result.Item2;

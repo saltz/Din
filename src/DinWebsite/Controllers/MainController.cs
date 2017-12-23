@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using DinWebsite.ExternalModels.AD;
 using DinWebsite.Logic;
-using DinWebsite.Models;
 using TMDbLib.Objects.Search;
 
 namespace DinWebsite.Controllers
 {
     public class MainController : Controller
     {
-        public ActionResult ChangePassword(NewPasswordData data)
+        public ActionResult ChangePassword()
         {
-            if (AccountManagment.ChangePassword((Session["UserData"] as ADObject).SAMAccountName, data.Password1,
-                data.Password2))
+            if (AccountManagment.ChangePassword((Session["UserData"] as ADObject).SAMAccountName, Request.Form["Password1"],
+                Request.Form["Password2"]))
             {
                 Session.Clear();
                 Session["success"] = 1;

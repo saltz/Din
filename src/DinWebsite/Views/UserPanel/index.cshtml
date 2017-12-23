@@ -1,4 +1,5 @@
-﻿@section CSS
+﻿@using DinWebsite.ExternalModels.AD
+@section CSS
 {
     <link href="~/Content/UserPannelIndex_style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -237,7 +238,6 @@
                             </a>
                         </div>
                         <h2>Change Password</h2>
-                       @using DinWebsite.ExternalModels.AD                       @using DinWebsite.Models
                         <form method="post" action="@Url.Action("ChangePassword", "Main")">
                             <div class="form-group row">
                                 <label for="password1" class="col-md-3 col-md-offset-2">New password</label>

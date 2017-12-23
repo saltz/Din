@@ -4,68 +4,63 @@
 
 @section CSS
 {
-    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/home_style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 }
 
 @section scripts
 {
+    <script src="~/Scripts/jquery.particleground.min.js" type="text/javascript"></script>
     <script>
-        $(document).ready(function() {
-            $('.messageCloseBtn').click(function() {
-                if ($('.messageCloseBtn').data('type') == "failed") {
-                    $('.failed').slideToggle();
-                } else {
-                    $('.success').slideToggle();
-                }
+        $(document).ready(function () {
+
+            $('#particles').particleground({
+                dotColor: '#ff8d1c',
+                lineColor: '#ff8d1c',
+                parallax: true,
+                parallaxMultiplier: 20
             });
+
+            if ($('#error').attr("title") === ("pwd-incorect")) {
+                $('.log-status').addClass('wrong-entry');
+                $('.alert').fadeIn(500);
+                setTimeout("$('.alert').fadeOut(1500);", 3000);
+            }
+
+            $('.form-control').keypress(function () {
+                $('.log-status').removeClass('wrong-entry');
+            });
+
+
         });
     </script>
 }
 
-<div class="banner">
-    <div class="banner-inner">
+<div id="particles">
+    <div id="index">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="wrap">
-                        <div class="transparentBackground">
-                            <p class="form-title">
-                                Sign In
-                            </p>
-                            <form method="post" action="@Url.Action("Login")" class="login">
-                                <input type="text" placeholder="Username" name="Username"/>
-                                <input type="password" placeholder="Password" name="Password"/>
-                                <input type="submit" value="Sign In" class="btn btn-success btn-sm"/>
-                            </form>
-                        </div>
-                        @{
-                            if (Session["failed"] != null)
-                            {
-                                <div class="failed">
-                                    <div class="messageCloseBtn" data-type="failed">
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </div>
-                                    <p>@Session["failedString"]</p>
-                                </div>
-                            }
-                            else if (Session["success"] != null)
-                            {
-                                <div class="success">
-                                    <div class="messageCloseBtn" data-type="success">
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </div>
-                                    <p>@Session["successString"]</p>
-                                </div>
-                            }
-                        }
+            <h1 id="title">DIN</h1>
+            <br/>
+            <h3 id="subtitle">Movies are awesome!</h3>
+            <div class="login-form">
+                <form method="post" action="@Url.Action("Login")">
+                    <h4>SIGN IN</h4>
+                    <div class="form-group ">
+                        <input type="text" class="form-control" placeholder="Username" name="username" id="UserName">
                     </div>
-                </div>
+                    <div class="form-group log-status">
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="Passwod">
+                    </div>
+                    <span class="alert">Invalid Credentials</span>
+                    <button type="submit" class="log-btn">Log in</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+@if (Session["Failed"] != null)
+{
+    <span id="error" style="display: none;" title="pwd-incorect"></span>
+    Session["Failed"] = null;
+}

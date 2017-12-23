@@ -1,159 +1,177 @@
-﻿.banner {
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    -webkit-background-size: cover;
-    background: url(pictures/background.jpg) no-repeat center center fixed;
-    background-blend-mode: lighten;
-    background-color: #001922;
-    background-size: cover;
-    height: 100vh;
+﻿html, body {
     width: 100%;
-}
-
-.wrap {
     height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: #edeff2;
+}
+
+#particles {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#index {
+    position: absolute;
+    width: 100%;
+    top: 20%;
     left: 0;
-    margin-top: 25%;
-    min-height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 99;
 }
 
-.transparentBackground {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-    margin: 0 auto;
-    padding-bottom: 15px;
-    padding-top: 10px;
-    width: 300px;
+.container {
+    text-align: center;
+    color: black;
 }
 
-p.form-title {
-    color: #FFFFFF;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 4px;
+#title {
+    font-size: 60px;
+    color: rgba(255, 141, 28, 0.8);
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+    margin-bottom: -2%;
+}
+
+#subtitle {
+    font-size: 40px;
+    color: #b8b8b8;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+h4 {
+    color: #b8b8b8;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+
+.login-form {
     margin-top: 5%;
-    text-align: center;
-    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.6),
-                 0px 8px 13px rgba(0, 0, 0, 0.4),
-                 0px 18px 23px rgba(0, 0, 0, 0.4);
-    text-transform: uppercase;
+    width: 300px;
+    margin-left: calc(50% - 150px);
 }
 
-form {
-    margin: 0 auto;
-    width: 250px;
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
 }
 
-form.login input[type="text"], form.login input[type="password"] {
-    background: 0;
-    border: 0;
-    border-bottom: 1px solid #FFFFFF;
-    color: #FFFFFF;
+.form-control {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background: #edeff2;
+    padding: 5px 7px 5px 15px;
+    color: #666;
+    border: 1px solid rgba(255, 141, 28, 0.5);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+    .form-control:focus, .form-control:focus {
+        border-color: rgba(255, 141, 28, 0.8);
+        color: #494949;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 141, 28, 0.6);
+    }
+
+.log-status.wrong-entry {
+    -moz-animation: wrong-log 0.3s;
+    -webkit-animation: wrong-log 0.3s;
+    animation: wrong-log 0.3s;
+}
+
+    .log-status.wrong-entry .form-control, .wrong-entry .form-control {
+        border-color: #ed1c24;
+        color: #ed1c24;
+    }
+
+.log-btn {
+    background: transparent;
+    display: inline-block;
+    width: 40%;
+    margin-top: 10%;
+    margin-left: 60%;
+    font-size: 16px;
+    height: 50px;
+    color: #adadad;
+    text-decoration: none;
+    border: 1px solid rgba(255, 141, 28, 0.6);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+    .log-btn:hover {
+        color: rgba(255, 141, 28, 0.9);
+        border: 1px solid rgba(255, 141, 28, 0.9);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 141, 28, 0.6);
+    }
+
+.alert {
+    display: none;
     font-size: 12px;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin: 0;
-    margin-bottom: 5px;
-    outline: 0;
-    outline: 0;
-    padding: 5px 10px;
-    width: 100%;
-}
-
-form.login input[type="submit"] {
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    margin-top: 16px;
-    outline: 0;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-form.login input[type="submit"]:hover { transition: background-color 0.5s ease; }
-
-form.login .remember-forgot {
+    color: #f00;
     float: left;
-    margin: 10px 0 0 0;
-    width: 100%;
 }
 
-form.login .forgot-pass-content {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    min-height: 20px;
+@-moz-keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
+
+    20%, 60% {
+        left: 15px;
+    }
+
+    40%, 80% {
+        left: -15px;
+    }
 }
 
-form.login label, form.login a {
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: 400;
+@-webkit-keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
+
+    20%, 60% {
+        left: 15px;
+    }
+
+    40%, 80% {
+        left: -15px;
+    }
 }
 
-form.login a { transition: color 0.5s ease; }
+@keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
 
-form.login a:hover { color: #2ecc71; }
+    20%, 60% {
+        left: 15px;
+    }
 
-.failed {
-    background-color: rgba(150, 18, 18, 0.7);
-    border: 1px solid rgba(150, 18, 18, 0.9);
-    border-radius: 10px;
-    height: 120px;
-    left: calc(50% - 175px);
-    margin-top: 40px;
-    padding: 10px;
-    position: absolute;
-    text-align: center;
-    top: 30%;
-    width: 350px;
+    40%, 80% {
+        left: -15px;
+    }
 }
-
-.failed p {
-    color: #fff;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 30px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-.success {
-    background-color: rgba(66, 244, 161, 0.8);
-    border: 1px solid rgba(66, 244, 161, 1);
-    border-radius: 10px;
-    height: 120px;
-    left: calc(50% - 175px);
-    margin-top: 40px;
-    padding: 10px;
-    position: absolute;
-    text-align: center;
-    top: 30%;
-    width: 350px;
-}
-
-.success p {
-    color: #fff;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 30px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-.messageCloseBtn { float: left; }
-
-.messageCloseBtn span { color: #ffffff; }
-
-.messageCloseBtn span:hover { transform: scale(1.2); }
 
 /* CSS For mobile devices */
 
 @media only screen and (max-width: 500px) {
-    .transparentBackground { margin-top: 30%; }
+
+    #title {
+        margin-top: -10%;
+        font-size: 45px;
+        margin-bottom: -10%;
+    }
+
+    #subtitle {
+        font-size: 25px;
+        margin-bottom: 10%;
+    }
 }
