@@ -15,27 +15,5 @@ namespace DinWebsite.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public ActionResult Login()
-        {
-            try
-            {
-                HttpContext.Session.Clear();
-                var username = Request.Form["username"];
-                var password = Request.Form["password"];
-
-                if (username.Equals("dane"))
-                {
-                    HttpContext.Session.SetString("login", "ok");
-                }
-
-                return RedirectToAction("index");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Index");
-            }
-        }
     }
 }

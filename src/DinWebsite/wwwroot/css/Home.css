@@ -1,0 +1,80 @@
+﻿html, body {
+    height: 100%;
+}
+
+.carousel {
+    position: absolute;
+}
+
+.carousel, .carousel-itemm, .active {
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 100%;
+    width: 100%;
+}
+
+.menu {
+    padding-top: 10%;
+    text-align: right;
+    overflow: hidden;
+}
+
+.menu--closed {
+    height: 70px;
+}
+
+.menu--open .menu-button {
+    transform-origin: center;
+    transform: rotate(90deg);
+}
+
+.menu-button {
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.3s transform ease-in-out, 0.3s opacity ease-in-out;
+}
+
+.menu-button:hover {
+        color: rgba(255, 141, 28, 1);
+    }
+
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: right;
+    transition: 0.6s margin ease-in-out;
+}
+
+.items a {
+    margin-bottom: 5%;
+    text-decoration: none;
+    font-size: 20px;
+    color: #212529;
+}
+
+.items a:hover {
+    color: rgba(255, 141, 28, 1);
+}
+
+.items .oi {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.items--hidden {
+    margin-top: 400px;
+    z-index: -100;
+}
+
+.items--visible {
+    margin-top: 10%;
+    z-index: 100;
+}

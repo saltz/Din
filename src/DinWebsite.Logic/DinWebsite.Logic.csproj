@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TMDbLib" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DinWebsite.Database\DinWebsite.Database.csproj" />
+    <ProjectReference Include="..\DinWebsite.ExternalModels\DinWebsite.ExternalModels.csproj" />
+  </ItemGroup>
+
+</Project>
