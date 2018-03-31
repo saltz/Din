@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DinWebsite.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace DinWebsite.Controllers

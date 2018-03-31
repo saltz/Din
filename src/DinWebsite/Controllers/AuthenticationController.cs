@@ -32,8 +32,7 @@ namespace DinWebsite.Controllers
                 {
                     var contentManager = new ContentManager();
                     HttpContext.Session.SetString("BackgroundImages", contentManager.GenerateBackground());
-                    var user = _context.Users.First(u => u.ID == auth.UserRef);
-                    HttpContext.Session.SetString("User",);
+                    HttpContext.Session.SetString("User", "ss");
                     return View("../Main/Home");
                 }
                 else

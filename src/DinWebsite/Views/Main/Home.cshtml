@@ -13,12 +13,12 @@
 
 @if (Context.Session.GetString("User") != null)
 {
-    //Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-    //Context.Response.Headers.Add("Pragma", "no-cache");
-    //Context.Response.Headers.Add("Expires", "0");
+    Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+    Context.Response.Headers.Add("Pragma", "no-cache");
+    Context.Response.Headers.Add("Expires", "0");
 
     var images = JsonConvert.DeserializeObject<List<BackgroundImage>>(Context.Session.GetString("BackgroundImages"));
-    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
+    //var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var first = true;
 
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -40,7 +40,12 @@
     </div>
     <div class="container-fluid">
         <div clas="row">
-            <div class="col-lg-2 offset-lg-10">
+            <div class="col-sm-2">
+                <div class="user-name">
+                    <h3>Dane Naebers</h3>
+                </div>
+            </div>
+            <div class="col-sm-2 offset-sm-10">
                 <div class="menu menu--closed">
                     <span class="oi oi-menu menu-button"></span>
                     <div class="items items--hidden">
@@ -51,7 +56,6 @@
             </div>
         </div>
         <div class="row">
-
         </div>
     </div>
 

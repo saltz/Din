@@ -44,10 +44,8 @@ namespace DinWebsite
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Main/Error");
-            }
+
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 
             app.UseStaticFiles();
             app.UseSession();
