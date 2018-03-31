@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace DinWebsite.ExternalModels.DownloadClient
 {
@@ -12,5 +13,11 @@ namespace DinWebsite.ExternalModels.DownloadClient
 
         [JsonProperty("error")]
         public object Error { get; set; }
+    }
+
+    public class DownloadClientResult
+    {
+        [JsonProperty("torrents")]
+        public List<DownloadClientItem> Items { get; set; }
     }
 }

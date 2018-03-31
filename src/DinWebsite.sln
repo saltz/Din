@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinWebsite", "DinWebsite\DinWebsite.csproj", "{A1A9D0E0-67B3-4503-B073-C11067D8BE9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Database", "DinWebsite.Database\DinWebsite.Database.csproj", "{C8548DC5-2D16-414E-8770-90A4EB5B417C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinWebsite.Database", "DinWebsite.Database\DinWebsite.Database.csproj", "{C8548DC5-2D16-414E-8770-90A4EB5B417C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.ExternalModels", "DinWebsite.ExternalModels\DinWebsite.ExternalModels.csproj", "{D689C2E1-FB42-4EF6-A141-B5F4D7797ED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinWebsite.ExternalModels", "DinWebsite.ExternalModels\DinWebsite.ExternalModels.csproj", "{D689C2E1-FB42-4EF6-A141-B5F4D7797ED5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Logic", "DinWebsite.Logic\DinWebsite.Logic.csproj", "{B5B44027-A16C-4701-BECB-3B77B9934EA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinWebsite.Logic", "DinWebsite.Logic\DinWebsite.Logic.csproj", "{B5B44027-A16C-4701-BECB-3B77B9934EA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinWebsite.Tests", "DinWebsite.Tests\DinWebsite.Tests.csproj", "{ABB583D8-D08F-4767-B8D0-8D5688847DD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B5B44027-A16C-4701-BECB-3B77B9934EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5B44027-A16C-4701-BECB-3B77B9934EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5B44027-A16C-4701-BECB-3B77B9934EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB583D8-D08F-4767-B8D0-8D5688847DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB583D8-D08F-4767-B8D0-8D5688847DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB583D8-D08F-4767-B8D0-8D5688847DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB583D8-D08F-4767-B8D0-8D5688847DD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

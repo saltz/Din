@@ -5,6 +5,12 @@ using Newtonsoft.Json;
 
 namespace DinWebsite.ExternalModels.Content
 {
+    public class UnsplashContainer
+    {
+        [JsonProperty("urls")]
+        public Urls Urls { get; set; }
+    }
+
     public class Urls
     {
         [JsonProperty("full")]

@@ -16,10 +16,10 @@ namespace DinWebsite.ExternalModels.DownloadClient
         private bool _authenticated;
         private HttpWebRequest _request;
 
-        public DownloadClient()
+        public DownloadClient(string url, string pwd)
         {
-            _url = File.ReadLines("C:/din_properties/api_downloadclient").First();
-            _pwd = File.ReadLines("C:/din_properties/api_downloadclient").ElementAt(1);
+            _url = url;
+            _pwd = pwd;
             _cookies = new CookieContainer();
             _authenticated = false;
         }

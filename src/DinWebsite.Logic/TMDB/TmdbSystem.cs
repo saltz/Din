@@ -12,9 +12,9 @@ namespace DinWebsite.Logic.TMDB
     {
         private readonly TMDbClient TmDbClient;
 
-        public TmdbSystem()
+        public TmdbSystem(string key)
         {
-            TmDbClient = new TMDbClient(File.ReadLines("C:/din_properties/api_key").First());
+            TmDbClient = new TMDbClient(key);
         }
 
         public List<SearchMovie> SearchMovie(string searchQuery)

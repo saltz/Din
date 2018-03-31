@@ -17,7 +17,7 @@
     Context.Response.Headers.Add("Pragma", "no-cache");
     Context.Response.Headers.Add("Expires", "0");
 
-    var images = JsonConvert.DeserializeObject<List<BackgroundImage>>(Context.Session.GetString("BackgroundImages"));
+    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(Context.Session.GetString("BackgroundImages"));
     //var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var first = true;
 
@@ -55,7 +55,18 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="main-page-content container">
         <div class="row">
+            <div class="col-sm-4">
+                <h1>Add a Movie</h1>
+            </div>
+            <div class="col-sm-4">
+                <h1>Launch Client</h1>
+            </div>
+            <div class="col-sm-4">
+                <h1>Add a TV Show</h1>
+            </div>
         </div>
     </div>
 

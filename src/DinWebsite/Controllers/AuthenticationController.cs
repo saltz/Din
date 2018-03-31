@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using DinWebsite.Database;
 using DinWebsite.ExternalModels.Authentication;
+using DinWebsite.ExternalModels.Content;
 using DinWebsite.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace DinWebsite.Controllers
                     return RedirectToAction("Index", "Main");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 HttpContext.Session.SetString("Login", "BAD");
                 return RedirectToAction("Index", "Main");
@@ -52,7 +53,9 @@ namespace DinWebsite.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Main");
+            var contentManager = new ContentManager();
+            HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.Logout));
+            return View("../Main/Logout");
         }
     }
 }

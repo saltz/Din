@@ -1,32 +1,44 @@
-﻿@model int
+﻿@using DinWebsite.ExternalModels.Content
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@model int
 
 @{
+    var gif = JsonConvert.DeserializeObject<GiphyContainer>(Context.Session.GetString("Gif"));
     var statusCode = Model;
     var statusmessage = "";
     switch (statusCode)
     {
         case 400:
-            statusmessage = "Bad request: The request cannot be fulfilled due to bad syntax";
+            statusmessage = "Te Fck did you do";
             break;
         case 403:
-            statusmessage = "Forbidden";
+            statusmessage = "No No No";
             break;
         case 404:
-            statusmessage = "Page not found";
+            statusmessage = "It's gone";
             break;
         case 408:
             statusmessage = "The server timed out waiting for the request";
             break;
         case 500:
-            statusmessage = "Internal Server Error - server was unable to finish processing the request";
+            statusmessage = "Hmmm seems like I fucked up";
             break;
         default:
-            statusmessage = "That’s odd... Something we didn't expect happened";
+            statusmessage = "Hmmm seems like I fucked up";
             break;
     }
 }
 
-<div class="jumbotron">
-    <h1>Error @statusCode</h1>
-    <h3>@statusmessage</h3>
+@section CSS {
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/GifPage.css"/>
+}
+
+<div class="gif-container">
+    <div class="msg-container">
+        <h2>@statusCode</h2>
+        <h3>@statusmessage</h3>
+    </div>
+    <img src="@gif.Data.ImageOriginalUrl"/>
 </div>

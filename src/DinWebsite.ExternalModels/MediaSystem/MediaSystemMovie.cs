@@ -4,13 +4,13 @@ using Newtonsoft.Json;
 
 namespace DinWebsite.ExternalModels.Movie
 {
-    public class Movie
+    public class MediaSystemMovie
     {
-        public Movie()
+        public MediaSystemMovie()
         {
         }
 
-        public Movie(string title, List<Image> images, int tmdbid, DateTime date)
+        public MediaSystemMovie(string title, List<MovieImage> images, int tmdbid, DateTime date)
         {
             Title = title;
             Year = date.Year;
@@ -21,7 +21,7 @@ namespace DinWebsite.ExternalModels.Movie
             Tmdbid = tmdbid;
             RootFolderPath = "F:\\Movies\\";
             Monitored = true;
-            AddOptions = new AddOptions
+            MovieOptions = new MovieOptions
             {
                 SearchForMovie = true
             };
@@ -43,7 +43,7 @@ namespace DinWebsite.ExternalModels.Movie
         public string Titleslug { get; set; }
 
         [JsonProperty("images")]
-        public List<Image> Images { get; set; }
+        public List<MovieImage> Images { get; set; }
 
         [JsonProperty("tmdbid")]
         public int Tmdbid { get; set; }
@@ -55,7 +55,7 @@ namespace DinWebsite.ExternalModels.Movie
         public bool Monitored { get; set; }
 
         [JsonProperty("addOptions")]
-        public AddOptions AddOptions { get; set; }
+        public MovieOptions MovieOptions { get; set; }
 
         [JsonProperty("downloaded")]
         public bool Downloaded { get; set; }
@@ -66,5 +66,36 @@ namespace DinWebsite.ExternalModels.Movie
             slug = slug + date.Year.ToString().ToLower();
             return slug;
         }
+    }
+
+    public class MovieImage
+    {
+        public MovieImage()
+        {
+        }
+
+        public MovieImage(string url)
+        {
+            Covertype = "poster";
+            Url = url;
+        }
+
+        [JsonProperty("covertype")]
+        public string Covertype { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+    }
+
+    public class MovieOptions
+    {
+        [JsonProperty("ignoreEpisodesWithFiles")]
+        public bool IgnoreEpisodesWithFiles { get; set; }
+
+        [JsonProperty("ignoreEpisodesWithoutFiles")]
+        public bool IgnoreEpisodesWithoutFiles { get; set; }
+
+        [JsonProperty("searchForMovie")]
+        public bool SearchForMovie { get; set; }
     }
 }

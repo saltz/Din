@@ -9,9 +9,9 @@ namespace DinWebsite.Logic.DownloadSystem
     {
         private readonly DownloadClient _downloadClient;
 
-        public DownloadSystem()
+        public DownloadSystem(string url, string pwd)
         {
-           _downloadClient = new DownloadClient();
+           _downloadClient = new DownloadClient(url, pwd);
         }
 
     }

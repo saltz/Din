@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using DinWebsite.ExternalModels.Content;
 using DinWebsite.ExternalModels.DownloadClient;
 using DinWebsite.Logic.TMDB;
 using TMDbLib.Objects.Search;
@@ -15,10 +16,50 @@ namespace DinWebsite.Logic
         private TmdbSystem _tmdbSystem;
         private MediaSystem.MediaSystem _mediaSystem;
         private DownloadSystem.DownloadSystem _downloadSystem;
+        private readonly Properties _properties;
+
+        public ContentManager()
+        {
+            _properties = new Properties("C:/din_properties/properties");
+        }
 
         public string GenerateBackground()
         {
-            var url = File.ReadLines("C:/din_properties/background_uri").First();
+            var url = _properties.Get("unsplash");
+            string result;
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.Method = "GET";
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
+
+
+        public string GetRandomGif(GiphyQuery query)
+        {
+            string url;
+            switch (query)
+            {
+                case GiphyQuery.PageNotFound:
+                    url = _properties.Get("giphyPageNotFound");
+                    break;
+                case GiphyQuery.Forbidden:
+                    url = _properties.Get("giphyForbidden");
+                    break;
+                case GiphyQuery.Logout:
+                    url = _properties.Get("giphyLogout");
+                    break;
+                case GiphyQuery.ServerError:
+                    url = _properties.Get("giphyServerError");
+                    break;
+                default:
+                    url = _properties.Get("giphyRandom");
+                    break;
+            }
             string result;
 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -33,13 +74,13 @@ namespace DinWebsite.Logic
 
         public List<SearchMovie> TmdbSearchMovie(string searchQuery)
         {
-            _tmdbSystem = new TmdbSystem();
+            _tmdbSystem = new TmdbSystem(_properties.Get("tmdb"));
             return _tmdbSystem.SearchMovie(searchQuery);
         }
 
         public string MediaSystemAddMovie(SearchMovie movie, Object userAdObject)
         {
-            _mediaSystem = new MediaSystem.MediaSystem();
+            _mediaSystem = new MediaSystem.MediaSystem(_properties.Get("mediaSystem"));
             var status = _mediaSystem.AddMovie(movie);
             if (!status.Equals("error"))
             {
@@ -52,7 +93,7 @@ namespace DinWebsite.Logic
 
         public List<int> MediaSystemGetCurrentMovies()
         {
-            _mediaSystem = new MediaSystem.MediaSystem();
+            _mediaSystem = new MediaSystem.MediaSystem(_properties.Get("mediaSystem"));
             return _mediaSystem.GetCurrentMovies();
         }
 
@@ -128,7 +169,7 @@ namespace DinWebsite.Logic
 
             title1 = Regex.Replace(title1, @"[\d-]", string.Empty);
             title2 = Regex.Replace(title2, @"[\d-]", string.Empty);
-            return new[] {title1, title2};
+            return new[] { title1, title2 };
         }
 
         private double CalculateItemPercentage(IReadOnlyCollection<DownloadClientFile> files, IEnumerable<double> fileStatus)

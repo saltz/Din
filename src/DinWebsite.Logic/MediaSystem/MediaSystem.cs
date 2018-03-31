@@ -12,18 +12,18 @@ namespace DinWebsite.Logic.MediaSystem
 {
     public class MediaSystem
     {
-        private readonly string requestUri;
+        private readonly string _url;
 
-        public MediaSystem()
+        public MediaSystem(string url)
         {
-           requestUri = File.ReadLines("C:/din_properties/api_movie").First();
+           _url = url;
         }
 
         public string AddMovie(SearchMovie movie)
         {
-            var images = new List<Image> { new Image(movie.PosterPath) };
-            var payload = new Movie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUri);
+            var images = new List<MovieImage> { new MovieImage(movie.PosterPath) };
+            var payload = new MediaSystemMovie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
@@ -50,7 +50,7 @@ namespace DinWebsite.Logic.MediaSystem
             var movieIds = new List<int>();
             string webResult;
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUri);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
@@ -58,7 +58,7 @@ namespace DinWebsite.Logic.MediaSystem
             {
                 webResult = streamReader.ReadToEnd();
             }
-            var objects = JsonConvert.DeserializeObject<List<Movie>>(webResult);
+            var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(webResult);
             foreach (var m in objects)
                 movieIds.Add(m.Tmdbid);
             return movieIds;

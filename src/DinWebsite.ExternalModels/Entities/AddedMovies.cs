@@ -15,4 +15,11 @@ namespace DinWebsite.ExternalModels.Content
         public int Eta { get; set; }
         public double Percentage { get; set; }
     }
+
+    public enum ContentStatus
+    {
+        Added,
+        NotAvailable,
+        Downloaded
+    }
 }
