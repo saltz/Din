@@ -26,22 +26,6 @@ namespace DinWebsite.Controllers
         {
             var reExecute = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
             _logger.LogInformation($"Unexpected Status Code: {statusCode}, OriginalPath: {reExecute.OriginalPath}");
-            var contentManager = new ContentManager();
-            switch (statusCode)
-            {
-                case 403:
-                    HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.Forbidden));
-                    break;
-                case 404:
-                    HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.PageNotFound));
-                    break;
-                case 500:
-                    HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.ServerError));
-                    break;
-                default:
-                    HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.Random));
-                    break;
-            }
             return View(statusCode);
         }
     }
