@@ -1,2 +1,10 @@
 language: csharp
-solution: ./src/DinWebsite.sln
+mono: none
+dotnet: 2.0.0
+solution: src/DinWebsite.sln
+os:
+  - linux
+install:
+  - dotnet restore
+  - dotnet build src/
+  - dotnet test src/DinWebsite.Tests/
