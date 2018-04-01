@@ -5,6 +5,9 @@ solution: src/DinWebsite.sln
 os:
   - linux
 install:
-  - dotnet restore
-  - dotnet build src/
+  - dotnet restore src/DinWebsite/
+  - dotnet restore src/DinWebsite.Database/
+  - dotnet restore src/DinWebsite.ExternalModels/
+  - dotnet restore src/DinWebsite.Logic/
+  - dotnet build src/DinWebsite/
   - dotnet test src/DinWebsite.Tests/
