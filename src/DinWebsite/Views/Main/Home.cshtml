@@ -1,5 +1,6 @@
 ﻿@using DinWebsite.ExternalModels.Authentication
 @using DinWebsite.ExternalModels.Content
+@using DinWebsite.Logic
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
 
@@ -17,20 +18,16 @@
     Context.Response.Headers.Add("Pragma", "no-cache");
     Context.Response.Headers.Add("Expires", "0");
 
-    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(Context.Session.GetString("BackgroundImages"));
-    //var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-    var first = true;
+    var contentManager = new ContentManager();
+    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
+    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
 
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             @{
-                if (first)
-                {
-                    var image = images[0].Urls.Custom;
-                    images.Remove(images[0]);
-                    first = false;
-                    <div class="carousel-item active"><img src="@image" /></div>
-                }
+                var image = images[0].Urls.Custom;
+                images.Remove(images[0]);
+                <div class="carousel-item active"><img src="@image" /></div>
                 foreach (var i in images)
                 {
                     <div class="carousel-item"><img src="@i.Urls.Custom" /></div>
@@ -42,7 +39,7 @@
         <div clas="row">
             <div class="col-sm-2">
                 <div class="user-name">
-                    <h3>Dane Naebers</h3>
+                    <h3>@user.FirstName @user.LastName</h3>
                 </div>
             </div>
             <div class="col-sm-2 offset-sm-10">

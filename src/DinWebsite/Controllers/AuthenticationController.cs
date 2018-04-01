@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using DinWebsite.Database;
-using DinWebsite.ExternalModels.Authentication;
 using DinWebsite.ExternalModels.Content;
 using DinWebsite.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace DinWebsite.Controllers
@@ -18,8 +17,6 @@ namespace DinWebsite.Controllers
         public AuthenticationController(DinWebsiteContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
-            _context.SaveChanges();
         }
 
         [HttpPost]
@@ -28,12 +25,15 @@ namespace DinWebsite.Controllers
             try
             {
                 var username = Request.Form["username"];
-                var auth = _context.Authentication.First(u => u.Username == username);
-                if (BCrypt.Net.BCrypt.Verify(Request.Form["password"], auth.Hash))
+                var user = _context.User.Include(u => u.Account).FirstOrDefault(u => u.Account.Username.Equals(username));
+                if (user != null && BCrypt.Net.BCrypt.Verify(Request.Form["password"], user.Account.Hash))
                 {
-                    var contentManager = new ContentManager();
-                    HttpContext.Session.SetString("BackgroundImages", contentManager.GenerateBackground());
-                    HttpContext.Session.SetString("User", "ss");
+                    var serializedUser = JsonConvert.SerializeObject(user, Formatting.Indented,
+                        new JsonSerializerSettings
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+                    HttpContext.Session.SetString("User", serializedUser);
                     return View("../Main/Home");
                 }
                 else
@@ -53,8 +53,6 @@ namespace DinWebsite.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
-            var contentManager = new ContentManager();
-            HttpContext.Session.SetString("Gif", contentManager.GetRandomGif(GiphyQuery.Logout));
             return View("../Main/Logout");
         }
     }

@@ -13,24 +13,26 @@ namespace DinWebsite.Database
         {
 
         }
+        public DbSet<User> User { get; set; }
+        public DbSet<Account> Account { get; set; }
+        public DbSet<AddedMovie> AddedMovie { get; set; }
 
-        public DbSet<Authentication> Authentication { get; set; }
-        public DbSet<AddedMovies> AddedMovies { get; set; }
-        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AddedMovies>().ToTable("AddedMovies");
             modelBuilder.Entity<User>()
                 .ToTable("User")
-                .HasOne(a => a.Auth)
-                .WithOne(b => b.User)
-                .HasForeignKey<Authentication>(b => b.UserRef);
-            modelBuilder.Entity<Authentication>()
-                .ToTable("Auth")
-                .HasIndex(a => a.Username).IsUnique();
-
+                .HasOne(u => u.Account)
+                .WithOne(a => a.User)
+                .HasForeignKey<Account>(a => a.UserRef);
+            modelBuilder.Entity<Account>()
+                .HasMany(a => a.AddedMovies)
+                .WithOne(am => am.Account);
+            modelBuilder.Entity<Account>()
+                .HasIndex(a => a.Username)
+                .IsUnique();
+            modelBuilder.Entity<AddedMovie>().ToTable("AddedMovies");
         }
     }
 }

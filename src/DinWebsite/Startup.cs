@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace DinWebsite
 {
@@ -25,10 +27,7 @@ namespace DinWebsite
         {
             services.AddMvc();
             services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = "DinCookie";
-            });
+            services.AddSession(options => { options.Cookie.Name = "DinCookie"; });
             var mysqlConnectionString = Configuration.GetConnectionString("MysqlConnectionString");
             services.AddDbContext<DinWebsiteContext>(options =>
                 options.UseMySql(

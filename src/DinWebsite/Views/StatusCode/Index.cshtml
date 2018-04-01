@@ -1,31 +1,39 @@
 ﻿@using DinWebsite.ExternalModels.Content
+@using DinWebsite.Logic
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
 @model int
 
 @{
-    var gif = JsonConvert.DeserializeObject<GiphyContainer>(Context.Session.GetString("Gif"));
+    var contentManager = new ContentManager();
+    GiphyContainer gif = null;
     var statusCode = Model;
     var statusmessage = "";
     switch (statusCode)
     {
         case 400:
             statusmessage = "Te Fck did you do";
+            gif = JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Random));
             break;
         case 403:
             statusmessage = "No No No";
+            JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Forbidden));
             break;
         case 404:
             statusmessage = "It's gone";
+            JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.PageNotFound));
             break;
         case 408:
             statusmessage = "The server timed out waiting for the request";
+            JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.ServerError));
             break;
         case 500:
             statusmessage = "Hmmm seems like I fucked up";
+            JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.ServerError));
             break;
         default:
             statusmessage = "Hmmm seems like I fucked up";
+            JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Random));
             break;
     }
 }
@@ -40,5 +48,5 @@
         <h2>@statusCode</h2>
         <h3>@statusmessage</h3>
     </div>
-    <img src="@gif.Data.ImageOriginalUrl"/>
+    <img src="@gif?.Data.ImageOriginalUrl"/>
 </div>

@@ -1,9 +1,11 @@
 ﻿@using DinWebsite.ExternalModels.Content
+@using DinWebsite.Logic
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
 
 @{
-    var gif = JsonConvert.DeserializeObject<GiphyContainer>(Context.Session.GetString("Gif"));
+    var contentManager = new ContentManager();
+    var gif = JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Logout));
 }
 
 @section CSS {
