@@ -19,8 +19,6 @@ C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\D
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.ExternalModels.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.ExternalModels.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.csprojResolveAssemblyReference.cache
-C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.Properties.PrivateStrings.resources
-C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.csproj.GenerateResource.Cache
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.csproj.CoreCompileInputs.cache
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.AssemblyInfoInputs.cache
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.AssemblyInfo.cs

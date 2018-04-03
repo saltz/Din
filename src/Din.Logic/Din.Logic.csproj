@@ -13,19 +13,4 @@
     <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\PrivateStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PrivateStrings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\PrivateStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PrivateStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

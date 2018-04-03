@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Din.ExternalModels.Content;
@@ -14,10 +15,23 @@ namespace Din.Logic
         private TmdbSystem _tmdbSystem;
         private MediaSystem.MediaSystem _mediaSystem;
         private DownloadSystem.DownloadSystem _downloadSystem;
+        private readonly PropertyFile _propertyFile;
+
+        public ContentManager()
+        {
+            try
+            {
+                _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Din\\properties"));
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("Property file not found");
+            }
+        }
 
         public string GenerateBackground()
         {
-            var httpRequest = new HttpRequestHelper(Properties.PrivateStrings.unsplash);
+            var httpRequest = new HttpRequestHelper(_propertyFile.get("unsplash"));
             return httpRequest.PerformGetRequest();
         }
 
@@ -28,19 +42,19 @@ namespace Din.Logic
             switch (query)
             {
                 case GiphyQuery.PageNotFound:
-                    httpRequest = new HttpRequestHelper(Properties.PrivateStrings.giphyPageNotFound);
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyPageNotFound"));
                     break;
                 case GiphyQuery.Forbidden:
-                    httpRequest = new HttpRequestHelper(Properties.PrivateStrings.giphyForbidden);
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyForbidden"));
                     break;
                 case GiphyQuery.Logout:
-                    httpRequest = new HttpRequestHelper(Properties.PrivateStrings.giphyLogout);
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyLogout"));
                     break;
                 case GiphyQuery.ServerError:
-                    httpRequest = new HttpRequestHelper(Properties.PrivateStrings.giphyServerError);
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyServerError"));
                     break;
                 default:
-                    httpRequest = new HttpRequestHelper(Properties.PrivateStrings.giphyRandom);
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"));
                     break;
             }
             return httpRequest.PerformGetRequest();
@@ -48,14 +62,14 @@ namespace Din.Logic
 
         public List<SearchMovie> TmdbSearchMovie(string searchQuery)
         {
-            _tmdbSystem = new TmdbSystem(Properties.PrivateStrings.tmdb);
+            _tmdbSystem = new TmdbSystem(_propertyFile.get("tmdb"));
             return _tmdbSystem.SearchMovie(searchQuery);
         }
 
         //TODO
         public bool MediaSystemAddMovie(SearchMovie movie, Object userAdObject)
         {
-            _mediaSystem = new MediaSystem.MediaSystem(Properties.PrivateStrings.mediaSystem);
+            _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
             var responseCode = _mediaSystem.AddMovie(movie);
             if (!responseCode.Equals(400))
             {
@@ -68,7 +82,7 @@ namespace Din.Logic
 
         public List<int> MediaSystemGetCurrentMovies()
         {
-            _mediaSystem = new MediaSystem.MediaSystem(Properties.PrivateStrings.mediaSystem);
+            _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
             return _mediaSystem.GetCurrentMovies();
         }
 
