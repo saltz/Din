@@ -1,0 +1,40 @@
+﻿@using Din.ExternalModels.Content
+@using Din.Logic
+@using Newtonsoft.Json
+
+@{
+    var contentManager = new ContentManager();
+    var gif = JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Logout));
+}
+
+@section CSS {
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/GifPage.css" />
+    <style>
+        .msg-container {
+            top: 45%;
+            width: 1000px;
+            left:calc(50% - 500px);
+        }
+
+         .msg-container h3 {
+             font-size: 70px;
+         }
+    </style>
+}
+
+<div class="gif-container">
+    <div class="msg-container">
+        <h3>smell ya later</h3>
+    </div>
+    <img src="@gif.Data.ImageOriginalUrl" />
+</div>
+
+@section scripts {
+    <script>
+        window.setTimeout(function(){
+            window.location.href='https://thedin.nl';
+        }, 5000);
+    </script>
+}
+

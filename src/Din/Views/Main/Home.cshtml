@@ -1,0 +1,103 @@
+﻿@using Din.ExternalModels.Content
+@using Din.ExternalModels.Entities
+@using Din.Logic
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section CSS {
+    <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
+}
+
+@if (Context.Session.GetString("User") != null)
+{
+    Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+    Context.Response.Headers.Add("Pragma", "no-cache");
+    Context.Response.Headers.Add("Expires", "0");
+
+    var contentManager = new ContentManager();
+    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
+    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            @{
+                var image = images[0].Urls.Custom;
+                images.Remove(images[0]);
+                <div class="carousel-item active"><img src="@image" /></div>
+                foreach (var i in images)
+                {
+                    <div class="carousel-item"><img src="@i.Urls.Custom" /></div>
+                }
+            }
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div clas="row">
+            <div class="col-sm-2">
+                <div class="user-name">
+                    <h3>@user.FirstName @user.LastName</h3>
+                </div>
+            </div>
+            <div class="col-sm-2 offset-sm-10">
+                <div class="menu menu--closed">
+                    <span class="oi oi-menu menu-button"></span>
+                    <div class="items items--hidden">
+                        <a href="#">Account<span class="oi oi-person"></span></a>
+                        <a href="@Url.Action("Logout", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-page-content container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h1>Add a Movie</h1>
+            </div>
+            <div class="col-sm-4">
+                <h1>Launch Client</h1>
+            </div>
+            <div class="col-sm-4">
+                <h1>Add a TV Show</h1>
+            </div>
+        </div>
+    </div>
+
+
+
+    @section scripts {
+        <script>
+            $(document).ready(function () {
+                $('.carousel').carousel({
+                    interval: 5000
+                })
+                var Menu = {
+
+                    body: $('.menu'),
+                    button: $('.menu-button'),
+                    tools: $('.items')
+
+                };
+
+                Menu.button.click(function () {
+                    Menu.body.toggleClass('menu--closed');
+                    Menu.body.toggleClass('menu--open');
+                    Menu.tools.toggleClass('items--visible');
+                    Menu.tools.toggleClass('items--hidden');
+                });
+
+
+            });
+        </script>
+    }
+
+}
+else
+{
+    @Url.Action("Index", "Main");
+}
+

@@ -1,0 +1,28 @@
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.deps.json
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.json
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.dev.json
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.pdb
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.csproj.CoreCompileInputs.cache
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.AssemblyInfoInputs.cache
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.AssemblyInfo.cs
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.pdb
+C:\Users\Dane\Documents\Visual Studio 2017\Projects\DinWebsite\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.csprojResolveAssemblyReference.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.deps.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.dev.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.Database.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.Logic.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.Logic.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Debug\netcoreapp2.0\DinWebsite.Database.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.csprojResolveAssemblyReference.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.csproj.CoreCompileInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.AssemblyInfoInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.AssemblyInfo.cs
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Debug\netcoreapp2.0\DinWebsite.pdb

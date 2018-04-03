@@ -1,0 +1,10 @@
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Any CPU\Debug\netcoreapp2.0\DinWebsite.deps.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Any CPU\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Any CPU\Debug\netcoreapp2.0\DinWebsite.runtimeconfig.dev.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Any CPU\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\bin\Any CPU\Debug\netcoreapp2.0\DinWebsite.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Any CPU\Debug\netcoreapp2.0\DinWebsite.csproj.CoreCompileInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Any CPU\Debug\netcoreapp2.0\DinWebsite.AssemblyInfoInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Any CPU\Debug\netcoreapp2.0\DinWebsite.AssemblyInfo.cs
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Any CPU\Debug\netcoreapp2.0\DinWebsite.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite\obj\Any CPU\Debug\netcoreapp2.0\DinWebsite.pdb

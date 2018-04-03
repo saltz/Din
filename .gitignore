@@ -427,5 +427,9 @@ typings/
 # By default, sensitive information, such as encrypted password
 # should be stored in the .pubxml.user file.
 
+### Custom Ignores ###
+
+src/DinWebsite.Logic/Properties/PrivateStrings.resx
+src/DinWebsite.Logic/Properties/PrivateStrings.Designer.cs
 
 # End of https://www.gitignore.io/api/aspnetcore,visualstudio,visualstudiocode

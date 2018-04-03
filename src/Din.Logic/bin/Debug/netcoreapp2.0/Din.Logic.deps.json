@@ -1,0 +1,97 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0",
+    "signature": "ce65a2c87b2b625eb07a4972d532362d862204ff"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {
+      "Din.Logic/1.0.0": {
+        "dependencies": {
+          "Din.ExternalModels": "1.0.0",
+          "MediaBrowser.ApiClient": "3.1.0",
+          "TMDbLib": "1.0.0"
+        },
+        "runtime": {
+          "Din.Logic.dll": {}
+        }
+      },
+      "MediaBrowser.ApiClient/3.1.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "MediaBrowser.Common": "3.3.10"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Emby.ApiClient.dll": {}
+        }
+      },
+      "MediaBrowser.Common/3.3.10": {
+        "runtime": {
+          "lib/netstandard1.3/MediaBrowser.Common.dll": {},
+          "lib/netstandard1.3/MediaBrowser.Model.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "TMDbLib/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netcoreapp1.0/TMDbLib.dll": {}
+        }
+      },
+      "Din.ExternalModels/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "Din.ExternalModels.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Din.Logic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MediaBrowser.ApiClient/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CzHHBgp2fSgNrnfjBWWWbkRF+TXXcLwJdO72N4mNswpcOGDNRvbKgHhgAiJu8oaakXqOKMtSvKmns3Izcv/LBw==",
+      "path": "mediabrowser.apiclient/3.1.0",
+      "hashPath": "mediabrowser.apiclient.3.1.0.nupkg.sha512"
+    },
+    "MediaBrowser.Common/3.3.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iit0fh3ZedQHi9W1+NBTDpXH3pTDiGUI331M+t3EN2GlAdvxCJ4qD/LdOWzD6KtGxdbv9t0qpHgfRhxzoGgsfg==",
+      "path": "mediabrowser.common/3.3.10",
+      "hashPath": "mediabrowser.common.3.3.10.nupkg.sha512"
+    },
+    "Newtonsoft.Json/11.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "path": "newtonsoft.json/11.0.2",
+      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    },
+    "TMDbLib/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rmZM2/OFEiUjqvSvTjSRQkSZ1osJWui68meQE4cIJLZ/SGbzQvI29LLMMdpTfxfr3L9VHWYLShyHd+wxRIuNvg==",
+      "path": "tmdblib/1.0.0",
+      "hashPath": "tmdblib.1.0.0.nupkg.sha512"
+    },
+    "Din.ExternalModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

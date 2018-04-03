@@ -1,0 +1,9 @@
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.deps.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.csprojResolveAssemblyReference.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.csproj.CoreCompileInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.AssemblyInfoInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.AssemblyInfo.cs
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.ExternalModels\obj\Debug\netcoreapp2.0\DinWebsite.ExternalModels.pdb

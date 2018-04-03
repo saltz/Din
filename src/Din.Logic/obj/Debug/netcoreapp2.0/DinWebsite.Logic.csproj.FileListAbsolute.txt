@@ -1,0 +1,15 @@
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.Logic.deps.json
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.Logic.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.Logic.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.Database.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.Database.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\bin\Debug\netcoreapp2.0\DinWebsite.ExternalModels.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.csprojResolveAssemblyReference.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.csproj.CoreCompileInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.AssemblyInfoInputs.cache
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.AssemblyInfo.cs
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.dll
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.pdb
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.Properties.PrivateStrings.resources
+C:\Users\Dane\Documents\git_projects\DinWebsite\src\DinWebsite.Logic\obj\Debug\netcoreapp2.0\DinWebsite.Logic.csproj.GenerateResource.Cache
