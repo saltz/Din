@@ -1,0 +1,39 @@
+﻿@using Din.ExternalModels.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+
+@{
+    if (Context.Session.GetString("User") != null)
+    {
+        Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+        Context.Response.Headers.Add("Pragma", "no-cache");
+        Context.Response.Headers.Add("Expires", "0");
+
+        var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
+        if (user.Account.Role.Equals(AccountRoll.Admin))
+        {
+            @section CSS {
+                
+            }
+
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Admin Panel</h1>
+                </div>
+            </div>
+
+            @section scripts {
+                <script src="~/lib/tabler/js/dashboard.js"></script>
+            }
+        }
+        else
+        {
+            Url.Action("Index", "Main");
+        }
+    }
+    else
+    {
+        Url.Action("Index", "Main");
+    }
+}
+

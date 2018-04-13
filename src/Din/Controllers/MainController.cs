@@ -12,7 +12,14 @@ namespace Din.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return HttpContext.Session.GetString("User") != null ? View("Home") : View();
+        }
+
+        public IActionResult GoBackAndClean()
+        {
+            HttpContext.Session.Remove("searchResult");
+            HttpContext.Session.Remove("currentMovies");
+            return RedirectToAction("Index");
         }
     }
 }

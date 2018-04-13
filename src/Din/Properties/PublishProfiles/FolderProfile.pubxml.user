@@ -8,4 +8,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\Users\Dane\Desktop\publish_debug</_PublishTargetUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <File Include="Startup.cs">
+      <publishTime>04/02/2018 13:56:18</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

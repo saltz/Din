@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Din.Data;
+using Din.Logic.BrowserDetection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace Din.Controllers
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
+                    HttpContext.Session.SetString("UserAgent", Request.Headers["User-Agent"].ToString());
                     HttpContext.Session.SetString("User", serializedUser);
                     return View("../Main/Home");
                 }

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "469d68d6c483a1349ddb007a4ee3debb5aa5032c"
+    "signature": "05c2a025ec8fdc89b741e72b2312c1023ee1d37f"
   },
   "compilationOptions": {
     "defines": [
@@ -4106,16 +4106,15 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
-      "TMDbLib/1.0.0": {
+      "UAParser/3.0.0": {
         "dependencies": {
-          "NETStandard.Library": "2.0.0",
-          "Newtonsoft.Json": "11.0.2"
+          "NETStandard.Library": "2.0.0"
         },
         "runtime": {
-          "lib/netcoreapp1.0/TMDbLib.dll": {}
+          "lib/netstandard1.3/UAParser.dll": {}
         },
         "compile": {
-          "lib/netcoreapp1.0/TMDbLib.dll": {}
+          "lib/netstandard1.3/UAParser.dll": {}
         }
       },
       "WindowsAzure.Storage/8.1.4": {
@@ -4159,13 +4158,25 @@
         "dependencies": {
           "Din.ExternalModels": "1.0.0",
           "MediaBrowser.ApiClient": "3.1.0",
-          "TMDbLib": "1.0.0"
+          "TMDbLib": "1.0.0",
+          "UAParser": "3.0.0"
         },
         "runtime": {
           "Din.Logic.dll": {}
         },
         "compile": {
           "Din.Logic.dll": {}
+        }
+      },
+      "TMDbLib/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "TMDbLib.dll": {}
+        },
+        "compile": {
+          "TMDbLib.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.0.0": {
@@ -6501,12 +6512,12 @@
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
     },
-    "TMDbLib/1.0.0": {
+    "UAParser/3.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rmZM2/OFEiUjqvSvTjSRQkSZ1osJWui68meQE4cIJLZ/SGbzQvI29LLMMdpTfxfr3L9VHWYLShyHd+wxRIuNvg==",
-      "path": "tmdblib/1.0.0",
-      "hashPath": "tmdblib.1.0.0.nupkg.sha512"
+      "sha512": "sha512-q3HQawDOf6+8lzYyc+WDSPO2Sz0F5SpD7jaBm22bBy1i1/DtHTw7rPfuX5J7IRDVXxkJXp5QTL1NIvXCaKTkvQ==",
+      "path": "uaparser/3.0.0",
+      "hashPath": "uaparser.3.0.0.nupkg.sha512"
     },
     "WindowsAzure.Storage/8.1.4": {
       "type": "package",
@@ -6526,6 +6537,11 @@
       "sha512": ""
     },
     "Din.Logic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TMDbLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

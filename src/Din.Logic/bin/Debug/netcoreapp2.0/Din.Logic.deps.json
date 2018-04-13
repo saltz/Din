@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "ce65a2c87b2b625eb07a4972d532362d862204ff"
+    "signature": "5909ea10dcf00874ba31bd7549ef9b2183403a4b"
   },
   "compilationOptions": {},
   "targets": {
@@ -10,7 +10,8 @@
         "dependencies": {
           "Din.ExternalModels": "1.0.0",
           "MediaBrowser.ApiClient": "3.1.0",
-          "TMDbLib": "1.0.0"
+          "TMDbLib": "1.0.0",
+          "UAParser": "3.0.0"
         },
         "runtime": {
           "Din.Logic.dll": {}
@@ -36,12 +37,9 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "TMDbLib/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "11.0.2"
-        },
+      "UAParser/3.0.0": {
         "runtime": {
-          "lib/netcoreapp1.0/TMDbLib.dll": {}
+          "lib/netstandard1.3/UAParser.dll": {}
         }
       },
       "Din.ExternalModels/1.0.0": {
@@ -50,6 +48,14 @@
         },
         "runtime": {
           "Din.ExternalModels.dll": {}
+        }
+      },
+      "TMDbLib/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "TMDbLib.dll": {}
         }
       }
     }
@@ -81,14 +87,19 @@
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
-    "TMDbLib/1.0.0": {
+    "UAParser/3.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rmZM2/OFEiUjqvSvTjSRQkSZ1osJWui68meQE4cIJLZ/SGbzQvI29LLMMdpTfxfr3L9VHWYLShyHd+wxRIuNvg==",
-      "path": "tmdblib/1.0.0",
-      "hashPath": "tmdblib.1.0.0.nupkg.sha512"
+      "sha512": "sha512-q3HQawDOf6+8lzYyc+WDSPO2Sz0F5SpD7jaBm22bBy1i1/DtHTw7rPfuX5J7IRDVXxkJXp5QTL1NIvXCaKTkvQ==",
+      "path": "uaparser/3.0.0",
+      "hashPath": "uaparser.3.0.0.nupkg.sha512"
     },
     "Din.ExternalModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TMDbLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

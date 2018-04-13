@@ -3,12 +3,14 @@
 @using Din.Logic
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
+@using UAParser
 
 @{
     ViewData["Title"] = "Home";
 }
 
 @section CSS {
+    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
 }
 
@@ -21,6 +23,7 @@
     var contentManager = new ContentManager();
     var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
+    var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
 
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
@@ -35,34 +38,80 @@
             }
         </div>
     </div>
-    <div class="container-fluid">
-        <div clas="row">
-            <div class="col-sm-2">
-                <div class="user-name">
-                    <h3>@user.FirstName @user.LastName</h3>
-                </div>
-            </div>
-            <div class="col-sm-2 offset-sm-10">
-                <div class="menu menu--closed">
-                    <span class="oi oi-menu menu-button"></span>
-                    <div class="items items--hidden">
-                        <a href="#">Account<span class="oi oi-person"></span></a>
-                        <a href="@Url.Action("Logout", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
-                    </div>
-                </div>
+    <div class="container header">
+        <div class="user-name">
+            <i class="fab fa-@client.UserAgent.Family.ToLower()"></i>
+            <h3>@user.FirstName @user.LastName</h3>
+        </div>
+        <div class="menu menu--closed">
+            <span class="oi oi-menu menu-button"></span>
+            <div class="items items--hidden">
+                <a href="#">Account<span class="oi oi-person"></span></a>
+                @if (user.Account.Role.Equals(AccountRoll.Admin))
+                {
+                    <a href="@Url.Action("Index", "Admin")">Admin Panel<span class="oi oi-terminal"></span></a>
+                }
+                <a href="@Url.Action("Logout", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
             </div>
         </div>
     </div>
     <div class="main-page-content container">
         <div class="row">
             <div class="col-sm-4">
-                <h1>Add a Movie</h1>
+                <div class="app-container" data-toggle="modal" data-target="#add-movie">
+                    <i class="fa fa-film"></i>
+                    <h3>Add Movie</h3>
+                </div>
             </div>
             <div class="col-sm-4">
-                <h1>Launch Client</h1>
+                <div class="app-container">
+                    <i class="fa fa-play-circle"></i>
+                    <h3>Launch Client</h3>
+                </div>
             </div>
             <div class="col-sm-4">
-                <h1>Add a TV Show</h1>
+                <div class="app-container" data-toggle="modal" data-target="#add-tvshow">
+                    <i class="fa fa-tv"></i>
+                    <h3>Add Tv Show</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-movie" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="custom-modal-header">
+                    <i class="fas fa-times" data-dismiss="modal"></i>
+                    <h3>Add A Movie</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Enter the name of the movie you want to add</p>
+                    <form method="post" action="@Url.Action("SearchMovie", "Content")">
+                        <i class="fas fa-search"></i>
+                        <input type="search" id="search" name="searchQuery" placeholder="Search..."/>
+                        <input id="submit-button" type="submit" value="search"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-tvshow" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="custom-modal-header">
+                    <i class="fas fa-times" data-dismiss="modal"></i>
+                    <h3>Add A Tv Show</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Enter the name of the Tv Show you want to add</p>
+                    <form method="post" action="@Url.Action("SearchTvShow", "Content")">
+                        <i class="fas fa-search"></i>
+                        <input type="search" id="search" name="searchQuery" placeholder="Search..."/>
+                        <input id="submit-button" type="submit" value="search"/>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

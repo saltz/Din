@@ -49,9 +49,12 @@ namespace Din
                     defaults: new { controller = "Authentication", action = "Login" });
                 routes.MapRoute("Logout", "Logout",
                     defaults: new {controller = "Authentication", action = "Logout"});
+                routes.MapRoute("SearchMovie", "MovieResults",
+                    defaults: new {controller = "Content", Action = "SearchMovie"});
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
+           
             });
         }
     }

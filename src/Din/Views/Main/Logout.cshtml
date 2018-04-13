@@ -3,6 +3,10 @@
 @using Newtonsoft.Json
 
 @{
+    Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+    Context.Response.Headers.Add("Pragma", "no-cache");
+    Context.Response.Headers.Add("Expires", "0");
+
     var contentManager = new ContentManager();
     var gif = JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Logout));
 }

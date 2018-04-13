@@ -18,5 +18,6 @@ C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Di
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.csproj.CoreCompileInputs.cache
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.AssemblyInfoInputs.cache
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.AssemblyInfo.cs
+C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.csproj.CopyComplete
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Data\obj\Debug\netcoreapp2.0\Din.Data.pdb
