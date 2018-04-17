@@ -27,8 +27,6 @@ C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.Data.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.ExternalModels.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.Logic.dll
-C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\TMDbLib.dll
-C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\TMDbLib.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.Data.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.ExternalModels.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din\bin\Debug\netcoreapp2.0\Din.Logic.pdb

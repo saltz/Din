@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
+    <PackageReference Include="TMDbLib" Version="1.2.0-alpha" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\lib\TMDbLib\TMDbLib.csproj" />
     <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
     <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
     <ProjectReference Include="..\Din.Logic\Din.Logic.csproj" />

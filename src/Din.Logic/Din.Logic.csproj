@@ -6,11 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="MediaBrowser.ApiClient" Version="3.1.0" />
+    <PackageReference Include="TMDbLib" Version="1.2.0-alpha" />
     <PackageReference Include="UAParser" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\lib\TMDbLib\TMDbLib.csproj" />
+    <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
     <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
   </ItemGroup>
 

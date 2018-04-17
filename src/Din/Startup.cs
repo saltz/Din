@@ -23,7 +23,7 @@ namespace Din
             services.AddDistributedMemoryCache();
             services.AddSession(options => { options.Cookie.Name = "DinCookie"; });
             var mysqlConnectionString = Configuration.GetConnectionString("MysqlConnectionString");
-            services.AddDbContext<DinWebsiteContext>(options =>
+            services.AddDbContext<DinContext>(options =>
                 options.UseMySql(
                     mysqlConnectionString)
             );

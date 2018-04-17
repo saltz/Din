@@ -5064,6 +5064,20 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "TMDbLib/1.2.0-alpha": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Net.Http": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.2/TMDbLib.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.2/TMDbLib.dll": {}
+        }
+      },
       "UAParser/3.0.0": {
         "type": "package",
         "dependencies": {
@@ -5122,9 +5136,10 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
+          "Din.Data": "1.0.0",
           "Din.ExternalModels": "1.0.0",
           "MediaBrowser.ApiClient": "3.1.0",
-          "TMDbLib": "1.0.0",
+          "TMDbLib": "1.2.0-alpha",
           "UAParser": "3.0.0"
         },
         "compile": {
@@ -5132,19 +5147,6 @@
         },
         "runtime": {
           "bin/placeholder/Din.Logic.dll": {}
-        }
-      },
-      "TMDbLib/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.0",
-        "dependencies": {
-          "Newtonsoft.Json": "11.0.2"
-        },
-        "compile": {
-          "bin/placeholder/TMDbLib.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/TMDbLib.dll": {}
         }
       }
     }
@@ -13217,6 +13219,17 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "TMDbLib/1.2.0-alpha": {
+      "sha512": "0yv4oqNLOUt42Nds6mSJNlwqY/aRkUqHrbDsX0097W5B/kNu+OkOzpiWjkXUVcl2CYk1HegY/Qe9GMmcICbLcw==",
+      "type": "package",
+      "path": "tmdblib/1.2.0-alpha",
+      "files": [
+        "lib/net45/TMDbLib.dll",
+        "lib/netstandard1.2/TMDbLib.dll",
+        "tmdblib.1.2.0-alpha.nupkg.sha512",
+        "tmdblib.nuspec"
+      ]
+    },
     "UAParser/3.0.0": {
       "sha512": "q3HQawDOf6+8lzYyc+WDSPO2Sz0F5SpD7jaBm22bBy1i1/DtHTw7rPfuX5J7IRDVXxkJXp5QTL1NIvXCaKTkvQ==",
       "type": "package",
@@ -13266,11 +13279,6 @@
       "type": "project",
       "path": "../Din.Logic/Din.Logic.csproj",
       "msbuildProject": "../Din.Logic/Din.Logic.csproj"
-    },
-    "TMDbLib/1.0.0": {
-      "type": "project",
-      "path": "../../lib/TMDbLib/TMDbLib.csproj",
-      "msbuildProject": "../../lib/TMDbLib/TMDbLib.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -13283,7 +13291,7 @@
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.3",
       "Pomelo.EntityFrameworkCore.MySql >= 2.0.1",
-      "TMDbLib >= 1.0.0"
+      "TMDbLib >= 1.2.0-alpha"
     ]
   },
   "packageFolders": {
@@ -13319,9 +13327,6 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\Dane\\Documents\\git_projects\\Din\\lib\\TMDbLib\\TMDbLib.csproj": {
-              "projectPath": "C:\\Users\\Dane\\Documents\\git_projects\\Din\\lib\\TMDbLib\\TMDbLib.csproj"
-            },
             "C:\\Users\\Dane\\Documents\\git_projects\\Din\\src\\Din.Data\\Din.Data.csproj": {
               "projectPath": "C:\\Users\\Dane\\Documents\\git_projects\\Din\\src\\Din.Data\\Din.Data.csproj"
             },
@@ -13363,6 +13368,10 @@
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
             "version": "[2.0.1, )"
+          },
+          "TMDbLib": {
+            "target": "Package",
+            "version": "[1.2.0-alpha, )"
           }
         },
         "imports": [

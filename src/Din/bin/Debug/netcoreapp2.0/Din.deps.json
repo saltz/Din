@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "05c2a025ec8fdc89b741e72b2312c1023ee1d37f"
+    "signature": "c7aadcfdd87d1f3abf2880f21285f047cb2ecfdc"
   },
   "compilationOptions": {
     "defines": [
@@ -30,8 +30,7 @@
           "Microsoft.AspNetCore.All": "2.0.6",
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.3",
-          "Pomelo.EntityFrameworkCore.MySql": "2.0.1",
-          "TMDbLib": "1.0.0"
+          "Pomelo.EntityFrameworkCore.MySql": "2.0.1"
         },
         "runtime": {
           "Din.dll": {}
@@ -4106,6 +4105,19 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
+      "TMDbLib/1.2.0-alpha": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Net.Http": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.2/TMDbLib.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.2/TMDbLib.dll": {}
+        }
+      },
       "UAParser/3.0.0": {
         "dependencies": {
           "NETStandard.Library": "2.0.0"
@@ -4156,9 +4168,10 @@
       },
       "Din.Logic/1.0.0": {
         "dependencies": {
+          "Din.Data": "1.0.0",
           "Din.ExternalModels": "1.0.0",
           "MediaBrowser.ApiClient": "3.1.0",
-          "TMDbLib": "1.0.0",
+          "TMDbLib": "1.2.0-alpha",
           "UAParser": "3.0.0"
         },
         "runtime": {
@@ -4166,17 +4179,6 @@
         },
         "compile": {
           "Din.Logic.dll": {}
-        }
-      },
-      "TMDbLib/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "11.0.2"
-        },
-        "runtime": {
-          "TMDbLib.dll": {}
-        },
-        "compile": {
-          "TMDbLib.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.0.0": {
@@ -6512,6 +6514,13 @@
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
     },
+    "TMDbLib/1.2.0-alpha": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0yv4oqNLOUt42Nds6mSJNlwqY/aRkUqHrbDsX0097W5B/kNu+OkOzpiWjkXUVcl2CYk1HegY/Qe9GMmcICbLcw==",
+      "path": "tmdblib/1.2.0-alpha",
+      "hashPath": "tmdblib.1.2.0-alpha.nupkg.sha512"
+    },
     "UAParser/3.0.0": {
       "type": "package",
       "serviceable": true,
@@ -6537,11 +6546,6 @@
       "sha512": ""
     },
     "Din.Logic/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "TMDbLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

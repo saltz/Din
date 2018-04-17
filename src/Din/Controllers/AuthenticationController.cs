@@ -11,9 +11,9 @@ namespace Din.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly DinWebsiteContext _context;
+        private readonly DinContext _context;
 
-        public AuthenticationController(DinWebsiteContext context)
+        public AuthenticationController(DinContext context)
         {
             _context = context;
         }

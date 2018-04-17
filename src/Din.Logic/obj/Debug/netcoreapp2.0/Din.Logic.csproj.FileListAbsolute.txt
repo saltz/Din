@@ -21,9 +21,9 @@ C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\D
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.Logic.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.Logic.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.ExternalModels.dll
-C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\TMDbLib.dll
-C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\TMDbLib.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.ExternalModels.pdb
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.csproj.CopyComplete
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.dll
 C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\obj\Debug\netcoreapp2.0\Din.Logic.pdb
+C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.Data.dll
+C:\Users\Dane\Documents\git_projects\Din\src\Din.Logic\bin\Debug\netcoreapp2.0\Din.Data.pdb

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Din.Data;
 using Din.ExternalModels.Content;
 using Din.ExternalModels.DownloadClient;
+using Din.ExternalModels.Entities;
 using Din.Logic.TMDB;
 using TMDbLib.Objects.Search;
 
@@ -53,6 +55,9 @@ namespace Din.Logic
                 case GiphyQuery.ServerError:
                     httpRequest = new HttpRequestHelper(_propertyFile.get("giphyServerError"));
                     break;
+                case GiphyQuery.Random:
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"));
+                    break;
                 default:
                     httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"));
                     break;
@@ -66,25 +71,23 @@ namespace Din.Logic
             return _tmdbSystem.SearchMovie(searchQuery);
         }
 
-        //TODO
-        public bool MediaSystemAddMovie(SearchMovie movie, Object userAdObject)
-        {
-            _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
-            var responseCode = _mediaSystem.AddMovie(movie);
-            if (!responseCode.Equals(400))
-            {
-                // ReportEvent(userAdObject, movie.Title, "added"); SUCCESS
-                return true;
-            }
-            //  ReportEvent(userAdObject, movie.Title, "failed to add"); FAILED
-            return false;
-        }
-
         public List<int> MediaSystemGetCurrentMovies()
         {
             _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
             return _mediaSystem.GetCurrentMovies();
         }
+
+        //TODO
+        public bool MediaSystemAddMovie(SearchMovie movie, Account account)
+        {
+            _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
+            var responseCode = _mediaSystem.AddMovie(movie);
+            if (responseCode.Equals(400)) return false;
+            LogContent(movie, account); 
+            return true;
+        }
+
+        
 
         //TODO
         //public static List<ContentStatusObject> GetContentStatus(Object user)
@@ -116,6 +119,11 @@ namespace Din.Logic
         //            break;
         //        }
         //}
+
+        private void LogContent(SearchMovie m, Account a)
+        {
+            
+        }
 
         private string[] FixNames(string title1, string title2)
         {

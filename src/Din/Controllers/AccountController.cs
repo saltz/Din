@@ -5,9 +5,9 @@ namespace Din.Controllers
 {
     public class AccountController : Controller
     {
-        private DinWebsiteContext _context;
+        private DinContext _context;
 
-        public AccountController(DinWebsiteContext context)
+        public AccountController(DinContext context)
         {
             _context = context;
         }

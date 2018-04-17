@@ -25,8 +25,7 @@ namespace Din.ExternalModels.Entities
         public string Hash { get; set; }
         public AccountRoll Role { get; set; }
         public User User { get; set; }
-
-        public ICollection<AddedMovie> AddedMovies { get; set; }
+        public ICollection<AddedContent> AddedContent { get; set; }
         public int UserRef { get; set; }
 
         public Account() { }
