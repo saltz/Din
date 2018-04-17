@@ -13,7 +13,6 @@ namespace Din.Controllers
         }
         public void CreateUser()
         {
-
         }
 
         public void GetUser()

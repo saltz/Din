@@ -37,7 +37,7 @@ namespace Din.Logic.MediaSystem
             return movieIds;
         }
 
-        private List<AddedMovie> CheckIfItemIsCompleted(List<AddedMovie> items)
+        private List<AddedContent> CheckIfItemIsCompleted(List<AddedContent> items)
         {
             //TODO SORT OUT THIS CODE
             var httpRequest = new HttpRequestHelper(_url);  
@@ -45,7 +45,7 @@ namespace Din.Logic.MediaSystem
             foreach (var i in items)
             foreach (var m in objects)
             {
-                if (!i.MovieName.Equals(m.Title)) continue;
+                if (!i.Title.Equals(m.Title)) continue;
                 if (!m.Downloaded) continue;
                 i.Status = ContentStatus.Downloaded;
                 // databaseContent.UpdateItemStatus(i);

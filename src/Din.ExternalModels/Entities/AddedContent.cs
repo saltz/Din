@@ -3,7 +3,7 @@
 namespace Din.ExternalModels.Entities
 {
 
-    public abstract class AddedContent
+    public class AddedContent
     {
         public int ID { get; set; }
         public string Title { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Din.Data;
+using Din.ExternalModels.Entities;
 using Din.Logic.BrowserDetection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
