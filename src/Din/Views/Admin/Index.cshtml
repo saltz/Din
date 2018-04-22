@@ -5,10 +5,6 @@
 @{
     if (Context.Session.GetString("User") != null)
     {
-        Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-        Context.Response.Headers.Add("Pragma", "no-cache");
-        Context.Response.Headers.Add("Expires", "0");
-
         var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
         if (user.Account.Role.Equals(AccountRoll.Admin))
         {

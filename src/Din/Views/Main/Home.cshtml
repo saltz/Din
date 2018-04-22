@@ -7,6 +7,7 @@
 @using Newtonsoft.Json
 @using UAParser
 
+
 @{
     ViewData["Title"] = "Home";
 }
@@ -18,15 +19,12 @@
 
 @if (Context.Session.GetString("User") != null)
 {
-    Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-    Context.Response.Headers.Add("Pragma", "no-cache");
-    Context.Response.Headers.Add("Expires", "0");
-
     var contentManager = new ContentManager();
     var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
-    var contentAdded = JsonConvert.DeserializeObject(Context.Session.GetString("contentAdded"));
+
+    var user2 = Context.User;
 
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
@@ -92,8 +90,8 @@
                     <p>Enter the name of the movie you want to add</p>
                     <form method="post" action="@Url.Action("SearchMovie", "Content")">
                         <i class="fas fa-search"></i>
-                        <input type="search" id="search" name="searchQuery" placeholder="Search..."/>
-                        <input id="submit-button" type="submit" value="search"/>
+                        <input type="search" id="search" name="searchQuery" placeholder="Search..." />
+                        <input id="submit-button" type="submit" value="search" />
                     </form>
                 </div>
             </div>
@@ -111,25 +109,27 @@
                     <p>Enter the name of the Tv Show you want to add</p>
                     <form method="post" action="@Url.Action("SearchTvShow", "Content")">
                         <i class="fas fa-search"></i>
-                        <input type="search" id="search" name="searchQuery" placeholder="Search..."/>
-                        <input id="submit-button" type="submit" value="search"/>
+                        <input type="search" id="search" name="searchQuery" placeholder="Search..." />
+                        <input id="submit-button" type="submit" value="search" />
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    if (contentAdded != null)
+    if (Context.Session.GetString("contentAdded") != null)
     {
+        var message = JsonConvert.DeserializeObject<Dictionary<string, string>>(Context.Session.GetString("contentAdded"));
+
         <div id="content-added" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="custom-modal-header">
                         <i class="fas fa-times" data-dismiss="modal"></i>
-                        <h3 id="modal-title"></h3>
+                        <h3 id="modal-title">@message["title"]</h3>
                     </div>
                     <div class="modal-body">
-                        <p id="modal-message"></p>
+                        <p id="modal-message">@message["message"]</p>
                     </div>
                 </div>
             </div>
@@ -138,36 +138,39 @@
 
 
 
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            $('.carousel').carousel({
-                interval: 5000
-            })
-            var Menu = {
-
-                body: $('.menu'),
-                button: $('.menu-button'),
-                tools: $('.items')
-
-            };
-
-            Menu.button.click(function () {
-                Menu.body.toggleClass('menu--closed');
-                Menu.body.toggleClass('menu--open');
-                Menu.tools.toggleClass('items--visible');
-                Menu.tools.toggleClass('items--hidden');
-            });
-        });
-    </script>
-    
-    
-    @if(contentAdded != null) {
+    @section scripts {
         <script>
-            $('#content-added').modal('toggle');
+            $(document).ready(function () {
+                $('.carousel').carousel({
+                    interval: 5000
+                })
+                var Menu = {
+
+                    body: $('.menu'),
+                    button: $('.menu-button'),
+                    tools: $('.items')
+
+                };
+
+                Menu.button.click(function () {
+                    Menu.body.toggleClass('menu--closed');
+                    Menu.body.toggleClass('menu--open');
+                    Menu.tools.toggleClass('items--visible');
+                    Menu.tools.toggleClass('items--hidden');
+                });
+            });
         </script>
+
+
+        @if (Context.Session.GetString("contentAdded") != null)
+        {
+            <script>
+                $('#content-added').modal('toggle');
+            </script>
+
+            Context.Session.Remove("contentAdded");
+        }
     }
-}
 
 }
 else

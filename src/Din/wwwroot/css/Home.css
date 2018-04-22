@@ -19,7 +19,7 @@
 .carousel-item img {
     height: 100%;
     width: 100%;
-    filter: opacity(80%)
+    filter: opacity(90%)
 }
 
 .header {
@@ -30,7 +30,6 @@
     position: absolute;
     top: 2%;
     left: 2%;
-    filter: drop-shadow(0 0 0.6rem rgba(255,255,255, 0.2));
 }
 
 .user-name .fab {
@@ -85,8 +84,6 @@
         text-decoration: none;
         font-size: 20px;
         color: #212529;
-        filter: drop-shadow(0 0 0.6rem rgba(255,255,255, 0.2));
-
     }
 
         .items a:hover {
@@ -116,7 +113,6 @@
 .app-container {
     text-align: center;
     transition: 0.3s ease-in-out;
-    filter: drop-shadow(0 0 0.6rem rgba(255,255,255, 0.2));
 }
 
 .app-container:hover {

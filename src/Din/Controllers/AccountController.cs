@@ -1,4 +1,5 @@
 ﻿using Din.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Din.Controllers
@@ -11,10 +12,13 @@ namespace Din.Controllers
         {
             _context = context;
         }
+
+        [Authorize]
         public void CreateUser()
         {
         }
 
+        [Authorize]
         public void GetUser()
         {
 
