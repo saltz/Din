@@ -23,14 +23,14 @@ namespace Din.Logic.MediaSystem
         {
             var images = new List<MovieImage> { new MovieImage(movie.PosterPath) };
             var payload = new MediaSystemMovie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
-            var httpRequest = new HttpRequestHelper(_url);
-            return httpRequest.PerformPostRequest(JsonConvert.SerializeObject(payload), "application/json");
+            var httpRequest = new HttpRequestHelper(_url, false);
+            return httpRequest.PerformPostRequest(JsonConvert.SerializeObject(payload)).Item1;
         }
 
         public List<int> GetCurrentMovies()
         {
             var movieIds = new List<int>();
-            var httpRequest = new HttpRequestHelper(_url);
+            var httpRequest = new HttpRequestHelper(_url, false);
             var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(httpRequest.PerformGetRequest());
             foreach (var m in objects)
                 movieIds.Add(m.Tmdbid);
@@ -40,7 +40,7 @@ namespace Din.Logic.MediaSystem
         private List<AddedContent> CheckIfItemIsCompleted(List<AddedContent> items)
         {
             //TODO SORT OUT THIS CODE
-            var httpRequest = new HttpRequestHelper(_url);  
+            var httpRequest = new HttpRequestHelper(_url, false);  
             var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(httpRequest.PerformGetRequest());
             foreach (var i in items)
             foreach (var m in objects)

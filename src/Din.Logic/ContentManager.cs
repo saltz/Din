@@ -33,7 +33,7 @@ namespace Din.Logic
 
         public string GenerateBackground()
         {
-            var httpRequest = new HttpRequestHelper(_propertyFile.get("unsplash"));
+            var httpRequest = new HttpRequestHelper(_propertyFile.get("unsplash"), false);
             return httpRequest.PerformGetRequest();
         }
 
@@ -44,22 +44,22 @@ namespace Din.Logic
             switch (query)
             {
                 case GiphyQuery.PageNotFound:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyPageNotFound"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyPageNotFound"), false);
                     break;
                 case GiphyQuery.Forbidden:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyForbidden"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyForbidden"), false);
                     break;
                 case GiphyQuery.Logout:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyLogout"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyLogout"), false);
                     break;
                 case GiphyQuery.ServerError:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyServerError"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyServerError"), false);
                     break;
                 case GiphyQuery.Random:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"), false);
                     break;
                 default:
-                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"));
+                    httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"), false);
                     break;
             }
             return httpRequest.PerformGetRequest();
