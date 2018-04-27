@@ -23,12 +23,10 @@ namespace Din.Controllers
     public class AuthenticationController : Controller
     {
         private readonly DinContext _context;
-        private readonly IConfiguration _config;
 
-        public AuthenticationController(DinContext context, IConfiguration config)
+        public AuthenticationController(DinContext context)
         {
             _context = context;
-            _config = config;
         }
 
         [HttpPost, AllowAnonymous]

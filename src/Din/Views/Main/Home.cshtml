@@ -23,9 +23,7 @@
     var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
-
-    var user2 = Context.User;
-
+    
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             @{
@@ -177,4 +175,3 @@ else
 {
     @Url.Action("Index", "Main");
 }
-

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +15,7 @@ namespace Din.Controllers
         }
 
         // GET: /<controller>/
-        [HttpGet("/StatusCode/{statusCode}")]
+        [HttpGet("/StatusCode/{statusCode}"), AllowAnonymous]
         public IActionResult Index(int statusCode)
         {
             var reExecute = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();

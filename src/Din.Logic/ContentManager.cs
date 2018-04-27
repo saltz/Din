@@ -23,7 +23,8 @@ namespace Din.Logic
         {
             try
             {
-                _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Din\\properties"));
+                _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.UserProfile), "Din" + Path.DirectorySeparatorChar + "properties"));
             }
             catch (IOException)
             {
