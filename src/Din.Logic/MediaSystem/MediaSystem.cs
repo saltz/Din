@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.MediaSystem;
 using Newtonsoft.Json;
@@ -19,39 +20,38 @@ namespace Din.Logic.MediaSystem
            _url = url;
         }
 
-        public int AddMovie(SearchMovie movie)
+        public async Task<int> AddMovieAsync(SearchMovie movie)
         {
             var images = new List<MovieImage> { new MovieImage(movie.PosterPath) };
             var payload = new MediaSystemMovie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate));
             var httpRequest = new HttpRequestHelper(_url, false);
-            return httpRequest.PerformPostRequest(JsonConvert.SerializeObject(payload)).Item1;
+            var response = await httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload));
+            return response.Item1;
         }
 
-        public List<int> GetCurrentMovies()
+        public async Task<List<int>> GetCurrentMoviesAsync()
         {
             var movieIds = new List<int>();
             var httpRequest = new HttpRequestHelper(_url, false);
-            var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(httpRequest.PerformGetRequest());
+            var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(await httpRequest.PerformGetRequestAsync());
             foreach (var m in objects)
                 movieIds.Add(m.Tmdbid);
             return movieIds;
         }
 
-        private List<AddedContent> CheckIfItemIsCompleted(List<AddedContent> items)
+        public async Task<List<AddedContent>> CheckIfItemIsCompletedAsync(List<AddedContent> content)
         {
-            //TODO SORT OUT THIS CODE
             var httpRequest = new HttpRequestHelper(_url, false);  
-            var objects = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(httpRequest.PerformGetRequest());
-            foreach (var i in items)
-            foreach (var m in objects)
+            var current = JsonConvert.DeserializeObject<List<MediaSystemMovie>>(await httpRequest.PerformGetRequestAsync());
+            foreach (var i in content)
+            foreach (var m in current)
             {
                 if (!i.Title.Equals(m.Title)) continue;
                 if (!m.Downloaded) continue;
                 i.Status = ContentStatus.Downloaded;
-                // databaseContent.UpdateItemStatus(i);
                 break;
             }
-            return items;
+            return content;
         }
     }
 }

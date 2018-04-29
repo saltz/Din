@@ -17,17 +17,16 @@ namespace Din.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .ToTable("User")
+            modelBuilder.Entity<User>().ToTable("User")
                 .HasOne(u => u.Account)
                 .WithOne(a => a.User)
                 .HasForeignKey<Account>(a => a.UserRef);
-            modelBuilder.Entity<Account>()
-                .HasMany(a => a.AddedContent)
-                .WithOne(am => am.Account);
-            modelBuilder.Entity<Account>()
+            modelBuilder.Entity<Account>().ToTable("Account")
                 .HasIndex(a => a.Username)
                 .IsUnique();
+            modelBuilder.Entity<Account>()
+                .HasMany(a => a.AddedContent)
+                .WithOne(ac => ac.Account);
             modelBuilder.Entity<AddedContent>().ToTable("AddedContent");
         }
     }

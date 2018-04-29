@@ -1,0 +1,18 @@
+﻿ <div id="add-movie" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="custom-modal-header">
+                <i class="fas fa-times" data-dismiss="modal"></i>
+                <h3>Add A Movie</h3>
+            </div>
+            <div class="modal-body">
+                <p>Enter the name of the movie you want to add</p>
+                <form method="post" action="@Url.Action("SearchMovieAsync", "Content")">
+                    <i class="fas fa-search"></i>
+                    <input type="search" id="search" name="searchQuery" placeholder="Search..." />
+                    <input id="submit-button" type="submit" value="search" />
+                </form>
+             </div>
+         </div>
+     </div>
+ </div>

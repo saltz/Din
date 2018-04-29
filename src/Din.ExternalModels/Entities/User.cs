@@ -11,10 +11,11 @@ namespace Din.ExternalModels.Entities
 
         public User() { }
 
-        public User(string firstname, string lastname)
+        public User(string firstname, string lastname, Account account)
         {
             FirstName = firstname;
             LastName = lastname;
+            Account = account;
         }
     }
 
@@ -25,7 +26,7 @@ namespace Din.ExternalModels.Entities
         public string Hash { get; set; }
         public AccountRoll Role { get; set; }
         public User User { get; set; }
-        public ICollection<AddedContent> AddedContent { get; set; }
+        public List<AddedContent> AddedContent { get; set; }
         public int UserRef { get; set; }
 
         public Account() { }

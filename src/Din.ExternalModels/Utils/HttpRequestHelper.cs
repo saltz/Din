@@ -5,6 +5,7 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Din.Logic
 {
@@ -22,23 +23,23 @@ namespace Din.Logic
             _request.CookieContainer = cookies;
         }
 
-        public string PerformGetRequest()
+        public async Task<string> PerformGetRequestAsync()
         {
             _request.Method = "GET";
-            _response = (HttpWebResponse)_request.GetResponse();
+            _response = (HttpWebResponse) await _request.GetResponseAsync();
             using (var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
                 _result = sr.ReadToEnd();
             return _result;
         }
 
-        public Tuple<int, string> PerformPostRequest(string payload)
+        public async Task<Tuple<int, string>> PerformPostRequestAsync(string payload)
         {
             _request.Method = "POST";
             using (var sw = new StreamWriter(_request.GetRequestStream()))
                 sw.Write(payload);
             try
             {
-                _response = (HttpWebResponse)_request.GetResponse();
+                _response = (HttpWebResponse) await _request.GetResponseAsync();
                 using(var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
                     _result = sr.ReadToEnd();
                 return new Tuple<int, string>((int) _response.StatusCode, _result);

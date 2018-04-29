@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Content;
 using Din.ExternalModels.DownloadClient;
 using Din.ExternalModels.Entities;
 using Din.Logic.TMDB;
+using Microsoft.EntityFrameworkCore;
 using TMDbLib.Objects.Search;
 
 namespace Din.Logic
@@ -17,29 +20,28 @@ namespace Din.Logic
         private TmdbSystem _tmdbSystem;
         private MediaSystem.MediaSystem _mediaSystem;
         private DownloadSystem.DownloadSystem _downloadSystem;
-        private readonly PropertyFile _propertyFile;
+        private readonly DinContext _context;
+        private PropertyFile _propertyFile;
 
         public ContentManager()
         {
-            try
-            {
-                _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.UserProfile), "Din" + Path.DirectorySeparatorChar + "properties"));
-            }
-            catch (IOException)
-            {
-                Console.WriteLine("Property file not found");
-            }
+            InitilizeProperties();
         }
 
-        public string GenerateBackground()
+        public ContentManager(DinContext context)
+        {
+            InitilizeProperties();
+            _context = context;
+        }
+    
+        public async Task<string> GenerateBackgroundAsync()
         {
             var httpRequest = new HttpRequestHelper(_propertyFile.get("unsplash"), false);
-            return httpRequest.PerformGetRequest();
+            return await httpRequest.PerformGetRequestAsync();
         }
 
 
-        public string GetRandomGif(GiphyQuery query)
+        public async Task<string> GetRandomGifAsync(GiphyQuery query)
         {
             HttpRequestHelper httpRequest;
             switch (query)
@@ -63,67 +65,80 @@ namespace Din.Logic
                     httpRequest = new HttpRequestHelper(_propertyFile.get("giphyRandom"), false);
                     break;
             }
-            return httpRequest.PerformGetRequest();
+            var response = await httpRequest.PerformGetRequestAsync();
+            return response;
         }
 
-        public List<SearchMovie> TmdbSearchMovie(string searchQuery)
+        public async Task<List<SearchMovie>> TmdbSearchMovieAsync(string searchQuery)
         {
             _tmdbSystem = new TmdbSystem(_propertyFile.get("tmdb"));
-            return _tmdbSystem.SearchMovie(searchQuery);
+            return await _tmdbSystem.SearchMovie(searchQuery);
         }
 
-        public List<int> MediaSystemGetCurrentMovies()
+        public async Task<List<int>> MediaSystemGetCurrentMoviesAsync()
         {
             _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
-            return _mediaSystem.GetCurrentMovies();
+            return await _mediaSystem.GetCurrentMoviesAsync();
         }
 
-        //TODO
-        public bool MediaSystemAddMovie(SearchMovie movie, Account account)
+        public async Task<bool> MediaSystemAddMovie(SearchMovie movie, Account account)
         {
             _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
-            var responseCode = _mediaSystem.AddMovie(movie);
-            if (responseCode.Equals(400)) return false;
-            LogContent(movie, account); 
+            var responseCode = await _mediaSystem.AddMovieAsync(movie);
+            if (!responseCode.Equals(201)) return false;
+            await LogContentAsync(movie, account); 
             return true;
         }
 
-        
-
-        //TODO
-        //public static List<ContentStatusObject> GetContentStatus(Object user)
-        //{
-        //    UpdateContentStatus(user);
-        //    var databaseContent = new DatabaseContent();
-        //    return databaseContent.GetMoviesByAccountname(user.SAMAccountName);
-        //}
-
-       
-        //TODO
-        //private static void UpdateContentStatus(ADObject user)
-        //{
-        //    var databaseContent = new DatabaseContent();
-        //    var movies = databaseContent.GetMoviesByAccountname(user.SAMAccountName);
-        //    var itemsToCheck = movies.Where(cso => !cso.Status.Equals("downloaded")).ToList();
-        //    itemsToCheck = CheckIfItemIsCompleted(itemsToCheck);
-        //    if (!DownloadClient.Authenticate()) return;
-        //    var downloadClientItems = DownloadClient.GetAllItems();
-        //    foreach (var item in itemsToCheck)
-        //        foreach (var dItem in downloadClientItems)
-        //        {
-        //            var titles = FixNames(item.Title, dItem.Name);
-        //            if (!(titles[0].CalculateSimilarity(titles[1]) > 0.4)) continue;
-        //            var responseItem = DownloadClient.GetItemStatus(dItem.Hash);
-        //            item.Eta = responseItem.Eta;
-        //            item.Percentage = CalculateItemPercentage(responseItem.Files, responseItem.FileProgress);
-        //            databaseContent.SetItemEta(item);
-        //            break;
-        //        }
-        //}
-
-        private void LogContent(SearchMovie m, Account a)
+        public async Task<List<AddedContent>> GetAddedContent(Account a)
         {
-            
+            return await PerformUpdateAsync(a);
+        }
+
+        private async Task LogContentAsync(SearchMovie m, Account a)
+        {
+            if(a.AddedContent == null)
+                a.AddedContent = new List<AddedContent>();
+            _context.Attach(a);
+            a.AddedContent.Add(new AddedContent(m.Title, DateTime.Now, ContentStatus.Added, a));
+            await _context.SaveChangesAsync();
+        }
+
+        private void InitilizeProperties()
+        {
+            try
+            {
+                _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(
+                        Environment.SpecialFolder.UserProfile), "Din" + Path.DirectorySeparatorChar + "properties"));
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("Property file not found");
+            }
+        }
+
+        private async Task<List<AddedContent>> PerformUpdateAsync(Account account)
+        {
+            var content = await _context.AddedContent.Where(ac => ac.Account.Equals(account) && !ac.Status.Equals(ContentStatus.Downloaded)).ToListAsync();
+            _mediaSystem = new MediaSystem.MediaSystem(_propertyFile.get("mediaSystem"));
+            _downloadSystem = new DownloadSystem.DownloadSystem(_propertyFile.get("downloadSystemUrl"), _propertyFile.get("downloadSystemPwd"));
+            content = await _mediaSystem.CheckIfItemIsCompletedAsync(content);
+            var downloadClientItems = await _downloadSystem.GetAllItemsAsync();
+            foreach (var item in content)
+            foreach (var dItem in downloadClientItems)
+            {
+                var titles = FixNames(item.Title, dItem.Name);
+                if (!(titles[0].CalculateSimilarity(titles[1]) > 0.4)) continue;
+                var responseItem = await _downloadSystem.GetItemStatusAsync(dItem.Hash);
+                item.Eta = responseItem.Eta;
+                item.Percentage = (responseItem.FileProgress.Sum()) / responseItem.Files.Count;
+                break;
+            }
+
+            _context.Attach(account);
+            account.AddedContent.AddRange(content);
+            await _context.SaveChangesAsync();
+            return account.AddedContent;
         }
 
         private string[] FixNames(string title1, string title2)
@@ -138,11 +153,6 @@ namespace Din.Logic
             title1 = Regex.Replace(title1, @"[\d-]", string.Empty);
             title2 = Regex.Replace(title2, @"[\d-]", string.Empty);
             return new[] { title1, title2 };
-        }
-
-        private double CalculateItemPercentage(IReadOnlyCollection<DownloadClientFile> files, IEnumerable<double> fileStatus)
-        {
-            return (fileStatus.Sum()) / files.Count;
         }
     }
 }

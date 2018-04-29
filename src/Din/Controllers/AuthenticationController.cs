@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
 using Din.Logic.BrowserDetection;
@@ -30,15 +31,15 @@ namespace Din.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public ActionResult Login()
+        public async Task<IActionResult> LoginAsync()
         {
             try
             {
                 var username = Request.Form["username"];
                 var user = _context.User.Include(u => u.Account).FirstOrDefault(u => u.Account.Username.Equals(username));
                 if (user != null && BCrypt.Net.BCrypt.Verify(Request.Form["password"], user.Account.Hash))
-                {   
-                    Authenticate(user);       
+                {
+                    await Authenticate(user);
                     var serializedUser = JsonConvert.SerializeObject(user, Formatting.Indented,
                         new JsonSerializerSettings
                         {
@@ -48,11 +49,8 @@ namespace Din.Controllers
                     HttpContext.Session.SetString("User", serializedUser);
                     return View("../Main/Home");
                 }
-                else
-                {
-                    HttpContext.Session.SetString("Login", "BAD");
-                    return RedirectToAction("Index", "Main");
-                }
+                HttpContext.Session.SetString("Login", "BAD");
+                return RedirectToAction("Index", "Main");
             }
             catch (Exception)
             {
@@ -62,14 +60,14 @@ namespace Din.Controllers
         }
 
         [HttpGet, Authorize]
-        public ActionResult Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
-            HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
             return View("../Main/Logout");
         }
 
-        private void Authenticate(User user)
+        private async Task Authenticate(User user)
         {
             var claims = new List<Claim>
             {
@@ -79,7 +77,7 @@ namespace Din.Controllers
             };
             var userIdentity = new ClaimsIdentity(claims, "login");
             var principal = new ClaimsPrincipal(userIdentity);
-            HttpContext.SignInAsync(principal);
+            await HttpContext.SignInAsync(principal);
         }
     }
 }

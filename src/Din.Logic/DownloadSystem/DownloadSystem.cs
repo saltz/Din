@@ -1,4 +1,7 @@
-﻿using Din.ExternalModels.DownloadClient;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Din.ExternalModels.DownloadClient;
 
 namespace Din.Logic.DownloadSystem
 {
@@ -11,5 +14,14 @@ namespace Din.Logic.DownloadSystem
            _downloadClient = new DownloadClient(url, pwd);
         }
 
+        public async Task<List<DownloadClientItem>> GetAllItemsAsync()
+        {
+            return await _downloadClient.GetAllItemsAsync();
+        }
+
+        public async Task<DownloadClientItem> GetItemStatusAsync(string itemHash)
+        {
+            return await _downloadClient.GetItemStatusAsync(itemHash);
+        }
     }
 }

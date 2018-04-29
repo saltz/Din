@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Din.Data;
 using Din.ExternalModels.Entities;
 using Din.Logic;
 using Microsoft.AspNetCore.Authorization;
@@ -12,65 +14,71 @@ namespace Din.Controllers
 {
     public class ContentController : Controller
     {
+        private readonly DinContext _context;
+
+        public ContentController(DinContext context)
+        {
+            _context = context;
+        }
 
       
         [HttpPost, Authorize]
-        public IActionResult SearchMovie()
+        public async Task<IActionResult> SearchMovieAsync()
         {
             var searchQuery = Request.Form["searchQuery"];
             if (string.IsNullOrEmpty(searchQuery)) return RedirectToAction("Index", "Main");
             var contentManager = new ContentManager();
-            HttpContext.Session.SetString("searchResults", JsonConvert.SerializeObject(contentManager.TmdbSearchMovie(searchQuery)));
-            HttpContext.Session.SetString("currentMovies", JsonConvert.SerializeObject(contentManager.MediaSystemGetCurrentMovies()));
-            return View("../Content/MovieResults");
+            HttpContext.Session.SetString("searchResults", JsonConvert.SerializeObject(await contentManager.TmdbSearchMovieAsync(searchQuery)));
+            HttpContext.Session.SetString("currentMovies", JsonConvert.SerializeObject(await contentManager.MediaSystemGetCurrentMoviesAsync()));
+            return View("MovieResults");
         }
 
 
         [HttpPost, Authorize]
-        public IActionResult SearchTvShow()
+        public async Task<IActionResult> SearchTvShowAsync()
         {
             return null;
         }
 
 
         [HttpPost, Authorize]
-        public IActionResult AddMovie()
+        public async Task<IActionResult> AddMovieAsync()
         {
             var input = Request.Form["selected-movie"];
-            if (!string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input)) return RedirectToAction("Index", "StatusCode", 500);
+            var movieId = Convert.ToInt32(input);
+            foreach (var m in JsonConvert.DeserializeObject<List<SearchMovie>>(HttpContext.Session.GetString("searchResults")))
             {
-                var movieId = Convert.ToInt32(input);
-                foreach (var m in JsonConvert.DeserializeObject<List<SearchMovie>>(HttpContext.Session.GetString("searchResults")))
+                if (!m.Id.Equals(movieId)) continue;
+                var contentManager = new ContentManager(_context);
+                if (await contentManager.MediaSystemAddMovie(m,
+                    JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account))
                 {
-                    if (!m.Id.Equals(movieId)) continue;
-                    var contentManager = new ContentManager();
-                    if (contentManager.MediaSystemAddMovie(m,
-                            JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account))
+                    var result = new Dictionary<string, string>
                     {
-                        var result = new Dictionary<string, string>
+                        {"color", "#00d77c;" },
+                        {"title", "Movie Added Succesfully"},
                         {
-                            {"title", "Movie Added Succesfully"},
-                            {
-                                "message",
-                                "The Movie has been added 🤩   You can track the progress under your account profile tab."
-                            }
-                        };
-                        HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                        return View("../Main/Home");
-                    }
-                    else
+                            "message",
+                            "The Movie has been added 🤩   You can track the progress under your account profile tab."
+                        }
+                    };
+                    HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
+                    return View("../Main/Home");
+                }
+                else
+                {
+                    var result = new Dictionary<string, string>
                     {
-                        var result = new Dictionary<string, string>
+                        {"color", "#b43232" },
+                        {"title", "Failed At adding Movie"},
                         {
-                            {"title", "Failed At adding Movie"},
-                            {
-                                "message",
-                                "Somethning went wrong 😵   Try again later!"
-                            }
-                        };
-                        HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                        return View("../Main/Home");
-                    }
+                            "message",
+                            "Somethning went wrong 😵   Try again later!"
+                        }
+                    };
+                    HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
+                    return View("../Main/Home");
                 }
             }
             return RedirectToAction("Index", "StatusCode", 500);
@@ -78,7 +86,7 @@ namespace Din.Controllers
 
 
         [HttpPost, Authorize]
-        public IActionResult AddTvShow()
+        public async Task<IActionResult> AddTvShowAsync()
         {
             return null;
         }

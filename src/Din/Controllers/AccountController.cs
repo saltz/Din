@@ -1,4 +1,6 @@
-﻿using Din.Data;
+﻿using System.Threading.Tasks;
+using Din.Data;
+using Din.ExternalModels.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +8,7 @@ namespace Din.Controllers
 {
     public class AccountController : Controller
     {
-        private DinContext _context;
+        private readonly DinContext _context;
 
         public AccountController(DinContext context)
         {
@@ -14,8 +16,10 @@ namespace Din.Controllers
         }
 
         [Authorize]
-        public void CreateUser()
+        public async Task CreateUser(User user)
         {
+            await _context.User.AddAsync(user);
+            _context.SaveChanges();
         }
 
         [Authorize]

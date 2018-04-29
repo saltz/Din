@@ -14,4 +14,11 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
+    <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
+    <ProjectReference Include="..\Din.Logic\Din.Logic.csproj" />
+    <ProjectReference Include="..\Din\Din.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,22 @@
+﻿@using Din.ExternalModels.Content
+@using Din.Logic
+@using Newtonsoft.Json
+@{
+    var contentManager = new ContentManager();
+    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(await contentManager.GenerateBackgroundAsync());
+
+}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        @{
+            var image = images[0].Urls.Custom;
+            images.Remove(images[0]);
+            <div class="carousel-item active"><img src="@image" /></div>
+            foreach (var i in images)
+            {
+                <div class="carousel-item"><img src="@i.Urls.Custom" /></div>
+            }
+        }
+    </div>
+</div>

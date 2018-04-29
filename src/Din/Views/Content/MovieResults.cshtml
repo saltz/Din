@@ -14,7 +14,7 @@
     if (searchresult.Count.Equals(0))
     {
         <div class="back-button">
-            <a href="@Url.Action("GoBackAndClean", "Main")">
+            <a href="@Url.Action("Index", "Main")">
                 <p><i class="fas fa-angle-left"></i>Back</p>
             </a>
         </div>
@@ -25,7 +25,7 @@
     else
     {
         <div class="back-button">
-            <a href="@Url.Action("GoBackAndClean", "Main")">
+            <a href="@Url.Action("Index", "Main")">
                 <p><i class="fas fa-angle-left"></i>Back</p>
             </a>
         </div>
@@ -74,7 +74,7 @@
                                     }
                                     else
                                     {
-                                        <form method="post" action="@Url.Action("AddMovie", "Content")">
+                                        <form method="post" action="@Url.Action("AddMovieAsync", "Content")">
                                             <button id="@movie.Id" type="submit" class="btn btn-primary add-movie">Add Movie</button>
                                             <input class="selected-movie" name="selected-movie" />
                                         </form>

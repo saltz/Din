@@ -4,12 +4,12 @@
 
 @{
     var contentManager = new ContentManager();
-    var gif = JsonConvert.DeserializeObject<GiphyContainer>(contentManager.GetRandomGif(GiphyQuery.Logout));
+    var gif = JsonConvert.DeserializeObject<GiphyContainer>(await contentManager.GetRandomGifAsync(GiphyQuery.Logout));
 }
 
 @section CSS {
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/GifPage.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/GifPage.css" />
     <style>
         .msg-container {
             top: 45%;

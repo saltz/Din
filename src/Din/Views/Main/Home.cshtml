@@ -1,16 +1,10 @@
 ﻿@using Din.ExternalModels.Content
 @using Din.ExternalModels.Entities
 @using Din.Logic
-@using Microsoft.ApplicationInsights.AspNetCore
 @using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Newtonsoft.Json
 @using UAParser
 
-
-@{
-    ViewData["Title"] = "Home";
-}
 
 @section CSS {
     <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
@@ -19,24 +13,9 @@
 
 @if (Context.Session.GetString("User") != null)
 {
-    var contentManager = new ContentManager();
-    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(contentManager.GenerateBackground());
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
-    
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            @{
-                var image = images[0].Urls.Custom;
-                images.Remove(images[0]);
-                <div class="carousel-item active"><img src="@image" /></div>
-                foreach (var i in images)
-                {
-                    <div class="carousel-item"><img src="@i.Urls.Custom" /></div>
-                }
-            }
-        </div>
-    </div>
+    await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
     <div class="container header">
         <div class="user-name">
             <i class="fab fa-@client.UserAgent.Family.ToLower()"></i>
@@ -50,7 +29,7 @@
                 {
                     <a href="@Url.Action("Index", "Admin")">Admin Panel<span class="oi oi-terminal"></span></a>
                 }
-                <a href="@Url.Action("Logout", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
+                <a href="@Url.Action("LogoutAsync", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
             </div>
         </div>
     </div>
@@ -76,65 +55,11 @@
             </div>
         </div>
     </div>
-
-    <div id="add-movie" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="custom-modal-header">
-                    <i class="fas fa-times" data-dismiss="modal"></i>
-                    <h3>Add A Movie</h3>
-                </div>
-                <div class="modal-body">
-                    <p>Enter the name of the movie you want to add</p>
-                    <form method="post" action="@Url.Action("SearchMovie", "Content")">
-                        <i class="fas fa-search"></i>
-                        <input type="search" id="search" name="searchQuery" placeholder="Search..." />
-                        <input id="submit-button" type="submit" value="search" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="add-tvshow" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="custom-modal-header">
-                    <i class="fas fa-times" data-dismiss="modal"></i>
-                    <h3>Add A Tv Show</h3>
-                </div>
-                <div class="modal-body">
-                    <p>Enter the name of the Tv Show you want to add</p>
-                    <form method="post" action="@Url.Action("SearchTvShow", "Content")">
-                        <i class="fas fa-search"></i>
-                        <input type="search" id="search" name="searchQuery" placeholder="Search..." />
-                        <input id="submit-button" type="submit" value="search" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    if (Context.Session.GetString("contentAdded") != null)
     {
-        var message = JsonConvert.DeserializeObject<Dictionary<string, string>>(Context.Session.GetString("contentAdded"));
-
-        <div id="content-added" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="custom-modal-header">
-                        <i class="fas fa-times" data-dismiss="modal"></i>
-                        <h3 id="modal-title">@message["title"]</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p id="modal-message">@message["message"]</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        await Html.RenderPartialAsync("~/Views/Main/Partials/_AddMovie.cshtml");
+        await Html.RenderPartialAsync("~/Views/Main/Partials/_AddTvShow.cshtml");
+        await Html.RenderPartialAsync("~/Views/Main/Partials/_AddResult.cshtml");
     }
-
-
 
     @section scripts {
         <script>
@@ -142,6 +67,7 @@
                 $('.carousel').carousel({
                     interval: 5000
                 })
+
                 var Menu = {
 
                     body: $('.menu'),

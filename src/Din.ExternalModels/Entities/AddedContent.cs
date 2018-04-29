@@ -10,7 +10,16 @@ namespace Din.ExternalModels.Entities
         public DateTime DateAdded { get; set; }
         public ContentStatus Status { get; set; }
         public int Eta { get; set; }
+        public double Percentage { get; set; }
         public Account Account { get; set; }
+
+        public AddedContent(string title, DateTime dateAdded, ContentStatus status, Account account)
+        {
+            Title = title;
+            DateAdded = dateAdded;
+            Status = status;
+            Account = account;
+        }
     }
 
     public enum ContentStatus

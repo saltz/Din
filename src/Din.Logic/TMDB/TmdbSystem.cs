@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMDbLib.Client;
+using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
 
 namespace Din.Logic.TMDB
 {
     public class TmdbSystem
     {
-        private readonly TMDbClient TmDbClient;
+        private readonly TMDbClient _tmDbClient;
 
         public TmdbSystem(string key)
         {
-            TmDbClient = new TMDbClient(key);
+            _tmDbClient = new TMDbClient(key);
         }
 
-        public List<SearchMovie> SearchMovie(string searchQuery)
+        public async Task<List<SearchMovie>> SearchMovie(string searchQuery)
         {
-            var movies = TmDbClient.SearchMovieAsync(searchQuery).Result;
+            var movies = await _tmDbClient.SearchMovieAsync(searchQuery);
             return movies.Results;
         }
     }
