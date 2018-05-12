@@ -1,30 +1,22 @@
-﻿@using Din.ExternalModels.Content
-@using Din.ExternalModels.Entities
-@using Din.Logic
+﻿@using Din.ExternalModels.Entities
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
-@using UAParser
 
 
 @section CSS {
-    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/Home.css" rel="stylesheet" type="text/css"/>
 }
 
 @if (Context.Session.GetString("User") != null)
 {
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-    var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
-    await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
+    //await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
     <div class="container header">
-        <div class="user-name">
-            <i class="fab fa-@client.UserAgent.Family.ToLower()"></i>
-            <h3>@user.FirstName @user.LastName</h3>
-        </div>
         <div class="menu menu--closed">
             <span class="oi oi-menu menu-button"></span>
             <div class="items items--hidden">
-                <a href="#">Account<span class="oi oi-person"></span></a>
+                <a href="" data-toggle="modal" data-target="#account">Account<span class="oi oi-person"></span></a>
                 @if (user.Account.Role.Equals(AccountRoll.Admin))
                 {
                     <a href="@Url.Action("Index", "Admin")">Admin Panel<span class="oi oi-terminal"></span></a>
@@ -58,46 +50,80 @@
     {
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddMovie.cshtml");
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddTvShow.cshtml");
-        await Html.RenderPartialAsync("~/Views/Main/Partials/_AddResult.cshtml");
+        await Html.RenderPartialAsync("~/Views/Main/Partials/_Account.cshtml");
     }
+    <div class="ajax-div"></div>
 
-    @section scripts {
-        <script>
-            $(document).ready(function () {
-                $('.carousel').carousel({
-                    interval: 5000
-                })
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.carousel').carousel({
+                interval: 5000
+            });
 
-                var Menu = {
+            var Menu = {
+                body: $('.menu'),
+                button: $('.menu-button'),
+                tools: $('.items')
 
-                    body: $('.menu'),
-                    button: $('.menu-button'),
-                    tools: $('.items')
+            };
 
+            Menu.button.click(function() {
+                Menu.body.toggleClass('menu--closed');
+                Menu.body.toggleClass('menu--open');
+                Menu.tools.toggleClass('items--visible');
+                Menu.tools.toggleClass('items--hidden');
+            });
+
+
+            $('#search-movie-form').submit(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    query: $('.search-movie').val()
                 };
-
-                Menu.button.click(function () {
-                    Menu.body.toggleClass('menu--closed');
-                    Menu.body.toggleClass('menu--open');
-                    Menu.tools.toggleClass('items--visible');
-                    Menu.tools.toggleClass('items--hidden');
+                $.ajax({
+                    async: true,
+                    url: '@Url.Action("SearchMovieAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function(view) {
+                        $('div.ajax-div').replaceWith(view);
+                        $('#add-movie').modal('hide');
+                        $('.ajax-div').modal('show');
+                        $('.search-movie').val("");
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
                 });
             });
-        </script>
-
-
-        @if (Context.Session.GetString("contentAdded") != null)
-        {
-            <script>
-                $('#content-added').modal('toggle');
-            </script>
-
-            Context.Session.Remove("contentAdded");
-        }
-    }
-
-}
+        });
+ 
+        $(document).delegate('.add-movie', 'click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var data = {
+                id: $(this).attr('id')
+            };
+            $.ajax({
+                async: true,
+                url: '@Url.Action("AddMovieAsync", "Content")',
+                type: 'POST',
+                data: data,
+                success: function (view) {
+                    $('.modal-backdrop').remove();
+                    $('#search-results').replaceWith(view);
+                    $('#content-added').modal('show');
+                },
+                error: function() {
+                    console.log("error");
+                }
+            });
+        });
+    </script>
+}}
 else
 {
-    @Url.Action("Index", "Main");
+    @Url.Action("Index", "Main")
 }

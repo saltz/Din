@@ -3,10 +3,8 @@
 
 @if (Context.Session.GetString("contentAdded") != null)
 {
-
     var message = JsonConvert.DeserializeObject<Dictionary<string, string>>(Context.Session.GetString("contentAdded"));
-
-    <div id="content-added" class="modal fade" role="dialog">
+    <div id="content-added" class="modal fade ajax-div" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="custom-modal-header">

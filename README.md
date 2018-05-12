@@ -12,7 +12,7 @@
 
 [This Webapp](https://thedin.nl) is the place to be for active DIN users✌️
 
-**Why is this open source?**
+**Why is this open-source?**
 
 I made this project open-source for the possibility
 of collaboration and code inspection.

@@ -21,16 +21,17 @@ namespace Din.Controllers
             _context = context;
         }
 
-      
+
         [HttpPost, Authorize]
-        public async Task<IActionResult> SearchMovieAsync()
+        public async Task<IActionResult> SearchMovieAsync(string query)
         {
-            var searchQuery = Request.Form["searchQuery"];
-            if (string.IsNullOrEmpty(searchQuery)) return RedirectToAction("Index", "Main");
+            if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
             var contentManager = new ContentManager();
-            HttpContext.Session.SetString("searchResults", JsonConvert.SerializeObject(await contentManager.TmdbSearchMovieAsync(searchQuery)));
-            HttpContext.Session.SetString("currentMovies", JsonConvert.SerializeObject(await contentManager.MediaSystemGetCurrentMoviesAsync()));
-            return View("MovieResults");
+            HttpContext.Session.SetString("searchResults",
+                JsonConvert.SerializeObject(await contentManager.TmdbSearchMovieAsync(query)));
+            HttpContext.Session.SetString("currentMovies",
+                JsonConvert.SerializeObject(await contentManager.MediaSystemGetCurrentMoviesAsync()));
+            return PartialView("~/Views/Main/Partials/_SearchResults.cshtml");
         }
 
 
@@ -42,12 +43,12 @@ namespace Din.Controllers
 
 
         [HttpPost, Authorize]
-        public async Task<IActionResult> AddMovieAsync()
+        public async Task<IActionResult> AddMovieAsync(string id)
         {
-            var input = Request.Form["selected-movie"];
-            if (string.IsNullOrEmpty(input)) return RedirectToAction("Index", "StatusCode", 500);
-            var movieId = Convert.ToInt32(input);
-            foreach (var m in JsonConvert.DeserializeObject<List<SearchMovie>>(HttpContext.Session.GetString("searchResults")))
+            if (string.IsNullOrEmpty(id)) return RedirectToAction("Index", "StatusCode", 500);
+            var movieId = Convert.ToInt32(id);
+            foreach (var m in JsonConvert.DeserializeObject<List<SearchMovie>>(
+                HttpContext.Session.GetString("searchResults")))
             {
                 if (!m.Id.Equals(movieId)) continue;
                 var contentManager = new ContentManager(_context);
@@ -56,7 +57,7 @@ namespace Din.Controllers
                 {
                     var result = new Dictionary<string, string>
                     {
-                        {"color", "#00d77c;" },
+                        {"color", "#00d77c;"},
                         {"title", "Movie Added Succesfully"},
                         {
                             "message",
@@ -64,13 +65,12 @@ namespace Din.Controllers
                         }
                     };
                     HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                    return View("../Main/Home");
                 }
                 else
                 {
                     var result = new Dictionary<string, string>
                     {
-                        {"color", "#b43232" },
+                        {"color", "#b43232"},
                         {"title", "Failed At adding Movie"},
                         {
                             "message",
@@ -78,8 +78,8 @@ namespace Din.Controllers
                         }
                     };
                     HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                    return View("../Main/Home");
                 }
+                return PartialView("~/Views/Main/Partials/_AddResult.cshtml");
             }
             return RedirectToAction("Index", "StatusCode", 500);
         }

@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
-using Din.Logic.BrowserDetection;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Rest;
 using Newtonsoft.Json;
 
 namespace Din.Controllers
@@ -36,7 +29,8 @@ namespace Din.Controllers
             try
             {
                 var username = Request.Form["username"];
-                var user = _context.User.Include(u => u.Account).FirstOrDefault(u => u.Account.Username.Equals(username));
+                var user = _context.User.Include(u => u.Account)
+                    .FirstOrDefault(u => u.Account.Username.Equals(username));
                 if (user != null && BCrypt.Net.BCrypt.Verify(Request.Form["password"], user.Account.Hash))
                 {
                     await Authenticate(user);
@@ -49,6 +43,7 @@ namespace Din.Controllers
                     HttpContext.Session.SetString("User", serializedUser);
                     return View("../Main/Home");
                 }
+
                 HttpContext.Session.SetString("Login", "BAD");
                 return RedirectToAction("Index", "Main");
             }
@@ -78,6 +73,14 @@ namespace Din.Controllers
             var userIdentity = new ClaimsIdentity(claims, "login");
             var principal = new ClaimsPrincipal(userIdentity);
             await HttpContext.SignInAsync(principal);
+        }
+
+        //TODO Destory this code!
+        public void CreateTestUser()
+        {
+            var user = new User("Dane", "Naebers", new Account("dane", BCrypt.Net.BCrypt.HashPassword("test"), AccountRoll.Admin));
+            _context.User.AddAsync(user);
+            _context.SaveChangesAsync();
         }
     }
 }

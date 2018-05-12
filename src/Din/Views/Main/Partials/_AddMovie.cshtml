@@ -7,10 +7,10 @@
             </div>
             <div class="modal-body">
                 <p>Enter the name of the movie you want to add</p>
-                <form method="post" action="@Url.Action("SearchMovieAsync", "Content")">
+                <form id="search-movie-form">
                     <i class="fas fa-search"></i>
-                    <input type="search" id="search" name="searchQuery" placeholder="Search..." />
-                    <input id="submit-button" type="submit" value="search" />
+                    <input type="search" id="search" class="search-movie" name="searchQuery" placeholder="Search..." />
+                    <input id="submit-button" type="submit"/>
                 </form>
              </div>
          </div>

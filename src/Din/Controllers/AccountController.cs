@@ -25,7 +25,6 @@ namespace Din.Controllers
         [Authorize]
         public void GetUser()
         {
-
         }
     }
 }
