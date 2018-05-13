@@ -51,14 +51,10 @@ namespace Din
             app.UseSession();
             app.UseMvc(routes =>
             {
-                routes.MapRoute("Login", "Home",
-                    defaults: new { controller = "Authentication", action = "Login" });
+                routes.MapRoute("Login", "",
+                    defaults: new {controller = "Authentication", action = "LoginAsync"});
                 routes.MapRoute("Logout", "Logout",
-                    defaults: new {controller = "Authentication", action = "Logout"});
-                routes.MapRoute("SearchMovie", "MovieResults",
-                    defaults: new {controller = "Content", Action = "SearchMovie"});
-                routes.MapRoute("AddMovie", "AddMovie",
-                    defaults: new { controller = "Content", Action = "AddMovie" });
+                    defaults: new { controller = "Authentication", action = "LogoutAsync" });
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");

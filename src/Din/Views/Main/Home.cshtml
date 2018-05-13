@@ -6,17 +6,19 @@
 @section CSS {
     <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/Home.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/Account.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/MovieResults.css" rel="stylesheet" type="text/css"/>
 }
 
 @if (Context.Session.GetString("User") != null)
 {
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-    //await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
+    await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
     <div class="container header">
         <div class="menu menu--closed">
             <span class="oi oi-menu menu-button"></span>
             <div class="items items--hidden">
-                <a href="" data-toggle="modal" data-target="#account">Account<span class="oi oi-person"></span></a>
+                <a href="" class="account-btn">Account<span class="oi oi-person"></span></a>
                 @if (user.Account.Role.Equals(AccountRoll.Admin))
                 {
                     <a href="@Url.Action("Index", "Admin")">Admin Panel<span class="oi oi-terminal"></span></a>
@@ -50,7 +52,6 @@
     {
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddMovie.cshtml");
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddTvShow.cshtml");
-        await Html.RenderPartialAsync("~/Views/Main/Partials/_Account.cshtml");
     }
     <div class="ajax-div"></div>
 
@@ -61,20 +62,33 @@
                 interval: 5000
             });
 
-            var Menu = {
+            var menu = {
                 body: $('.menu'),
                 button: $('.menu-button'),
                 tools: $('.items')
-
             };
 
-            Menu.button.click(function() {
-                Menu.body.toggleClass('menu--closed');
-                Menu.body.toggleClass('menu--open');
-                Menu.tools.toggleClass('items--visible');
-                Menu.tools.toggleClass('items--hidden');
+            menu.button.click(function() {
+                toggleMenu();
             });
 
+            $('.account-btn').click(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $.ajax({
+                    url: '@Url.Action("GetUserView", "Account")',
+                    type: 'GET',
+                    success: function(view) {
+                        $('div.ajax-div').replaceWith(function() {
+                            return $(view).hide().fadeIn();
+                        });
+                        toggleMenu();
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
+            });
 
             $('#search-movie-form').submit(function(e) {
                 e.preventDefault();
@@ -83,7 +97,6 @@
                     query: $('.search-movie').val()
                 };
                 $.ajax({
-                    async: true,
                     url: '@Url.Action("SearchMovieAsync", "Content")',
                     type: 'POST',
                     data: data,
@@ -98,28 +111,53 @@
                     }
                 });
             });
+
+            function toggleMenu() {
+                menu.body.toggleClass('menu--closed');
+                menu.body.toggleClass('menu--open');
+                menu.tools.toggleClass('items--visible');
+                menu.tools.toggleClass('items--hidden');
+            }
         });
- 
-        $(document).delegate('.add-movie', 'click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var data = {
-                id: $(this).attr('id')
-            };
-            $.ajax({
-                async: true,
-                url: '@Url.Action("AddMovieAsync", "Content")',
-                type: 'POST',
-                data: data,
-                success: function (view) {
-                    $('.modal-backdrop').remove();
-                    $('#search-results').replaceWith(view);
-                    $('#content-added').modal('show');
-                },
-                error: function() {
-                    console.log("error");
-                }
+
+        $(document).delegate('.add-movie',
+            'click',
+            function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    id: $(this).attr('id')
+                };
+
+                $.ajax({
+                    url: '@Url.Action("AddMovieAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function(view) {
+                        $('.modal-backdrop').remove();
+                        $('#search-results').replaceWith(view);
+                        $('#content-added').modal('show');
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
             });
+
+        $(document).delegate('.nav a',
+            'click',
+            function() {
+                $('.nav').find('.active').removeClass('active');
+                $(this).parent().addClass('active');
+            });
+
+        $(document).mouseup(function(e) {
+            var container = $('.partial-screen'); 
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                container.fadeOut(function() {
+                    container.replaceWith('<div class="ajax-div"></div>');
+                });
+            }
         });
     </script>
 }}

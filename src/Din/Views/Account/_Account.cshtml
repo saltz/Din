@@ -1,0 +1,45 @@
+﻿@using Din.ExternalModels.Entities
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using UAParser
+
+@{
+    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
+    var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
+}
+
+<div id="account" class="shadow p-3 mb-5 rounded partial-screen">
+    <div class="left-container shadow rounded">
+        <div class="user-section">
+            <div class="user-picture">
+                <img src="https://i.imgur.com/4R5tPqj.jpg"/>
+            </div>
+            <div class="user-info">
+                <h3>@user.FirstName @user.LastName</h3>
+                <i class="fab fa-@client.UA.Family.ToLower()"></i>
+                <i class="fab fa-@client.OS.Family.ToLower()"></i>
+            </div>
+        </div>
+        <aside class="sidebar">
+            <div id="leftside-navigation">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fas fa-user"></i><span>Information</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fas fa-file-video"></i><span>Added Content</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="data-pane shadow rounded">
+        <div class="account-information">
+
+        </div>
+    </div>
+</div>

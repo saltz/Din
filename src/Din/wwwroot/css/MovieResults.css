@@ -1,0 +1,180 @@
+﻿#search-results .modal-dialog {
+    max-width: 90%;
+    height: 96%;
+    margin-top: 1%;
+}
+
+
+
+    #search-results .modal-dialog .modal-content {
+        height: 100%;
+        overflow: hidden;
+    }
+
+        #search-results .modal-dialog .modal-content .modal-body {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            margin-right: -20px;
+            margin-bottom: 5%;
+            margin-top: 0%;
+        }
+
+#search-results-failed .modal-dialog .custom-modal-header h3 {
+    color: #b43232;
+}
+
+.results {
+    margin-top: 20px;
+}
+
+.card-frame {
+    margin-left: 5%;
+    width: 95%;
+}
+
+.card {
+    background-color: #fff;
+    border: 5px solid rgba(0, 0, 0, 0.0);
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 30px;
+    flex-direction: inherit;
+}
+
+div.item {
+    color: #000;
+    float: left;
+    margin-bottom: 24px;
+}
+
+    div.item p {
+        line-height: 1.2em;
+        overflow: hidden;
+        padding: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    div.item.card {
+        color: white;
+        background: #2b303b;
+        box-sizing: border-box;
+        width: 483px;
+    }
+
+    div.item.poster.card {
+        align-items: center;
+        display: flex;
+        margin-bottom: 34px;
+    }
+
+div.image {
+    overflow: hidden;
+}
+
+div.item.poster.card div.info {
+    box-sizing: border-box;
+    height: 278px;
+    padding: 10px 16px 16px 16px;
+    position: relative;
+    width: 298px;
+}
+
+div.item p.flex {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.media section div.info p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+div.item span.rating {
+    line-height: 0;
+    padding-left: 4px;
+    top: 0;
+}
+
+
+div.item.card p.overview {
+    font-size: 0.9em;
+    height: 55%;
+    line-height: 1.2em;
+    margin-top: 30px;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.item .info .flex a {
+    font-weight: bold;
+    margin-right: 10px;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.add-button button {
+    margin-top: 10px;
+    margin-left: 150px;
+    background: #4f5b66;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.add-button .btn-primary:hover {
+    background: #ff8d1c;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.btn.disabled, .btn:disabled {
+    opacity: 0.8;
+}
+
+.selected-movie {
+    display: none !important;
+}
+
+/* CSS For mobile devices */
+
+@media only screen and (max-width: 500px) {
+    .card-frame {
+        margin: 60px 0 0 0;
+        width: 100%;
+    }
+
+    .results h2 {
+        margin-top: 10%;
+    }
+
+    div.item.card {
+        margin: 0;
+        width: 100%;
+    }
+
+    .image_content {
+        width: 50%
+    }
+
+    div.image_content img.poster {
+        height: 275px;
+        width: 100%;
+    }
+
+    div.item.poster.card div.info {
+        width: 50%;
+    }
+
+    .item .info .flex .vote_avarage {
+        display: none;
+    }
+
+    .item .info .flex a {
+        font-size: 11px;
+    }
+
+    .add-button button {
+        margin-left: 50px;
+    }
+}

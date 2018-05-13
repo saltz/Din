@@ -22,9 +22,11 @@ namespace Din.Controllers
             _context.SaveChanges();
         }
 
-        [Authorize]
-        public void GetUser()
+
+        [Authorize, HttpGet]
+        public IActionResult GetUserView()
         {
+            return PartialView("~/Views/Account/_Account.cshtml");
         }
     }
 }

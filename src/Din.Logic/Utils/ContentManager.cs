@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Content;
-using Din.ExternalModels.DownloadClient;
 using Din.ExternalModels.Entities;
 using Din.Logic.TMDB;
 using Microsoft.EntityFrameworkCore;
 using TMDbLib.Objects.Search;
 
-namespace Din.Logic
+namespace Din.Logic.Utils
 {
     public class ContentManager
     {
@@ -21,7 +19,7 @@ namespace Din.Logic
         private MediaSystem.MediaSystem _mediaSystem;
         private DownloadSystem.DownloadSystem _downloadSystem;
         private readonly DinContext _context;
-        private PropertyFile _propertyFile;
+        private static PropertyFile _propertyFile;
 
         public ContentManager()
         {
@@ -104,10 +102,11 @@ namespace Din.Logic
             await _context.SaveChangesAsync();
         }
 
-        private void InitilizeProperties()
+        private static void InitilizeProperties()
         {
             try
             {
+                if (_propertyFile != null) return;
                 _propertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(
                         Environment.SpecialFolder.UserProfile), "Din" + Path.DirectorySeparatorChar + "properties"));
             }

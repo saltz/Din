@@ -1,0 +1,126 @@
+﻿#account {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    top: 2.5%;
+    left: 2.5%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.shadow {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.left-container {
+    width: 14%;
+    height: 100%;
+    background: #293949;
+    float: left;
+}
+
+.user-section {
+    height: 300px;
+    color: white;
+}
+
+.user-section .user-picture {
+    height: 70%;
+}
+
+.user-section .user-picture img {
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+    margin-top: 10%;
+    margin-left: 10%;
+    border: 3px solid #ff8d1c;
+}
+
+.user-section .user-info {
+    height: 30%;
+    text-align: center;
+}
+.user-section .user-info i {
+    padding: 10px;
+}
+
+.sidebar {
+    background: #293949;
+    border-top: #23313f 4px solid;
+    z-index: 100;
+}
+
+.sidebar #leftside-navigation ul,
+.sidebar #leftside-navigation ul ul {
+    margin: -2px 0 0;
+    padding: 0;
+}
+.sidebar #leftside-navigation ul li {
+    list-style-type: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 2px transparent solid;
+}
+
+.nav {
+    display: block;
+}
+
+.nav-link {
+    padding: 0;
+}
+
+.active {
+    border-left: 2px solid #ff8d1c !important;
+    background-color: #394f66;
+}
+
+.sidebar #leftside-navigation ul li.active ul {
+    display: block;
+}
+.sidebar #leftside-navigation ul li {
+    color: #aeb2b7;
+    text-decoration: none;
+    display: block;
+    padding: 18px 0 18px 25px;
+    font-size: 12px;
+    outline: 0;
+}
+    .sidebar #leftside-navigation ul li a:hover {
+        cursor: pointer;
+        color: #ff8d1c;
+    }
+.sidebar #leftside-navigation ul li span {
+    display: inline-block;
+}
+.sidebar #leftside-navigation ul li i {
+    width: 20px;
+}
+.sidebar #leftside-navigation ul li i .fa-angle-left,
+.sidebar #leftside-navigation ul li i .fa-angle-right {
+    padding-top: 3px;
+}
+.sidebar #leftside-navigation ul ul {
+    display: none;
+}
+.sidebar #leftside-navigation ul ul li {
+    background: #23313f;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: none;
+}
+.sidebar #leftside-navigation ul ul li {
+    font-size: 12px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    color: #aeb2b7;
+}
+
+.data-pane {
+    float: left;
+    width: 84%;
+    height: 100%;
+    margin-left: 2%;
+    background: rgba(41, 57, 73, 0.7);
+}
