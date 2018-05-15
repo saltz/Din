@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Din.Logic
+namespace Din.ExternalModels.Utils
 {
     public class PropertyFile
     {

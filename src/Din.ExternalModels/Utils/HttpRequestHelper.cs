@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Din.Logic
+namespace Din.ExternalModels.Utils
 {
     public class HttpRequestHelper
     {

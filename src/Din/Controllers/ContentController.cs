@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Din.Data;
 using Din.ExternalModels.Entities;
-using Din.Logic;
-using Din.Logic.Utils;
+using Din.ExternalModels.ViewModels;
+using Din.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +14,11 @@ namespace Din.Controllers
 {
     public class ContentController : Controller
     {
-        private readonly DinContext _context;
+        private readonly IContentService _service;
 
-        public ContentController(DinContext context)
+        public ContentController(IContentService service)
         {
-            _context = context;
+            _service = service;
         }
 
 
@@ -27,12 +26,8 @@ namespace Din.Controllers
         public async Task<IActionResult> SearchMovieAsync(string query)
         {
             if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
-            var contentManager = new ContentManager();
-            HttpContext.Session.SetString("searchResults",
-                JsonConvert.SerializeObject(await contentManager.TmdbSearchMovieAsync(query)));
-            HttpContext.Session.SetString("currentMovies",
-                JsonConvert.SerializeObject(await contentManager.MediaSystemGetCurrentMoviesAsync()));
-            return PartialView("~/Views/Main/Partials/_SearchResults.cshtml");
+            return PartialView("~/Views/Main/Partials/_SearchResults.cshtml",
+                await _service.SearchMovieAsync(query));
         }
 
 
@@ -44,45 +39,19 @@ namespace Din.Controllers
 
 
         [HttpPost, Authorize]
-        public async Task<IActionResult> AddMovieAsync(string id)
+        public async Task<IActionResult> AddMovieAsync(string movieData)
         {
-            if (string.IsNullOrEmpty(id)) return RedirectToAction("Index", "StatusCode", 500);
-            var movieId = Convert.ToInt32(id);
-            foreach (var m in JsonConvert.DeserializeObject<List<SearchMovie>>(
-                HttpContext.Session.GetString("searchResults")))
+            try
             {
-                if (!m.Id.Equals(movieId)) continue;
-                var contentManager = new ContentManager(_context);
-                if (await contentManager.MediaSystemAddMovie(m,
-                    JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account))
-                {
-                    var result = new Dictionary<string, string>
-                    {
-                        {"color", "#00d77c;"},
-                        {"title", "Movie Added Succesfully"},
-                        {
-                            "message",
-                            "The Movie has been added 🤩   You can track the progress under your account profile tab."
-                        }
-                    };
-                    HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                }
-                else
-                {
-                    var result = new Dictionary<string, string>
-                    {
-                        {"color", "#b43232"},
-                        {"title", "Failed At adding Movie"},
-                        {
-                            "message",
-                            "Somethning went wrong 😵   Try again later!"
-                        }
-                    };
-                    HttpContext.Session.SetString("contentAdded", JsonConvert.SerializeObject(result));
-                }
-                return PartialView("~/Views/Main/Partials/_AddResult.cshtml");
+                var movie = JsonConvert.DeserializeObject<SearchMovie>(movieData);
+                if (movie == null) return RedirectToAction("Index", "StatusCode", 500);
+                return PartialView("~/Views/Main/Partials/_AddResult.cshtml", await _service.AddMovieAsync(movie,
+                    JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account));
             }
-            return RedirectToAction("Index", "StatusCode", 500);
+            catch
+            {
+                return RedirectToAction("Index", "StatusCode", 500);
+            }
         }
 
 

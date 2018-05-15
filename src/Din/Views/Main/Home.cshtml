@@ -126,16 +126,15 @@
                 e.preventDefault();
                 e.stopPropagation();
                 var data = {
-                    id: $(this).attr('id')
+                    movieData: $(this).attr('data-model')
                 };
-
                 $.ajax({
                     url: '@Url.Action("AddMovieAsync", "Content")',
                     type: 'POST',
                     data: data,
-                    success: function(view) {
+                    success: function (view) {
                         $('.modal-backdrop').remove();
-                        $('#search-results').replaceWith(view);
+                        $('.ajax-div').replaceWith(view);
                         $('#content-added').modal('show');
                     },
                     error: function() {
@@ -152,7 +151,7 @@
             });
 
         $(document).mouseup(function(e) {
-            var container = $('.partial-screen'); 
+            var container = $('.partial-screen');
             if (!container.is(e.target) && container.has(e.target).length === 0) {
                 container.fadeOut(function() {
                     container.replaceWith('<div class="ajax-div"></div>');

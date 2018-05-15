@@ -1,13 +1,11 @@
-﻿@using Microsoft.ApplicationInsights.AspNetCore
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
-@using TMDbLib.Objects.Search
+
+@model Din.ExternalModels.ViewModels.SearchResultsModel
 
 @if (Context.Session.GetString("User") != null)
 {
-    var searchresult = JsonConvert.DeserializeObject<List<SearchMovie>>(Context.Session.GetString("searchResults"));
-    var movieIds = JsonConvert.DeserializeObject<List<int>>(Context.Session.GetString("currentMovies"));
-    if (searchresult.Count.Equals(0))
+    if (Model.QueryResult.Count.Equals(0))
     {
         <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
             <div class="modal-dialog">
@@ -34,7 +32,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="card-frame">
-                            @foreach (var movie in searchresult)
+                            @foreach (var movie in Model.QueryResult)
                             {
                                 var date = Convert.ToDateTime(movie.ReleaseDate).Year;
                                 var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
@@ -71,13 +69,13 @@
                                         </p>
                                         <div class="add-button">
                                             @{
-                                                if (movieIds.Contains(movie.Id))
+                                                if (Model.CurrentIdList.Contains(movie.Id))
                                                 {
                                                     <button disabled type="button" class="btn btn-default">Already Exists</button>
                                                 }
                                                 else
                                                 {
-                                                    <button id="@movie.Id" class="btn btn-primary add-movie">Add Movie</button>
+                                                    <button id="@movie.Id" data-model="@JsonConvert.SerializeObject(movie)" class="btn btn-primary add-movie">Add Movie</button>
                                                     <input class="selected-movie" name="selected-movie"/>
                                                 }
                                             }

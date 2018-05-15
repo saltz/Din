@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.MediaSystem;
+using Din.ExternalModels.Utils;
+using Din.Logic;
 using Newtonsoft.Json;
-using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 
-namespace Din.Logic.MediaSystem
+namespace Din.Service.Systems
 {
     public class MediaSystem
     {
-        private readonly string _url;
-
-        public MediaSystem(string url)
-        {
-           _url = url;
-        }
+        private static readonly string _url = MainService.PropertyFile.get("mediaSystem");
 
         public async Task<int> AddMovieAsync(SearchMovie movie)
         {

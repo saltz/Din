@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMDbLib.Client;
-using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
 
-namespace Din.Logic.TMDB
+namespace Din.Service.Systems
 {
     public class TmdbSystem
     {
         private readonly TMDbClient _tmDbClient;
 
-        public TmdbSystem(string key)
+        public TmdbSystem()
         {
-            _tmDbClient = new TMDbClient(key);
+            _tmDbClient = new TMDbClient(MainService.PropertyFile.get("tmdb"));
         }
 
         public async Task<List<SearchMovie>> SearchMovie(string searchQuery)

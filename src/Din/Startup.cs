@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Din.Data;
+using Din.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +34,10 @@ namespace Din
                 options.UseMySql(
                     mysqlConnectionString)
             );
-            services.AddLocalization(o => o.ResourcesPath = "Resources");
+
+            //Adding My Services
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IContentService, ContentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

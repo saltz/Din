@@ -1,10 +1,10 @@
 ﻿@using Din.ExternalModels.Content
 @using Din.Logic.Utils
+@using Din.Service.Utils
 @using Newtonsoft.Json
 
 @{
-    var contentManager = new ContentManager();
-    var gif = JsonConvert.DeserializeObject<GiphyContainer>(await contentManager.GetRandomGifAsync(GiphyQuery.Logout));
+    var gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Logout));
 }
 
 @section CSS {

@@ -70,7 +70,7 @@
     padding: 0;
 }
 
-.active {
+.nav .active {
     border-left: 2px solid #ff8d1c !important;
     background-color: #394f66;
 }

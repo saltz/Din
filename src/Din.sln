@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Din.Data", "Din.Data\Din.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Din.ExternalModels", "Din.ExternalModels\Din.ExternalModels.csproj", "{AFB6F640-FE1F-4198-B3AD-095144FBF523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Din.Logic", "Din.Logic\Din.Logic.csproj", "{8404F4AD-8667-4E10-B0A5-D096D984F181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Din.Service", "Din.Service\Din.Service.csproj", "{8404F4AD-8667-4E10-B0A5-D096D984F181}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Din.Tests", "Din.Tests\Din.Tests.csproj", "{DDB98AF9-9FB4-48CF-AFF5-98D45A1222DB}"
 EndProject

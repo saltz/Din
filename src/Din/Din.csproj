@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
     <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
-    <ProjectReference Include="..\Din.Logic\Din.Logic.csproj" />
+    <ProjectReference Include="..\Din.Service\Din.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

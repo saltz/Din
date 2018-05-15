@@ -8,4 +8,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="TMDbLib">
+      <HintPath>..\..\..\..\.nuget\packages\tmdblib\1.2.0-alpha\lib\netstandard1.2\TMDbLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
