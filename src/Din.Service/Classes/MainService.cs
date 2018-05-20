@@ -6,7 +6,10 @@ namespace Din.Service.Classes
 {
     public static class MainService
     {
-        public static PropertyFile PropertyFile = new PropertyFile(Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.UserProfile), "Din" + Path.DirectorySeparatorChar + "properties"));
+        //Debug Location
+        //public static readonly PropertyFile PropertyFile = new PropertyFile(@"PropertyFile");
+
+        //Release Location
+        public static readonly PropertyFile PropertyFile = new PropertyFile("/propdir/PropertyFile");
     }
 }
