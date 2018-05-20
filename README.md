@@ -4,9 +4,9 @@
 
 -----------------
 
-| `Linux`       | `Windows`       |
-|:-------------:|:---------------:|
-| [![Build Status](https://travis-ci.org/D4N3-777/Din.svg)](https://travis-ci.org/D4N3-777/Din) | [![Build status](https://ci.appveyor.com/api/projects/status/gfo4fmf8oskq6f67?svg=true)](https://ci.appveyor.com/project/DaneNaebers/din) |
+| `Linux`       | `Windows`       | `Docker`       |
+|:-------------:|:---------------:|:---------------:|
+| [![Build Status](https://travis-ci.org/D4N3-777/Din.svg)](https://travis-ci.org/D4N3-777/Din) | [![Build status](https://ci.appveyor.com/api/projects/status/gfo4fmf8oskq6f67?svg=true)](https://ci.appveyor.com/project/DaneNaebers/din) | [![Build Status](https://jenkins.naebers.me/buildStatus/icon?job=Din)](https://jenkins.naebers.me/job/Din/) |
 
 
 
