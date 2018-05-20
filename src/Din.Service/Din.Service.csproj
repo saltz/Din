@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.4.0" />
+    <PackageReference Include="MediaBrowser.ApiClient" Version="3.1.0" />
+    <PackageReference Include="TMDbLib" Version="1.2.0-alpha" />
+    <PackageReference Include="UAParser" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
+    <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BCrypt.Net-Core">
+      <HintPath>..\..\..\..\.nuget\packages\bcrypt.net-core\1.4.0\lib\netstandard1.3\BCrypt.Net-Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

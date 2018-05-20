@@ -1,2 +1,10 @@
 language: csharp
-solution: ./src/DinWebsite.sln
+sudo: required
+mono: none
+dotnet: 2.0.0
+solution: src/Din.sln
+os:
+  - linux
+dist: trusty
+script:
+  - ./build.sh
