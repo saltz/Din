@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Din.Service;
+using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 
-namespace Din.Service
+namespace Din.Service.Interfaces
 {
     public interface IAuthService
     {

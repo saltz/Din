@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Din.Logic.Utils
+namespace Din.Service.Utils
 {
     public static class SimilarityExtensions
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Din.ExternalModels.Exceptions;
 using Din.ExternalModels.Utils;
 using Newtonsoft.Json;
 

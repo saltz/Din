@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Din.ExternalModels.Utils;
 
-namespace Din.Service
+namespace Din.Service.Classes
 {
     public static class MainService
     {

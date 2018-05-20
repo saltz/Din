@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Din.ExternalModels.Content
+namespace Din.ExternalModels.GeneratedMedia
 {
     public class UnsplashContainer
     {

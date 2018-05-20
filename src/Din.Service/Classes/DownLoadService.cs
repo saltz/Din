@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.ExternalModels.DownloadClient;
 
-namespace Din.Logic.DownloadSystem
+namespace Din.Service.Classes
 {
     public class DownloadSystem
     {

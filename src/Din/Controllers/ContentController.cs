@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.ViewModels;
 using Din.Service;
+using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

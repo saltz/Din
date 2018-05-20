@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.ViewModels;
 using TMDbLib.Objects.Search;
 
-namespace Din.Service
+namespace Din.Service.Interfaces
 {
     public interface IContentService
     {

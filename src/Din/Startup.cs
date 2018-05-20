@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using Din.Data;
 using Din.Service;
+using Din.Service.Classes;
+using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

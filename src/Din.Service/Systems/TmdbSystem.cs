@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Din.Service.Classes;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
 

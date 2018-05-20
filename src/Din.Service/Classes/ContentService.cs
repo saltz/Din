@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.ViewModels;
+using Din.Service.Interfaces;
 using Din.Service.Systems;
 using TMDbLib.Objects.Search;
 
-namespace Din.Service
+namespace Din.Service.Classes
 {
     public class ContentService : IContentService
     {

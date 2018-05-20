@@ -103,6 +103,7 @@ div.item span.rating {
 div.item.card p.overview {
     font-size: 0.9em;
     height: 55%;
+    text-align: left !important;
     line-height: 1.2em;
     margin-top: 30px;
     white-space: normal;

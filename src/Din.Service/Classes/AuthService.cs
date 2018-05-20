@@ -4,9 +4,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
+using Din.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Din.Service
+namespace Din.Service.Classes
 {
     public class AuthService : IAuthService
     {

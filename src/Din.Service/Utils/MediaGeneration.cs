@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
-using Din.ExternalModels.Content;
+using Din.ExternalModels.GeneratedMedia;
 using Din.ExternalModels.Utils;
+using Din.Service.Classes;
 
 namespace Din.Service.Utils
 {
