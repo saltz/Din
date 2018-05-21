@@ -186,3 +186,10 @@
 }
 
 #submit-button { display: none; }
+
+/* Folding cube*/
+
+.sk-folding-cube {
+    top: calc(50% - 20px);
+    z-index: 9000;
+}

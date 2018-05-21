@@ -20,30 +20,35 @@
 }
 
 .user-section {
-    height: 300px;
+    height: 17vw;
     color: white;
 }
 
 .user-section .user-picture {
-    height: 70%;
+    height: 12vw;
 }
 
 .user-section .user-picture img {
-    height: 80%;
-    width: 80%;
+    height: 9vw;
+    width: 9vw;
     border-radius: 50%;
-    margin-top: 10%;
-    margin-left: 10%;
+    margin-top: 1vw;
+    margin-left: 2vw;
     border: 3px solid #ff8d1c;
 }
 
 .user-section .user-info {
-    height: 30%;
+    height: 4vw;
     text-align: center;
 }
 .user-section .user-info i {
     padding: 10px;
 }
+
+    .user-section .user-info h3 {
+        font-size: 24px;
+    }
+
 
 .sidebar {
     background: #293949;

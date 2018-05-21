@@ -6,18 +6,27 @@
 @{
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
+    var os = client.OS.Family.ToLower();
+    if (os.Equals("ubuntu"))
+    {
+        os = "linux";
+
+    } else if (os.Contains("mac"))
+    {
+        os = "apple";
+    }
 }
 
 <div id="account" class="shadow p-3 mb-5 rounded partial-screen">
     <div class="left-container shadow rounded">
         <div class="user-section">
             <div class="user-picture">
-                <img src="" alt="Your Picture"/>
+                <img src="" alt=""/>
             </div>
             <div class="user-info">
                 <h3>@user.FirstName @user.LastName</h3>
                 <i class="fab fa-@client.UA.Family.ToLower()"></i>
-                <i class="fab fa-@client.OS.Family.ToLower()"></i>
+                <i class="fab fa-@os"></i>
             </div>
         </div>
         <aside class="sidebar">
@@ -39,9 +48,6 @@
     </div>
     <div class="data-pane shadow rounded">
         <div class="account-information">
-            <h1>@client.Device.Family</h1>
-            <h1>@client.ToString()</h1>
-
         </div>
     </div>
 </div>

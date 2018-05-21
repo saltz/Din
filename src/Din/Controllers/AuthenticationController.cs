@@ -35,7 +35,7 @@ namespace Din.Controllers
                     });
                 HttpContext.Session.SetString("UserAgent", Request.Headers["User-Agent"].ToString());
                 HttpContext.Session.SetString("User", serializedUser);
-                return View("../Main/Home");
+                return View("~/Views/Main/Home.cshtml");
             }
             catch (Exception)
             {
@@ -49,7 +49,7 @@ namespace Din.Controllers
         {
             await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
-            return View("../Main/Logout");
+            return View("~/Views/Main/Logout.cshtml");
         }
     }
 }

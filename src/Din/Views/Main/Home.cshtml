@@ -5,6 +5,7 @@
 
 @section CSS {
     <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/Home.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/Account.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/MovieResults.css" rel="stylesheet" type="text/css"/>
@@ -54,6 +55,12 @@
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddTvShow.cshtml");
     }
     <div class="ajax-div"></div>
+    <div class="sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    </div>
 
 @section scripts {
     <script type="text/javascript">
@@ -90,7 +97,8 @@
                 });
             });
 
-            $('#search-movie-form').submit(function(e) {
+            $('#search-movie-form').submit(function (e) {
+                $('.sk-folding-cube').css('display', 'block');
                 e.preventDefault();
                 e.stopPropagation();
                 var data = {
@@ -100,7 +108,8 @@
                     url: '@Url.Action("SearchMovieAsync", "Content")',
                     type: 'POST',
                     data: data,
-                    success: function(view) {
+                    success: function (view) {
+                        $('.sk-folding-cube').css('display', 'none');
                         $('div.ajax-div').replaceWith(view);
                         $('#add-movie').modal('hide');
                         $('.ajax-div').modal('show');
