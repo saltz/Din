@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Din.ExternalModels.Utils
@@ -14,7 +15,7 @@ namespace Din.ExternalModels.Utils
 
         public HttpRequestHelper(string url, bool cookieContainer)
         {
-            _request = (HttpWebRequest)WebRequest.Create(url);
+            _request = (HttpWebRequest) WebRequest.Create(url);
             if (!cookieContainer) return;
             var cookies = new CookieContainer();
             _request.CookieContainer = cookies;
@@ -28,26 +29,39 @@ namespace Din.ExternalModels.Utils
 
         public async Task<string> PerformGetRequestAsync()
         {
-            _request.Method = "GET";
-            _response = (HttpWebResponse) await _request.GetResponseAsync();
-            using (var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
-                _result = sr.ReadToEnd();
-            return _result;
+            try
+            {
+                _request.Method = "GET";
+                _response = (HttpWebResponse) await _request.GetResponseAsync();
+                using (var sr =
+                    new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
+                    _result = sr.ReadToEnd();
+                return _result;
+            }
+            catch
+            {
+                //If it is a tvdb request and it 404's return empty object
+                if (_request.RequestUri.ToString().Contains("tvdb"))
+                    return "\r\n\r\n{\"data\":[]}\r\n\r\n";
+                throw new SystemException();
+            }
         }
 
         public async Task<Tuple<int, string>> PerformPostRequestAsync(string payload)
         {
             _request.Method = "POST";
+            _request.ContentType = "application/json";
             using (var sw = new StreamWriter(_request.GetRequestStream()))
                 sw.Write(payload);
             try
             {
                 _response = (HttpWebResponse) await _request.GetResponseAsync();
-                using(var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
+                using (var sr =
+                    new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
                     _result = sr.ReadToEnd();
                 return new Tuple<int, string>((int) _response.StatusCode, _result);
             }
-            catch (WebException)
+            catch (WebException e)
             {
                 return null;
             }

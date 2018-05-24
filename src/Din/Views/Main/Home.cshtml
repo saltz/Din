@@ -121,6 +121,30 @@
                 });
             });
 
+            $('#search-show-form').submit(function (e) {
+                $('.sk-folding-cube').css('display', 'block');
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    query: $('.search-show').val()
+                };
+                $.ajax({
+                    url: '@Url.Action("SearchTvShowAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function (view) {
+                        $('.sk-folding-cube').css('display', 'none');
+                        $('div.ajax-div').replaceWith(view);
+                        $('#add-tvshow').modal('hide');
+                        $('.ajax-div').modal('show');
+                        $('.search-show').val("");
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
+            });
+
             function toggleMenu() {
                 menu.body.toggleClass('menu--closed');
                 menu.body.toggleClass('menu--open');

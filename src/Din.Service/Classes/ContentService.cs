@@ -19,16 +19,26 @@ namespace Din.Service.Classes
             _context = context;
         } 
 
-        public async Task<SearchResultsModel> SearchMovieAsync(string query)
+        public async Task<MovieResultsModel> SearchMovieAsync(string query)
         {
-            var results = new SearchResultsModel
+            var results = new MovieResultsModel
             {
-                QueryResult = await new TmdbSystem().SearchMovie(query),
+                QueryResult = await new TmdbSystem().SearchMovieAsync(query),
                 CurrentIdList = await new MediaSystem().GetCurrentMoviesAsync()
             };
             return results;
         }
-        
+
+        public async Task<TvShowResultsModel> SearchTvShowAsync(string query)
+        {
+            var results = new TvShowResultsModel()
+            {
+                QueryResult = await new TvdbSystem().SearchTvShowAsync(query),
+                CurrentIdList = await new MediaSystem().GetCurrentTvShowsAsync()
+            };
+            return results;
+        }
+
         public async Task<AddContentResultModel> AddMovieAsync(SearchMovie movie, Account account)
         { 
             if (!(await new MediaSystem().AddMovieAsync(movie)).Equals(201))
@@ -47,6 +57,11 @@ namespace Din.Service.Classes
                 TitleColor = "#00d77c",
                 Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
             };
+        }
+
+        public Task<AddContentResultModel> AddTvShowAsync(string tvShow, Account account)
+        {
+            throw new NotImplementedException();
         }
 
         //public async Task<List<AddedContent>> GetAddedContent(Account a)

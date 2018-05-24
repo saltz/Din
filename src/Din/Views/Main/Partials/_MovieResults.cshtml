@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
 
-@model Din.ExternalModels.ViewModels.SearchResultsModel
+@model Din.ExternalModels.ViewModels.MovieResultsModel
 
 @if (Context.Session.GetString("User") != null)
 {
@@ -37,7 +37,7 @@
                                 var date = Convert.ToDateTime(movie.ReleaseDate).Year;
                                 var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
 
-                                <div movie-id="@movie.Id" class="item poster card">
+                                <div class="item poster card">
                                     <div class="image">
                                         @{
                                             if (string.IsNullOrEmpty(movie.PosterPath))

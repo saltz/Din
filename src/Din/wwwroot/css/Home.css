@@ -190,6 +190,6 @@
 /* Folding cube*/
 
 .sk-folding-cube {
-    top: calc(50% - 20px);
+    top: 20vw;
     z-index: 9000;
 }

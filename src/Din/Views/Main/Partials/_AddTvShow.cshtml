@@ -7,9 +7,9 @@
             </div>
             <div class="modal-body">
                 <p>Enter the name of the Tv Show you want to add</p>
-                <form method="post" action="@Url.Action("SearchTvShowAsync", "Content")">
+                <form id="search-show-form">
                     <i class="fas fa-search"></i>
-                    <input type="search" id="search" name="searchQuery" placeholder="Search..." />
+                    <input type="search" id="search" class="search-show" name="searchQuery" placeholder="Search..." />
                     <input id="submit-button" type="submit" value="search" />
                 </form>
             </div>

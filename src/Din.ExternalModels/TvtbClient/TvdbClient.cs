@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.ExternalModels.Utils;
 using Newtonsoft.Json;
@@ -9,35 +8,32 @@ namespace Din.ExternalModels.TvtbClient
     /// <inheritdoc />
     public class TvdbClient : ITvdbClient
     {
-        private readonly string _apiKey;
-        private readonly string _userKey;
-        private readonly string _username;
+        private readonly string _jwtToken;
+        
 
         public TvdbClient(string apiKey, string userKey, string username)
         {
-            _apiKey = apiKey;
-            _userKey = userKey;
-            _username = username;
+            _jwtToken = AuthenticateAsync(apiKey, userKey, username).Result;
         }
 
 
-        public async Task<string> Authenticate()
+        private static async Task<string> AuthenticateAsync(string apiKey, string userKey, string username)
         {
-            const string url = "https://api.thetvdb.com/login";
-            var payload = JsonConvert.SerializeObject(new
+            const string url = "https://tvdb2.plex.tv/login";
+            var payload = JsonConvert.SerializeObject(new TvdbCredentials()
             {
-                apikey = _apiKey,
-                userkey = _userKey,
-                usernam = _username
+                ApiKey = apiKey,
+                UserKey = userKey,
+                Username = username
             });
             var result = await new HttpRequestHelper(url, false).PerformPostRequestAsync(payload);
             return !result.Item1.Equals(200) ? null : JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Item2)["token"];
         }
 
-        public Task<List<TvdbObject>> SearchSeries(string query, string token)
+        public async Task<TvdbRootObject> SearchShowAsync(string query)
         {
-            const string url = "https://api.thetvdb.com/search/series?name={0}";
-            var result = await new HttpRequestHelper(url,);
+            var url = "https://tvdb2.plex.tv/search/series?name=" + query;
+            return JsonConvert.DeserializeObject<TvdbRootObject>(await new HttpRequestHelper(url, _jwtToken).PerformGetRequestAsync());
         }
     }
 }

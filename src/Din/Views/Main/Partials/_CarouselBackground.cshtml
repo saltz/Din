@@ -8,7 +8,7 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         @{
-            var image = images[0].Urls.Custom;
+            var image = images[0].Urls.Regular;
             images.Remove(images[0]);
             <div class="carousel-item active"><img src="@image" /></div>
             foreach (var i in images)

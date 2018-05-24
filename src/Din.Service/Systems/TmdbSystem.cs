@@ -15,7 +15,7 @@ namespace Din.Service.Systems
             _tmDbClient = new TMDbClient(MainService.PropertyFile.get("tmdb"));
         }
 
-        public async Task<List<SearchMovie>> SearchMovie(string searchQuery)
+        public async Task<List<SearchMovie>> SearchMovieAsync(string searchQuery)
         {
             var movies = await _tmDbClient.SearchMovieAsync(searchQuery);
             return movies.Results;
