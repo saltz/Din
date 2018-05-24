@@ -20,6 +20,12 @@ namespace Din.ExternalModels.Utils
             _request.CookieContainer = cookies;
         }
 
+        public HttpRequestHelper(string url, string token)
+        {
+            _request = (HttpWebRequest) WebRequest.Create(url);
+            _request.Headers.Add("Authorization", "Bearer " + token);
+        }
+
         public async Task<string> PerformGetRequestAsync()
         {
             _request.Method = "GET";
