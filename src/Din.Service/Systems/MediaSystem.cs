@@ -45,7 +45,7 @@ namespace Din.Service.Systems
             return response.Item1;
         }
 
-        public async Task<int> AddTvShowAsync(SearchTv show, int tvdbId, List<TvShowSeason> seasons)
+        public async Task<int> AddTvShowAsync(SearchTv show, string tvdbId, List<TvShowSeason> seasons)
         {
             var images = new List<MediaSystemImage> {new MediaSystemImage("poster", show.PosterPath)};
             var payload = new MediaSystemTvShow(show.Name, Convert.ToDateTime(show.FirstAirDate), tvdbId, images, seasons,
@@ -69,7 +69,6 @@ namespace Din.Service.Systems
                 i.Status = ContentStatus.Downloaded;
                 break;
             }
-
             return content;
         }
     }

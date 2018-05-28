@@ -35,6 +35,6 @@ namespace Din.Service.Interfaces
         /// <param name="tvShow">The TvShow object that needs to be added.</param>
         /// <param name="account">The account that performs the action.</param>
         /// <returns>The status results of the action (ok/bad).</returns>
-        Task<AddContentResultModel> AddTvShowAsync(string tvShow, Account account);
+        Task<AddContentResultModel> AddTvShowAsync(SearchTv tvShow, Account account);
     }
 }

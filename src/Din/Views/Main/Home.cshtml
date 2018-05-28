@@ -175,6 +175,29 @@
                     }
                 });
             });
+        
+        $(document).delegate('.add-tvshow',
+            'click',
+            function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    tvShowData: $(this).attr('data-model')
+                };
+                $.ajax({
+                    url: '@Url.Action("AddTvShowAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function (view) {
+                        $('.modal-backdrop').remove();
+                        $('.ajax-div').replaceWith(view);
+                        $('#content-added').modal('show');
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
+            });
 
         $(document).delegate('.nav a',
             'click',

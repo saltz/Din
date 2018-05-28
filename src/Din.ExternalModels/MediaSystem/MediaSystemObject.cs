@@ -62,13 +62,13 @@ namespace Din.ExternalModels.MediaSystem
     public class MediaSystemTvShow : MediaSystemObject
     {
         [JsonProperty("tvdbid")]
-        public int TvShowId { get; set; }
+        public string TvShowId { get; set; }
         [JsonProperty("seasons")]
         public List<TvShowSeason> Seasons { get; set; }
 
         public MediaSystemTvShow() { }
 
-        public MediaSystemTvShow(string title, DateTime date, int id, List<MediaSystemImage> images, List<TvShowSeason> seasons, string fileLocation)
+        public MediaSystemTvShow(string title, DateTime date, string id, List<MediaSystemImage> images, List<TvShowSeason> seasons, string fileLocation)
         {
             TvShowId = id;
             Title = title;

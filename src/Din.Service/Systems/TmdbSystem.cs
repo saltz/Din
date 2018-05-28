@@ -24,5 +24,11 @@ namespace Din.Service.Systems
         {
             return (await _tmDbClient.SearchTvShowAsync(searchQuery)).Results;
         }
+
+        public async Task<string> GetTvShowTvdbId(int id)
+        {
+            var result = await _tmDbClient.GetTvShowExternalIdsAsync(id);
+            return result.TvdbId;
+        }
     }
 }

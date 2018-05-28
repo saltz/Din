@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
+using Din.ExternalModels.MediaSystem;
 using Din.ExternalModels.ViewModels;
 using Din.Service.Interfaces;
 using Din.Service.Systems;
@@ -50,7 +51,7 @@ namespace Din.Service.Classes
                     Message = "Somethning went wrong 😵   Try again later!"
                 };
             }
-            await LogContentAsync(movie, account);
+            await LogContentAsync(movie.Title, account);
             return new AddContentResultModel
             {
                 Title = "Movie Added Succesfully",
@@ -59,22 +60,33 @@ namespace Din.Service.Classes
             };
         }
 
-        public Task<AddContentResultModel> AddTvShowAsync(string tvShow, Account account)
+        public async Task<AddContentResultModel> AddTvShowAsync(SearchTv tvShow, Account account)
         {
-            throw new NotImplementedException();
+            var seasons = new List<TvShowSeason>();
+            if (!(await new MediaSystem().AddTvShowAsync(tvShow, await new TmdbSystem().GetTvShowTvdbId(tvShow.Id), seasons)).Equals(201))
+            {
+                return new AddContentResultModel
+                {
+                    Title = "Failed At adding Tv Show",
+                    TitleColor = "#b43232",
+                    Message = "Somethning went wrong 😵   Try again later!"
+                };
+            }
+            await LogContentAsync(tvShow.Name, account);
+            return new AddContentResultModel
+            {
+                Title = "Tv Show Added Succesfully",
+                TitleColor = "#00d77c",
+                Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
+            };
         }
 
-        //public async Task<List<AddedContent>> GetAddedContent(Account a)
-        //{
-        //    return await PerformUpdateAsync(a);
-        //}
-
-        private async Task LogContentAsync(SearchMovie m, Account a)
+        private async Task LogContentAsync(string title, Account a)
         {
             if(a.AddedContent == null)
                 a.AddedContent = new List<AddedContent>();
             _context.Attach(a);
-            a.AddedContent.Add(new AddedContent(m.Title, DateTime.Now, ContentStatus.Added, a));
+            a.AddedContent.Add(new AddedContent(title, DateTime.Now, ContentStatus.Added, a));
             await _context.SaveChangesAsync();
         }
 

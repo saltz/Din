@@ -54,9 +54,20 @@ namespace Din.Controllers
 
 
         [HttpPost, Authorize]
-        public async Task<IActionResult> AddTvShowAsync()
+        public async Task<IActionResult> AddTvShowAsync(string tvShowData)
         {
-            return null;
+            try
+            {
+                var tvShow = JsonConvert.DeserializeObject<SearchTv>(tvShowData);
+                if (tvShow == null) return RedirectToAction("Index", "StatusCode", 500);
+                return PartialView("~/Views/main/Partials/_AddResult.cshtml",
+                    await _service.AddTvShowAsync(tvShow,
+                        JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account));
+            }
+            catch
+            {
+                return RedirectToAction("Index", "StatusCode", 500);
+            }
         }
     }
 }
