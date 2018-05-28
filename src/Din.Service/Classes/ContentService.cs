@@ -33,8 +33,8 @@ namespace Din.Service.Classes
         {
             var results = new TvShowResultsModel()
             {
-                QueryResult = await new TvdbSystem().SearchTvShowAsync(query),
-                CurrentIdList = await new MediaSystem().GetCurrentTvShowsAsync()
+                QueryResult = await new TmdbSystem().SearchTvShowAsync(query),
+                CurrentTtileList = await new MediaSystem().GetCurrentTvShowsAsync()
             };
             return results;
         }

@@ -17,8 +17,12 @@ namespace Din.Service.Systems
 
         public async Task<List<SearchMovie>> SearchMovieAsync(string searchQuery)
         {
-            var movies = await _tmDbClient.SearchMovieAsync(searchQuery);
-            return movies.Results;
+            return (await _tmDbClient.SearchMovieAsync(searchQuery)).Results;
+        }
+
+        public async Task<List<SearchTv>> SearchTvShowAsync(string searchQuery)
+        {
+            return (await _tmDbClient.SearchTvShowAsync(searchQuery)).Results;
         }
     }
 }

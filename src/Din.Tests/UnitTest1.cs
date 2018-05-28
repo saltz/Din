@@ -1,5 +1,3 @@
-
-using Din.ExternalModels.TvtbClient;
 using Xunit;
 
 namespace Din.Tests

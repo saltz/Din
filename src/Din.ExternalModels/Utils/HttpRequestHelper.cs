@@ -29,22 +29,12 @@ namespace Din.ExternalModels.Utils
 
         public async Task<string> PerformGetRequestAsync()
         {
-            try
-            {
-                _request.Method = "GET";
-                _response = (HttpWebResponse) await _request.GetResponseAsync();
-                using (var sr =
-                    new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
-                    _result = sr.ReadToEnd();
-                return _result;
-            }
-            catch
-            {
-                //If it is a tvdb request and it 404's return empty object
-                if (_request.RequestUri.ToString().Contains("tvdb"))
-                    return "\r\n\r\n{\"data\":[]}\r\n\r\n";
-                throw new SystemException();
-            }
+            _request.Method = "GET";
+            _response = (HttpWebResponse) await _request.GetResponseAsync();
+            using (var sr =
+                new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
+                _result = sr.ReadToEnd();
+            return _result;
         }
 
         public async Task<Tuple<int, string>> PerformPostRequestAsync(string payload)

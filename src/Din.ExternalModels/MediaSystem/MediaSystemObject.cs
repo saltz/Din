@@ -41,7 +41,7 @@ namespace Din.ExternalModels.MediaSystem
 
         public MediaSystemMovie() { }
 
-        public MediaSystemMovie(string title, List<MediaSystemImage> images, int tmdbid, DateTime date, string fileLocation)
+        public MediaSystemMovie(string title, DateTime date, int tmdbid, List<MediaSystemImage> images, string fileLocation)
         {
             Title = title;
             Year = date.Year;

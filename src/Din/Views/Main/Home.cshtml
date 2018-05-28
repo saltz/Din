@@ -4,11 +4,11 @@
 
 
 @section CSS {
-    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Home.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Account.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/MovieResults.css" rel="stylesheet" type="text/css"/>
+    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Account.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/MovieResults.css" rel="stylesheet" type="text/css" />
 }
 
 @if (Context.Session.GetString("User") != null)
@@ -62,8 +62,8 @@
         <div class="sk-cube3 sk-cube"></div>
     </div>
 
-@section scripts {
-    <script type="text/javascript">
+    @section scripts {
+        <script type="text/javascript">
         $(document).ready(function() {
             $('.carousel').carousel({
                 interval: 5000
@@ -191,8 +191,8 @@
                 });
             }
         });
-    </script>
-}}
+        </script>
+    }}
 else
 {
     @Url.Action("Index", "Main")

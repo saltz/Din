@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.MediaSystem;
-using Din.ExternalModels.TvtbClient;
 using Din.ExternalModels.Utils;
 using Din.Service.Classes;
 using Newtonsoft.Json;
@@ -27,33 +26,29 @@ namespace Din.Service.Systems
             return movieIds;
         }
 
-        public async Task<List<int>> GetCurrentTvShowsAsync()
+        public async Task<List<string>> GetCurrentTvShowsAsync()
         {
-            var tvShowIds = new List<int>();
+            var tvShowIds = new List<string>();
             var objects =
                 JsonConvert.DeserializeObject<List<MediaSystemTvShow>>(
                     await new HttpRequestHelper(_tvShowSystemUrl, false).PerformGetRequestAsync());
             foreach (var t in objects)
-                tvShowIds.Add(t.TvShowId);
+                tvShowIds.Add(t.Title);
             return tvShowIds;
         }
 
         public async Task<int> AddMovieAsync(SearchMovie movie)
         {
             var images = new List<MediaSystemImage> {new MediaSystemImage("poster", movie.PosterPath)};
-            var payload = new MediaSystemMovie(movie.Title, images, movie.Id, Convert.ToDateTime(movie.ReleaseDate),
-                MainService.PropertyFile.get("movieSystemFileLocation"));
-            var response =
-                await new HttpRequestHelper(_movieSystemUrl, false).PerformPostRequestAsync(
-                    JsonConvert.SerializeObject(payload));
+            var payload = new MediaSystemMovie(movie.Title, Convert.ToDateTime(movie.ReleaseDate), movie.Id, images, MainService.PropertyFile.get("movieSystemFileLocation"));
+            var response = await new HttpRequestHelper(_movieSystemUrl, false).PerformPostRequestAsync(JsonConvert.SerializeObject(payload));
             return response.Item1;
         }
 
-        public async Task<int> AddTvShowAsync(TvdbShow show, List<TvShowSeason> seasons)
+        public async Task<int> AddTvShowAsync(SearchTv show, int tvdbId, List<TvShowSeason> seasons)
         {
-            var images = new List<MediaSystemImage> {new MediaSystemImage("banner", show.Banner)};
-            var date = show.FirstAired ?? DateTime.MinValue;
-            var payload = new MediaSystemTvShow(show.Title, date, show.ShowId, images, seasons,
+            var images = new List<MediaSystemImage> {new MediaSystemImage("poster", show.PosterPath)};
+            var payload = new MediaSystemTvShow(show.Name, Convert.ToDateTime(show.FirstAirDate), tvdbId, images, seasons,
                 MainService.PropertyFile.get("tvShowSystemFileLocation"));
             var response =
                 await new HttpRequestHelper(_tvShowSystemUrl, false).PerformPostRequestAsync(

@@ -5,7 +5,7 @@
 
 @if (Context.Session.GetString("User") != null)
 {
-    if (Model.QueryResult.Shows.Count.Equals(0))
+    if (Model.QueryResult.Count.Equals(0))
     {
         <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
             <div class="modal-dialog">
@@ -32,15 +32,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="card-frame">
-                            @foreach (var show in Model.QueryResult.Shows)
+                            @foreach (var show in Model.QueryResult)
                             {
-                                var date = Convert.ToDateTime(show.FirstAired).Year;
-                                var posterPath = "https://www.thetvdb.com/banners/" + show.Banner;
+                                var date = Convert.ToDateTime(show.FirstAirDate).Year;
+                                var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + show.PosterPath;
 
                                 <div class="item poster card">
                                     <div class="image">
                                         @{
-                                            if (string.IsNullOrEmpty(show.Banner))
+                                            if (string.IsNullOrEmpty(show.PosterPath))
                                             {
                                                 <img class="poster" sizes="185px" src="~/images/not-found.png" )/>
                                             }
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="info">
                                         <p class="flex">
-                                            <a>@show.Title</a>
+                                            <a>@show.Name</a>
                                         </p>
                                         <p class="flex">
                                             <span>
@@ -65,13 +65,13 @@
                                         </p>
                                         <div class="add-button">
                                             @{
-                                                if (Model.CurrentIdList.Contains(show.ShowId))
+                                                if (Model.CurrentTtileList.Contains(show.Name))
                                                 {
                                                     <button disabled type="button" class="btn btn-default">Already Exists</button>
                                                 }
                                                 else
                                                 {
-                                                    <button id="@show.ShowId" data-model="@JsonConvert.SerializeObject(show)" class="btn btn-primary add-movie">Add Movie</button>
+                                                    <button data-model="@JsonConvert.SerializeObject(show)" class="btn btn-primary add-movie">Add TvShow</button>
                                                     <input class="selected-movie" name="selected-movie"/>
                                                 }
                                             }
