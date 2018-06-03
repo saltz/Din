@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
-using Din.ExternalModels.MediaSystem;
 using Din.ExternalModels.ViewModels;
 using Din.Service.Interfaces;
 using Din.Service.Systems;
@@ -62,8 +61,8 @@ namespace Din.Service.Classes
 
         public async Task<AddContentResultModel> AddTvShowAsync(SearchTv tvShow, Account account)
         {
-            var seasons = new List<TvShowSeason>();
-            if (!(await new MediaSystem().AddTvShowAsync(tvShow, await new TmdbSystem().GetTvShowTvdbId(tvShow.Id), seasons)).Equals(201))
+            var tmdbSystem = new TmdbSystem();
+            if (!(await new MediaSystem().AddTvShowAsync(tvShow, await tmdbSystem.GetTvShowTvdbId(tvShow.Id), await tmdbSystem.GetTvShowSeasons(tvShow.Id))).Equals(201))
             {
                 return new AddContentResultModel
                 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Din.ExternalModels.Utils
@@ -19,12 +18,6 @@ namespace Din.ExternalModels.Utils
             if (!cookieContainer) return;
             var cookies = new CookieContainer();
             _request.CookieContainer = cookies;
-        }
-
-        public HttpRequestHelper(string url, string token)
-        {
-            _request = (HttpWebRequest) WebRequest.Create(url);
-            _request.Headers.Add("Authorization", "Bearer " + token);
         }
 
         public async Task<string> PerformGetRequestAsync()
@@ -51,12 +44,11 @@ namespace Din.ExternalModels.Utils
                     _result = sr.ReadToEnd();
                 return new Tuple<int, string>((int) _response.StatusCode, _result);
             }
-            catch (WebException e)
+            catch
             {
                 return null;
             }
         }
-
 
         public void SetDecompressionMethods(IEnumerable<DecompressionMethods> methods)
         {

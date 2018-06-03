@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Din.ExternalModels.Utils
@@ -7,68 +6,27 @@ namespace Din.ExternalModels.Utils
     public class PropertyFile
     {
         private Dictionary<string, string> _list;
-        private string _filename;
 
         public PropertyFile(string file)
         {
-            reload(file);
+            Reload(file);
         }
 
-        public string get(string field, string defValue)
-        {
-            return (get(field) == null) ? (defValue) : (get(field));
-        }
-        public string get(string field)
+        public string Get(string field)
         {
             return (_list.ContainsKey(field)) ? (_list[field]) : (null);
         }
 
-        public void set(string field, Object value)
+        private void Reload(string filename)
         {
-            if (!_list.ContainsKey(field))
-                _list.Add(field, value.ToString());
-            else
-                _list[field] = value.ToString();
-        }
-
-        public void Save()
-        {
-            Save(this._filename);
-        }
-
-        public void Save(string filename)
-        {
-            this._filename = filename;
-
-            if (!System.IO.File.Exists(filename))
-                System.IO.File.Create(filename);
-
-            System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
-
-            foreach (string prop in _list.Keys.ToArray())
-                if (!string.IsNullOrWhiteSpace(_list[prop]))
-                    file.WriteLine(prop + "=" + _list[prop]);
-
-            file.Close();
-        }
-
-        public void reload()
-        {
-            reload(this._filename);
-        }
-
-        public void reload(string filename)
-        {
-            this._filename = filename;
             _list = new Dictionary<string, string>();
-
             if (System.IO.File.Exists(filename))
-                loadFromFile(filename);
+                LoadFromFile(filename);
             else
                 System.IO.File.Create(filename);
         }
 
-        private void loadFromFile(string file)
+        private void LoadFromFile(string file)
         {
             foreach (string line in System.IO.File.ReadAllLines(file))
             {
@@ -97,7 +55,5 @@ namespace Din.ExternalModels.Utils
                 }
             }
         }
-
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Din.Service;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +19,13 @@ namespace Din.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<IActionResult> LoginAsync()
+        public async Task<IActionResult> LoginAsync(string username, string password)
         {
             try
             {
-                var loginResult = await _service.LoginAsync(Request.Form["username"], Request.Form["password"]);
+                var loginResult = await _service.LoginAsync(username, password);
                 if (loginResult == null)
-                    return RedirectToAction("Index", "Main");
+                    return BadRequest();                   
                 await HttpContext.SignInAsync(loginResult.Item2);
                 var serializedUser = JsonConvert.SerializeObject(loginResult.Item1, Formatting.Indented,
                     new JsonSerializerSettings
@@ -39,8 +38,7 @@ namespace Din.Controllers
             }
             catch (Exception)
             {
-                HttpContext.Session.SetString("Login", "BAD");
-                return RedirectToAction("Index", "Main");
+                return BadRequest();
             }
         }
 

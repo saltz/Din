@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using TMDbLib.Objects.Search;
 
 namespace Din.ExternalModels.MediaSystem
 {
@@ -28,6 +29,7 @@ namespace Din.ExternalModels.MediaSystem
             return slug;
         }
     }
+
     public class MediaSystemMovie : MediaSystemObject
     {
         [JsonProperty("year")]
@@ -68,7 +70,7 @@ namespace Din.ExternalModels.MediaSystem
 
         public MediaSystemTvShow() { }
 
-        public MediaSystemTvShow(string title, DateTime date, string id, List<MediaSystemImage> images, List<TvShowSeason> seasons, string fileLocation)
+        public MediaSystemTvShow(string title, DateTime date, string id, List<MediaSystemImage> images, IEnumerable<SearchTvSeason> seasons, string fileLocation)
         {
             TvShowId = id;
             Title = title;
@@ -76,11 +78,12 @@ namespace Din.ExternalModels.MediaSystem
             ProfileId = "6";
             Titleslug = GenerateTitleSlug(title, date);
             Images = images;
-            Seasons = seasons;
             RootFolderPath = fileLocation;
             Monitored = true;
+            Seasons = new List<TvShowSeason>();
+            foreach (var s in seasons)
+                Seasons.Add(new TvShowSeason(s.SeasonNumber.ToString(), true));
         }
-
     }
 
     public class MediaSystemImage
@@ -120,5 +123,13 @@ namespace Din.ExternalModels.MediaSystem
         public string SeasonNumber { get; set; }
         [JsonProperty("monitored")]
         public bool Monitored { get; set; }
+
+        public TvShowSeason() { }
+
+        public TvShowSeason(string seasonNumber, bool monitored)
+        {
+            SeasonNumber = seasonNumber;
+            Monitored = monitored;
+        }
     }
 }

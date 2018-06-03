@@ -26,10 +26,6 @@
         <div id="search-results" class="modal fade ajax-div" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="custom-modal-header">
-                        <i class="fas fa-times" data-dismiss="modal"></i>
-                        <h3 id="modal-title">Results</h3>
-                    </div>
                     <div class="modal-body">
                         <div class="card-frame">
                             @foreach (var show in Model.QueryResult)
@@ -53,6 +49,10 @@
                                     <div class="info">
                                         <p class="flex">
                                             <a>@show.Name</a>
+                                            <span class="vote_avarage">
+                                                @show.VoteAverage
+                                                <span class="oi oi-star"></span>
+                                            </span>
                                         </p>
                                         <p class="flex">
                                             <span>
@@ -71,7 +71,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <button data-model="@JsonConvert.SerializeObject(show)" class="btn btn-primary add-tvshow">Add TvShow</button>
+                                                    <button data-model="@JsonConvert.SerializeObject(show)" class="btn btn-primary add-tvshow">Add Tv Show</button>
                                                     <input class="selected-movie" name="selected-movie"/>
                                                 }
                                             }

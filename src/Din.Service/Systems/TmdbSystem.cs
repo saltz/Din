@@ -12,7 +12,7 @@ namespace Din.Service.Systems
 
         public TmdbSystem()
         {
-            _tmDbClient = new TMDbClient(MainService.PropertyFile.get("tmdb"));
+            _tmDbClient = new TMDbClient(MainService.PropertyFile.Get("tmdb"));
         }
 
         public async Task<List<SearchMovie>> SearchMovieAsync(string searchQuery)
@@ -29,6 +29,11 @@ namespace Din.Service.Systems
         {
             var result = await _tmDbClient.GetTvShowExternalIdsAsync(id);
             return result.TvdbId;
+        }
+
+        public async Task<List<SearchTvSeason>> GetTvShowSeasons(int id)
+        {
+            return (await _tmDbClient.GetTvShowAsync(id)).Seasons;
         }
     }
 }
