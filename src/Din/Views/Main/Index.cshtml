@@ -1,22 +1,13 @@
-﻿@using Microsoft.AspNetCore.Http
-﻿@{
-    ViewBag.Title = "index";
-    if (Context.Session.GetString("Login") == null)
-    {
-        Context.Session.SetString("Login", "OK");
-    }
+﻿@section CSS {
+    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/index.css" rel="stylesheet" type="text/css"/>
 }
 
-@section CSS {
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/index.css" rel="stylesheet" type="text/css" />
-}
 <div id="particles">
     <div class="container">
         <div class="index">
             <h1 id="title">DIN</h1>
-            <br />
+            <br/>
             <h3 id="subtitle">Movies are awesome!</h3>
             <div class="login-form">
                 <div class="sk-folding-cube">
@@ -25,13 +16,12 @@
                     <div class="sk-cube4 sk-cube"></div>
                     <div class="sk-cube3 sk-cube"></div>
                 </div>
-                <form method="post" action="@Url.Action("LoginAsync", "Authentication")">
-                    <h4>SIGN IN</h4>
+                <form id="login-form">
                     <div class="form-group ">
-                        <input type="text" class="form-control" placeholder="Username" name="username" id="UserName">
+                        <input type="text" class="form-control" placeholder="Username" name="username" id="username">
                     </div>
                     <div class="form-group log-status">
-                        <input type="password" class="form-control" placeholder="Password" name="password" id="Passwod">
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
                     </div>
                     <span class="alert">Invalid Credentials</span>
                     <button type="submit" class="log-btn">Log in</button>
@@ -41,18 +31,11 @@
     </div>
 </div>
 
-
-@if (Context.Session.GetString("Login").Equals("BAD"))
-{
-    <span id="error" style="display: none;" title="pwd-incorect"></span>
-    Context.Session.SetString("Login", "OK");
-}
-
 @section scripts {
     <script src="~/lib/jquery.particleground.min.js" type="text/javascript"></script>
     <script>
         $(window).on("load",
-            function () {
+            function() {
                 $('#particles').particleground({
                     dotColor: '#ff8d1c',
                     lineColor: '#ff8d1c',
@@ -60,18 +43,33 @@
                     parallaxMultiplier: 20
                 });
 
-                if ($('#error').attr("title") === ("pwd-incorect")) {
-                    $('.log-status').addClass('wrong-entry');
-                    $('.alert').fadeIn(500);
-                    setTimeout("$('.alert').fadeOut(1500);", 3000);
-                }
-
-                $('.form-control').keypress(function () {
-                    $('.log-status').removeClass('wrong-entry');
+                $('#login-form').submit(function (e) {
+                    e.preventDefault();
+                    $('.sk-folding-cube').css('display', 'block');
+                    var data = {
+                        username: $('#username').val(),
+                        password: $('#password').val()
+                    }
+                    $.ajax({
+                        url: '@Url.Action("LoginAsync", "Authentication")',
+                        type: 'POST',
+                        data: data,
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function() {
+                            $('.sk-folding-cube').css('display', 'none');
+                            $('.log-status').addClass('wrong-entry');
+                            $('#username').val("");
+                            $('#password').val("");
+                            $('.alert').fadeIn(500);
+                            setTimeout("$('.alert').fadeOut(1500);", 3000);
+                        }
+                    });
                 });
 
-                $('.log-btn').click(function() {
-                    $('.sk-folding-cube').css('display', 'block');
+                $('.form-control').keypress(function() {
+                    $('.log-status').removeClass('wrong-entry');
                 });
             });
     </script>

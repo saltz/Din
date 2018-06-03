@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Din.ExternalModels.DownloadClient;
 
-namespace Din.Service.Classes
+namespace Din.Service.Systems
 {
     public class DownloadSystem
     {

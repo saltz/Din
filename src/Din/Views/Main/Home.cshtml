@@ -4,11 +4,10 @@
 
 
 @section CSS {
-    <link href="~/lib/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Home.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Account.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/MovieResults.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Account.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/SearchResult.css" rel="stylesheet" type="text/css" />
 }
 
 @if (Context.Session.GetString("User") != null)
@@ -62,8 +61,8 @@
         <div class="sk-cube3 sk-cube"></div>
     </div>
 
-@section scripts {
-    <script type="text/javascript">
+    @section scripts {
+        <script type="text/javascript">
         $(document).ready(function() {
             $('.carousel').carousel({
                 interval: 5000
@@ -121,6 +120,30 @@
                 });
             });
 
+            $('#search-show-form').submit(function (e) {
+                $('.sk-folding-cube').css('display', 'block');
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    query: $('.search-show').val()
+                };
+                $.ajax({
+                    url: '@Url.Action("SearchTvShowAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function (view) {
+                        $('.sk-folding-cube').css('display', 'none');
+                        $('div.ajax-div').replaceWith(view);
+                        $('#add-tvshow').modal('hide');
+                        $('.ajax-div').modal('show');
+                        $('.search-show').val("");
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
+            });
+
             function toggleMenu() {
                 menu.body.toggleClass('menu--closed');
                 menu.body.toggleClass('menu--open');
@@ -151,6 +174,29 @@
                     }
                 });
             });
+        
+        $(document).delegate('.add-tvshow',
+            'click',
+            function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var data = {
+                    tvShowData: $(this).attr('data-model')
+                };
+                $.ajax({
+                    url: '@Url.Action("AddTvShowAsync", "Content")',
+                    type: 'POST',
+                    data: data,
+                    success: function (view) {
+                        $('.modal-backdrop').remove();
+                        $('.ajax-div').replaceWith(view);
+                        $('#content-added').modal('show');
+                    },
+                    error: function() {
+                        console.log("error");
+                    }
+                });
+            });
 
         $(document).delegate('.nav a',
             'click',
@@ -167,8 +213,8 @@
                 });
             }
         });
-    </script>
-}}
+        </script>
+    }}
 else
 {
     @Url.Action("Index", "Main")

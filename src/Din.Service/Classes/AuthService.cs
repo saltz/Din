@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Classes
 {
+    /// <inheritdoc />
     public class AuthService : IAuthService
     {
         private readonly DinContext _context;

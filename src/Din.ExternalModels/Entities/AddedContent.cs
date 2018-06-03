@@ -24,8 +24,8 @@ namespace Din.ExternalModels.Entities
 
     public enum ContentStatus
     {
-        Added,
         NotAvailable,
+        Added,
         Downloaded
     }
 }

@@ -19,16 +19,26 @@ namespace Din.Service.Classes
             _context = context;
         } 
 
-        public async Task<SearchResultsModel> SearchMovieAsync(string query)
+        public async Task<MovieResultsModel> SearchMovieAsync(string query)
         {
-            var results = new SearchResultsModel
+            var results = new MovieResultsModel
             {
-                QueryResult = await new TmdbSystem().SearchMovie(query),
+                QueryResult = await new TmdbSystem().SearchMovieAsync(query),
                 CurrentIdList = await new MediaSystem().GetCurrentMoviesAsync()
             };
             return results;
         }
-        
+
+        public async Task<TvShowResultsModel> SearchTvShowAsync(string query)
+        {
+            var results = new TvShowResultsModel()
+            {
+                QueryResult = await new TmdbSystem().SearchTvShowAsync(query),
+                CurrentTtileList = await new MediaSystem().GetCurrentTvShowsAsync()
+            };
+            return results;
+        }
+
         public async Task<AddContentResultModel> AddMovieAsync(SearchMovie movie, Account account)
         { 
             if (!(await new MediaSystem().AddMovieAsync(movie)).Equals(201))
@@ -40,7 +50,7 @@ namespace Din.Service.Classes
                     Message = "Somethning went wrong 😵   Try again later!"
                 };
             }
-            await LogContentAsync(movie, account);
+            await LogContentAsync(movie.Title, account);
             return new AddContentResultModel
             {
                 Title = "Movie Added Succesfully",
@@ -49,17 +59,33 @@ namespace Din.Service.Classes
             };
         }
 
-        //public async Task<List<AddedContent>> GetAddedContent(Account a)
-        //{
-        //    return await PerformUpdateAsync(a);
-        //}
+        public async Task<AddContentResultModel> AddTvShowAsync(SearchTv tvShow, Account account)
+        {
+            var tmdbSystem = new TmdbSystem();
+            if (!(await new MediaSystem().AddTvShowAsync(tvShow, await tmdbSystem.GetTvShowTvdbId(tvShow.Id), await tmdbSystem.GetTvShowSeasons(tvShow.Id))).Equals(201))
+            {
+                return new AddContentResultModel
+                {
+                    Title = "Failed At adding Tv Show",
+                    TitleColor = "#b43232",
+                    Message = "Somethning went wrong 😵   Try again later!"
+                };
+            }
+            await LogContentAsync(tvShow.Name, account);
+            return new AddContentResultModel
+            {
+                Title = "Tv Show Added Succesfully",
+                TitleColor = "#00d77c",
+                Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
+            };
+        }
 
-        private async Task LogContentAsync(SearchMovie m, Account a)
+        private async Task LogContentAsync(string title, Account a)
         {
             if(a.AddedContent == null)
                 a.AddedContent = new List<AddedContent>();
             _context.Attach(a);
-            a.AddedContent.Add(new AddedContent(m.Title, DateTime.Now, ContentStatus.Added, a));
+            a.AddedContent.Add(new AddedContent(title, DateTime.Now, ContentStatus.Added, a));
             await _context.SaveChangesAsync();
         }
 

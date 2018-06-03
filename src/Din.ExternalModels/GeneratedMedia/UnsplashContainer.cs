@@ -14,7 +14,5 @@ namespace Din.ExternalModels.GeneratedMedia
         public string Full { get; set; }
         [JsonProperty("regular")]
         public string Regular { get; set; }
-        [JsonProperty("custom")]
-        public string Custom { get; set; }
     }
 }

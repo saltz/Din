@@ -14,7 +14,7 @@ namespace Din.ExternalModels.Utils
 
         public HttpRequestHelper(string url, bool cookieContainer)
         {
-            _request = (HttpWebRequest)WebRequest.Create(url);
+            _request = (HttpWebRequest) WebRequest.Create(url);
             if (!cookieContainer) return;
             var cookies = new CookieContainer();
             _request.CookieContainer = cookies;
@@ -24,7 +24,8 @@ namespace Din.ExternalModels.Utils
         {
             _request.Method = "GET";
             _response = (HttpWebResponse) await _request.GetResponseAsync();
-            using (var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
+            using (var sr =
+                new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
                 _result = sr.ReadToEnd();
             return _result;
         }
@@ -32,21 +33,22 @@ namespace Din.ExternalModels.Utils
         public async Task<Tuple<int, string>> PerformPostRequestAsync(string payload)
         {
             _request.Method = "POST";
+            _request.ContentType = "application/json";
             using (var sw = new StreamWriter(_request.GetRequestStream()))
                 sw.Write(payload);
             try
             {
                 _response = (HttpWebResponse) await _request.GetResponseAsync();
-                using(var sr = new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
+                using (var sr =
+                    new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
                     _result = sr.ReadToEnd();
                 return new Tuple<int, string>((int) _response.StatusCode, _result);
             }
-            catch (WebException)
+            catch
             {
                 return null;
             }
         }
-
 
         public void SetDecompressionMethods(IEnumerable<DecompressionMethods> methods)
         {

@@ -41,8 +41,8 @@ namespace Din.ExternalModels.Entities
 
     public enum AccountRoll
     {
-        Admin,
+        User,
         Moderator,
-        User
+        Admin
     }
 }

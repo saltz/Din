@@ -9,22 +9,20 @@ namespace Din.ExternalModels.DownloadClient
     public class DownloadClient
     {
         private HttpRequestHelper _httpRequest;
-        private readonly string _url;
 
         public DownloadClient(string url, string pwd)
         {
-            _url = url;
-            Authenticate(pwd);
+            Authenticate(url, pwd).Wait();
         }
 
-        private void Authenticate(string pwd)
+        private async Task Authenticate(string url, string pwd)
         {
-            var payload = new DownloadClientRequestObject1("auth.login", new List<string> {pwd}, 1);
-            _httpRequest = new HttpRequestHelper(_url, true);
+            var payload = new DcSingleParam("auth.login", new List<string> {pwd}, 1);
+            _httpRequest = new HttpRequestHelper(url, true);
             _httpRequest.SetDecompressionMethods(new List<DecompressionMethods>(){DecompressionMethods.Deflate, DecompressionMethods.GZip});        
             try
             {
-                var response = _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload));
+                await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload));
             }
             catch
             {
@@ -34,10 +32,10 @@ namespace Din.ExternalModels.DownloadClient
 
         public async Task<List<DownloadClientItem>> GetAllItemsAsync()
         {
-            var payload = new DownloadClientRequestObject1("webapi.get_torrents", new List<string>(), 1);
+            var payload = new DcSingleParam("webapi.get_torrents", new List<string>(), 1);
             try
             {
-                var response = JsonConvert.DeserializeObject<DownloadClientResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2);
+                var response = JsonConvert.DeserializeObject<DcResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2);
                 return new List<DownloadClientItem>(response.Result.Items);
             }
             catch
@@ -48,7 +46,7 @@ namespace Din.ExternalModels.DownloadClient
 
         public async Task<DownloadClientItem> GetItemStatusAsync(string itemHash)
         {
-            var payload = new DownloadClientRequestObject2("webapi.get_torrents", new List<List<string>>
+            var payload = new DcSCollectionParam("webapi.get_torrents", new List<List<string>>
             {
                 new List<string>
                 {
@@ -63,7 +61,7 @@ namespace Din.ExternalModels.DownloadClient
             }, 1);
             try
             {
-                return JsonConvert.DeserializeObject<DownloadClientResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2).Result.Items[0];
+                return JsonConvert.DeserializeObject<DcResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2).Result.Items[0];
             }
             catch
             {
