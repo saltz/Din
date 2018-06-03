@@ -90,8 +90,8 @@
                         });
                         toggleMenu();
                     },
-                    error: function() {
-                        console.log("error");
+                    error: function(error) {
+                        console.log(error);
                     }
                 });
             });
@@ -114,8 +114,8 @@
                         $('.ajax-div').modal('show');
                         $('.search-movie').val("");
                     },
-                    error: function() {
-                        console.log("error");
+                    error: function(error) {
+                        console.log(error);
                     }
                 });
             });
