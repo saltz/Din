@@ -1,6 +1,4 @@
-﻿html, body {
-    height: 100%;
-}
+﻿html, body { height: 100%; }
 
 .carousel { position: absolute; }
 
@@ -187,4 +185,42 @@
 .sk-folding-cube {
     top: 20vw;
     z-index: 9000;
+}
+
+@media only screen and (max-width: 500px) {
+    .carousel-item {
+        width: 170%;
+        height: 100vh;
+    }
+
+    .fa-search {
+        left: 7% !important;
+        margin-top: 5% !important;
+    }
+
+    .main-page-content { margin-top: 40%; }
+
+    .app-container { margin-bottom: 20%; }
+
+    .app-container .fa { font-size: 50px; }
+
+    .app-container h3 { font-size: 18px; }
+
+    .items--hidden { margin-top: -10%; }
+
+    .menu.menu--open .items a { font-size: 14px; }
+
+    .menu.menu--open .items span { font-size: 14px; }
+
+    .modal-dialog { margin-top: 50%; }
+
+    #search-results .modal-dialog { max-width: 100% !important; }
+
+    .card-frame { margin: 20px 0 0 0 !important; }
+
+    .card-frame .item { width: 94% !important; }
+
+    .card-frame .info .overview { font-size: 0.6em; }
+
+    .card-frame .item .info .add-button button { margin-left: 0; }
 }

@@ -25,7 +25,7 @@ namespace Din.Controllers
             {
                 var loginResult = await _service.LoginAsync(username, password);
                 if (loginResult == null)
-                    return BadRequest();                   
+                    return BadRequest();
                 await HttpContext.SignInAsync(loginResult.Item2);
                 var serializedUser = JsonConvert.SerializeObject(loginResult.Item1, Formatting.Indented,
                     new JsonSerializerSettings

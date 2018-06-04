@@ -8,9 +8,9 @@ namespace Din.Service.Classes
     public static class MainService
     {
         //Debug Location
-        //public static readonly PropertyFile PropertyFile = new PropertyFile(@"PropertyFile");
+        public static readonly PropertyFile PropertyFile = new PropertyFile(@"PropertyFile");
 
         //Release Location
-        public static readonly PropertyFile PropertyFile = new PropertyFile("/propdir/PropertyFile");
+        //public static readonly PropertyFile PropertyFile = new PropertyFile("/propdir/PropertyFile");
     }
 }
