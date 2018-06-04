@@ -65,7 +65,7 @@
                                         </p>
                                         <div class="add-button">
                                             @{
-                                                if (Model.CurrentTtileList.Contains(show.Name))
+                                                if (Model.CurrentTtileList.Contains(show.Name.ToLower()))
                                                 {
                                                     <button disabled type="button" class="btn btn-default">Already Exists</button>
                                                 }

@@ -33,7 +33,7 @@ namespace Din.Service.Systems
                 JsonConvert.DeserializeObject<List<MediaSystemTvShow>>(
                     await new HttpRequestHelper(_tvShowSystemUrl, false).PerformGetRequestAsync());
             foreach (var t in objects)
-                tvShowIds.Add(t.Title);
+                tvShowIds.Add(t.Title.ToLower());
             return tvShowIds;
         }
 

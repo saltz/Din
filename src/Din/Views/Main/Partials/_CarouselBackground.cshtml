@@ -5,7 +5,7 @@
     var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(await MediaGeneration.GenerateBackgroundAsync());
 }
 
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+<div class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         @{
             var image = images[0].Urls.Regular;

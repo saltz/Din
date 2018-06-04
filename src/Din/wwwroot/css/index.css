@@ -125,15 +125,11 @@ body {
 /* CSS For mobile devices */
 
 @media only screen and (max-width: 500px) {
-
-    #title {
-        margin-top: -10%;
-        font-size: 45px;
-        margin-bottom: -10%;
-    }
-
     #subtitle {
         font-size: 25px;
-        margin-bottom: 10%;
+    }
+
+    .login-form {
+        margin-top: 30%
     }
 }
