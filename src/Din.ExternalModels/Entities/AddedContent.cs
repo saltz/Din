@@ -13,6 +13,8 @@ namespace Din.ExternalModels.Entities
         public double Percentage { get; set; }
         public Account Account { get; set; }
 
+        public AddedContent() { }
+
         public AddedContent(string title, DateTime dateAdded, ContentStatus status, Account account)
         {
             Title = title;

@@ -4,6 +4,7 @@ using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,8 @@ namespace Din
                 options.UseMySql(
                     mysqlConnectionString)
             );
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //Adding My Services
             services.AddTransient<IAuthService, AuthService>();
