@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using Din.Data;
+using Din.ExternalModels.Utils;
+using Din.Service.Classes;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,7 @@ namespace Din
                 {
                     var context = services.GetRequiredService<DinContext>();
                     DbInitializer.Initialize(context);
+                    MainService.PropertyFile = !Debugger.IsAttached ? new PropertyFile("/propdir/PropertyFile") : new PropertyFile(@"PropertyFile");
                 }
                 catch (Exception ex)
                 {

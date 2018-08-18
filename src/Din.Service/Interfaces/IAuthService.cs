@@ -19,5 +19,7 @@ namespace Din.Service.Interfaces
         /// The user object corresponding with supplied credentials and the generated claims principle for authoraztion.
         /// </returns>
         Task<Tuple<User, ClaimsPrincipal>> LoginAsync(string username, string password);
+
+        Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status);
     }
 }

@@ -7,13 +7,12 @@ namespace Din.Data
     {
         public DinContext(DbContextOptions<DinContext> options) : base(options)
         {
-
         }
+
         public DbSet<User> User { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<AddedContent> AddedContent { get; set; }
-
-
+        public DbSet<LoginAttempt> LoginAttempt { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +27,7 @@ namespace Din.Data
                 .HasMany(a => a.AddedContent)
                 .WithOne(ac => ac.Account);
             modelBuilder.Entity<AddedContent>().ToTable("AddedContent");
+            modelBuilder.Entity<LoginAttempt>().ToTable("LoginAttempt");
         }
     }
 }

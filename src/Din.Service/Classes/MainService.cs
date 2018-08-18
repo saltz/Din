@@ -6,11 +6,7 @@ namespace Din.Service.Classes
     ///    MainService that provides the necessary properties.
     /// </summary>
     public static class MainService
-    {
-        //Debug Location
-        //public static readonly PropertyFile PropertyFile = new PropertyFile(@"PropertyFile");
-
-        //Release Location
-        public static readonly PropertyFile PropertyFile = new PropertyFile("/propdir/PropertyFile");
+    {         
+        public static PropertyFile PropertyFile;
     }
 }
