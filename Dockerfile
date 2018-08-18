@@ -6,7 +6,9 @@ COPY src/Din/*.csproj ./Din/
 COPY src/Din.ExternalModels/*.csproj ./Din.ExternalModels/
 COPY src/Din.Data/*.csproj ./Din.Data/
 COPY src/Din.Service/*.csproj ./Din.Service/
+COPY src/Din.Tests/*.csproj ./Din.Tests/
 COPY src/Din.sln ./
+COPY src/nuget.config ./
 RUN dotnet restore ./
 
 # Copy everything else and build
