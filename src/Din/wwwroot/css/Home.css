@@ -13,7 +13,7 @@
 .carousel-item img {
     height: 100%;
     width: 100%;
-    filter: opacity(90%)
+    filter: opacity(70%)
 }
 
 .header { height: 1px; }

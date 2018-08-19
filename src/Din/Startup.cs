@@ -1,4 +1,5 @@
-﻿using Din.Data;
+﻿using System.Net;
+using Din.Data;
 using Din.Service.Classes;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -66,6 +67,13 @@ namespace Din
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
+            });
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All,
+                RequireHeaderSymmetry = false,
+                ForwardLimit = null,
+                KnownProxies = {IPAddress.Parse("192.168.1.12")}
             });
         }
     }
