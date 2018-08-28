@@ -13,6 +13,7 @@ namespace Din.Data
         public DbSet<Account> Account { get; set; }
         public DbSet<AddedContent> AddedContent { get; set; }
         public DbSet<LoginAttempt> LoginAttempt { get; set; }
+        public DbSet<LoginLocation> LoginLocation { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +28,9 @@ namespace Din.Data
                 .HasMany(a => a.AddedContent)
                 .WithOne(ac => ac.Account);
             modelBuilder.Entity<AddedContent>().ToTable("AddedContent");
-            modelBuilder.Entity<LoginAttempt>().ToTable("LoginAttempt");
+            modelBuilder.Entity<LoginAttempt>().ToTable("LoginAttempt")
+                .HasOne(la => la.Location);
+            modelBuilder.Entity<LoginLocation>().ToTable("LoginLocation");
         }
     }
 }

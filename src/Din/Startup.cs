@@ -41,8 +41,6 @@ namespace Din
                     mysqlConnectionString)
             );
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             //Adding My Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IContentService, ContentService>();
@@ -67,13 +65,6 @@ namespace Din
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
-            });
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.All,
-                RequireHeaderSymmetry = false,
-                ForwardLimit = null,
-                KnownProxies = {IPAddress.Parse("192.168.1.12")}
             });
         }
     }
