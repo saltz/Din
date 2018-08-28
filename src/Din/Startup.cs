@@ -29,6 +29,8 @@ namespace Din
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.KnownProxies.Add(IPAddress.Parse("192.168.1.12"));
+                options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/"; });
@@ -67,13 +69,6 @@ namespace Din
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
-            });
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.All,
-                RequireHeaderSymmetry = false,
-                ForwardLimit = null,
-                KnownProxies = {IPAddress.Parse("192.168.1.12")}
             });
         }
     }
