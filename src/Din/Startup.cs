@@ -29,8 +29,6 @@ namespace Din
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                options.KnownProxies.Add(IPAddress.Parse("192.168.1.12"));
-                options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/"; });
@@ -53,6 +51,17 @@ namespace Din
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All,
+                RequireHeaderSymmetry = false,
+                ForwardLimit = null,
+                KnownProxies =
+                {
+                    IPAddress.Parse("192.168.1.12"),
+                    IPAddress.Parse("127.0.0.1")
+                },
+            });
             app.UseDeveloperExceptionPage();
             app.UseBrowserLink();
             app.UseForwardedHeaders();
