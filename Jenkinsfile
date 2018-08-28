@@ -1,8 +1,10 @@
 node {
     def app
+    def branch
 
     stage('Clone repository') {
         checkout scm
+        branch = env.BRANCH_NAME
     }
 
     stage('Build image') {
@@ -10,12 +12,15 @@ node {
     }
 
     stage('Push image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            if (env.BRANCH_NAME == 'master') {
-              app.push("latest")
-            } else if (env.BRANCH_NAME == 'dev') {
-              app.push("nightly")
+        if(branch == 'master' || branch == 'dev') {
+            echo 'image will be pushed to dockerhub'
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                app.push("${env.BUILD_NUMBER}")
+                if (branch == 'master') {
+                  app.push("latest")
+                } else if (branch == 'dev') {
+                  app.push("nightly")
+                }
             }
         }
     }
