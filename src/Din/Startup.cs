@@ -41,8 +41,6 @@ namespace Din
                     mysqlConnectionString)
             );
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             //Adding My Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IContentService, ContentService>();
@@ -51,17 +49,6 @@ namespace Din
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.All,
-                RequireHeaderSymmetry = false,
-                ForwardLimit = null,
-                KnownProxies =
-                {
-                    IPAddress.Parse("192.168.1.12"),
-                    IPAddress.Parse("127.0.0.1")
-                },
-            });
             app.UseDeveloperExceptionPage();
             app.UseBrowserLink();
             app.UseForwardedHeaders();

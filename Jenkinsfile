@@ -1,26 +1,27 @@
 node {
     def app
+    def branch
 
     stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
         checkout scm
+        branch = env.BRANCH_NAME
     }
 
     stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-
         app = docker.build("saltz/din")
     }
 
     stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("nightly")
+        if(branch == 'master' || branch == 'dev') {
+            echo 'image will be pushed to dockerhub'
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                app.push("${env.BUILD_NUMBER}")
+                if (branch == 'master') {
+                  app.push("latest")
+                } else if (branch == 'dev') {
+                  app.push("nightly")
+                }
+            }
         }
     }
 }

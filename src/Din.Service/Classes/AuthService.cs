@@ -15,14 +15,15 @@ namespace Din.Service.Classes
     {
         private readonly DinContext _context;
 
-        public AuthService(DinContext context) 
+        public AuthService(DinContext context)
         {
             _context = context;
         }
 
         public async Task<Tuple<User, ClaimsPrincipal>> LoginAsync(string username, string password)
         {
-            var user = await _context.User.Include(u => u.Account).FirstOrDefaultAsync(u => u.Account.Username.Equals(username));
+            var user = await _context.User.Include(u => u.Account)
+                .FirstOrDefaultAsync(u => u.Account.Username.Equals(username));
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Account.Hash)) return null;
             var claims = new List<Claim>
             {
@@ -36,8 +37,12 @@ namespace Din.Service.Classes
         public async Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status)
         {
             var userAgent = Parser.GetDefault().Parse(userAgentString);
-            await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand, userAgent.OS.Family, userAgent.UA.Family,
-                publicIp, DateTime.Now, status));
+            var geoUrl = MainService.PropertyFile.Get("ipstackBaseUrl") + publicIp +
+                         MainService.PropertyFile.Get("ipstackAccessToken");
+            await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand, userAgent.OS.Family,
+                userAgent.UA.Family,
+                publicIp,
+                await new LoginLocation().QueryGeographicalLocationAsync(geoUrl), DateTime.Now, status));
             await _context.SaveChangesAsync();
         }
     }

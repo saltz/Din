@@ -14,19 +14,17 @@ namespace Din.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthService _service;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthenticationController(IAuthService service, IHttpContextAccessor httpContextAccessor)
+        public AuthenticationController(IAuthService service)
         {
             _service = service;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string username, string password)
         {
             var userAgentString = Request.Headers["User-Agent"].ToString();
-            var publicIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var publicIp = Request.Headers["X-Real-IP"].ToString();
             try
             {
                 var loginResult = await _service.LoginAsync(username, password);
