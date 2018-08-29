@@ -5,10 +5,19 @@
     <_RazorBuildServerPipeName>razor-issues-2406</_RazorBuildServerPipeName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\lib\open-iconic-master\**" />
-    <Content Remove="wwwroot\lib\open-iconic-master\**" />
-    <EmbeddedResource Remove="wwwroot\lib\open-iconic-master\**" />
-    <None Remove="wwwroot\lib\open-iconic-master\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\js\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WebFiles\css\Account.css" />
+    <Content Include="WebFiles\css\FoldingCube.css" />
+    <Content Include="WebFiles\css\GifPage.css" />
+    <Content Include="WebFiles\css\Home.css" />
+    <Content Include="WebFiles\css\Index.css" />
+    <Content Include="WebFiles\css\Logout.css" />
+    <Content Include="WebFiles\css\SearchResult.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
@@ -25,6 +34,10 @@
     <ProjectReference Include="..\Din.Service\Din.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
+    <Folder Include="WebFiles\js\" />
+    <Folder Include="wwwroot\dist\css\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\dist\js\particleground.min.js" />
   </ItemGroup>
 </Project>

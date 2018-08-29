@@ -62,13 +62,6 @@ namespace Din.ExternalModels.Entities
         public LoginLocation()
         {
         }
-
-        public async Task<LoginLocation> QueryGeographicalLocationAsync(string url)
-        {
-            var client = new HttpClient();
-            var result = await client.GetStringAsync(url);
-            return JsonConvert.DeserializeObject<LoginLocation>(result);
-        }
     }
 
 
