@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
 using Din.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using UAParser;
 
 namespace Din.Service.Classes
@@ -39,11 +41,22 @@ namespace Din.Service.Classes
             var userAgent = Parser.GetDefault().Parse(userAgentString);
             var geoUrl = MainService.PropertyFile.Get("ipstackBaseUrl") + publicIp +
                          MainService.PropertyFile.Get("ipstackAccessToken");
-            await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand, userAgent.OS.Family,
-                userAgent.UA.Family,
-                publicIp,
-                await new LoginLocation().QueryGeographicalLocationAsync(geoUrl), DateTime.Now, status));
-            await _context.SaveChangesAsync();
+            try
+            {
+                var location =
+                    JsonConvert.DeserializeObject<LoginLocation>(await new HttpClient().GetStringAsync(geoUrl));
+                await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand,
+                    userAgent.OS.Family,
+                    userAgent.UA.Family, publicIp, location, DateTime.Now, status));
+                await _context.SaveChangesAsync();
+            }
+            catch (JsonReaderException)
+            {
+                await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand,
+                    userAgent.OS.Family,
+                    userAgent.UA.Family, publicIp, new LoginLocation(), DateTime.Now, status));
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

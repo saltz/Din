@@ -4,6 +4,7 @@
 @model int
 
 @{
+    //TODO Clean this up. there is not supposed to be that much logic inside a view.
     GiphyContainer gif = null;
     var statusCode = Model;
     var statusmessage = "";
@@ -38,11 +39,6 @@
             gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Random));
             break;
     }
-}
-
-@section CSS {
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="~/css/GifPage.css"/>
 }
 
 <div class="gif-container">

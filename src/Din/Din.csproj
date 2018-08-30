@@ -5,12 +5,6 @@
     <_RazorBuildServerPipeName>razor-issues-2406</_RazorBuildServerPipeName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\lib\open-iconic-master\**" />
-    <Content Remove="wwwroot\lib\open-iconic-master\**" />
-    <EmbeddedResource Remove="wwwroot\lib\open-iconic-master\**" />
-    <None Remove="wwwroot\lib\open-iconic-master\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2-preview1-20180816143335" />
@@ -23,8 +17,5 @@
     <ProjectReference Include="..\Din.Data\Din.Data.csproj" />
     <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
     <ProjectReference Include="..\Din.Service\Din.Service.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 </Project>
