@@ -15,11 +15,12 @@ node {
         if(branch == 'master' || branch == 'dev') {
             echo 'image will be pushed to dockerhub'
             docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                app.push("${env.BUILD_NUMBER}")
                 if (branch == 'master') {
                   app.push("latest")
+                  app.push("${env.BUILD_NUMBER}-latest-build")
                 } else if (branch == 'dev') {
                   app.push("nightly")
+                  app.push("${env.BUILD_NUMBER}-nightly-build")
                 }
             }
         }
