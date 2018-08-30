@@ -6,11 +6,6 @@
     var gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Logout));
 }
 
-@section CSS {
-    <link type="text/css" rel="stylesheet" href="~/css/GifPage.css"/>
-    <link type="text/css" rel="stylesheet" href="~/css/Logout.css"/>
-}
-
 <div class="gif-container">
     <div class="msg-container">
         <h3>smell ya later</h3>
@@ -25,4 +20,3 @@
         }, 5000);
     </script>
 }
-

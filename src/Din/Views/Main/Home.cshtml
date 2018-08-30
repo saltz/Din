@@ -2,28 +2,20 @@
 @using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
 
-
-@section CSS {
-    <link href="~/css/FoldingCube.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/Home.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/Account.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/SearchResult.css" rel="stylesheet" type="text/css" />
-}
-
 @if (Context.Session.GetString("User") != null)
 {
     var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
     await Html.RenderPartialAsync("~/Views/Main/Partials/_CarouselBackground.cshtml");
     <div class="container header">
         <div class="menu menu--closed">
-            <span class="oi oi-menu menu-button"></span>
+            <i class="fas fa-bars menu-button"></i>
             <div class="items items--hidden">
-                <a href="" class="account-btn">Account<span class="oi oi-person"></span></a>
+                <a href="" class="account-btn">Account<i class="fas fa-user"></i></a>
                 @if (user.Account.Role.Equals(AccountRoll.Admin))
                 {
-                    <a href="@Url.Action("Index", "Admin")">Admin Panel<span class="oi oi-terminal"></span></a>
+                    <a href="@Url.Action("Index", "Admin")">Admin Panel<i class="fas fa-terminal"></i></a>
                 }
-                <a href="@Url.Action("LogoutAsync", "Authentication")">Logout<span class="oi oi-account-logout"></span></a>
+                <a href="@Url.Action("LogoutAsync", "Authentication")">Logout<i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </div>
