@@ -11,7 +11,6 @@ var paths = {
     webroot: "./wwwroot/",
     StaticFiles: "./StaticFiles/",
     NodeLibs: "./node_modules/",
-    WebFonts: "./node_modules/@fortawesome/fontawesome-free/webfonts/*.*"
 };
 
 paths.js = [paths.NodeLibs + "jquery/dist/jquery.js",
@@ -21,6 +20,8 @@ paths.js = [paths.NodeLibs + "jquery/dist/jquery.js",
 paths.css = [paths.NodeLibs + "bootstrap/dist/css/bootstrap.css",
     paths.NodeLibs + "@fortawesome/fontawesome-free/css/all.css",
     paths.StaticFiles + "css/**/*.css"];
+paths.webfonts = [paths.NodeLibs + "@fortawesome/fontawesome-free/webfonts/*.*",
+    paths.StaticFiles + "webfonts/**/*.ttf"];
 paths.concatJsDest = paths.webroot + "dist/site.min.js";
 paths.concatCssDest = paths.webroot + "dist/site.min.css";
 paths.webfontsDest = paths.webroot + "webfonts/";
@@ -54,7 +55,7 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("move-webfonts", function() {
-    return gulp.src(paths.WebFonts).pipe(gulp.dest(paths.webfontsDest));
+    return gulp.src(paths.webfonts).pipe(gulp.dest(paths.webfontsDest));
 })
 
 gulp.task("min", ["min:js", "min:css"]);
