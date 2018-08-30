@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='build-project' Clean='clean' />
+﻿/// <binding BeforeBuild='build' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -59,4 +59,4 @@ gulp.task("move-webfonts", function() {
 
 gulp.task("min", ["min:js", "min:css"]);
 
-gulp.task("build-project", ["clean", "min", "move-webfonts"]);
+gulp.task("build", ["clean", "min", "move-webfonts"]);
