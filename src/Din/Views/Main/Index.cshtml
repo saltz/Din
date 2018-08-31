@@ -2,15 +2,9 @@
     <div class="container">
         <div class="index">
             <h1 id="title">DIN</h1>
-            <br/>
+            <br />
             <h3 id="subtitle">Movies are awesome!</h3>
             <div class="login-form">
-                <div class="sk-folding-cube">
-                    <div class="sk-cube1 sk-cube"></div>
-                    <div class="sk-cube2 sk-cube"></div>
-                    <div class="sk-cube4 sk-cube"></div>
-                    <div class="sk-cube3 sk-cube"></div>
-                </div>
                 <form id="login-form">
                     <div class="form-group ">
                         <input type="text" class="form-control" placeholder="Username" name="username" id="username">
@@ -23,7 +17,7 @@
                 </form>
             </div>
         </div>
-    </div>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>    </div>
 </div>
 
 @section scripts {
@@ -39,7 +33,7 @@
 
                 $('#login-form').submit(function (e) {
                     e.preventDefault();
-                    $('.sk-folding-cube').css('display', 'block');
+                    showLoader();
                     var data = {
                         username: $('#username').val(),
                         password: $('#password').val()
@@ -51,8 +45,8 @@
                         success: function () {
                             location.reload();
                         },
-                        error: function() {
-                            $('.sk-folding-cube').css('display', 'none');
+                        error: function () {
+                            hideLoader();
                             $('.log-status').addClass('wrong-entry');
                             $('#username').val("");
                             $('#password').val("");

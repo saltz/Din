@@ -8,7 +8,7 @@ using Din.Service.Interfaces;
 using Din.Service.Systems;
 using TMDbLib.Objects.Search;
 
-namespace Din.Service.Classes
+namespace Din.Service.Concrete
 {
     public class ContentService : IContentService
     {

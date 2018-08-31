@@ -5,7 +5,7 @@ namespace Din.Controllers
 {
     public class AdminController : Controller
     {
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();

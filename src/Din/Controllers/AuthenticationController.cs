@@ -42,7 +42,7 @@ namespace Din.Controllers
                 return View("~/Views/Main/Home.cshtml");
             }
             catch (Exception)
-            {
+            { 
                 await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Failed);
                 return BadRequest();
             }

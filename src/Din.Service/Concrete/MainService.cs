@@ -1,6 +1,6 @@
 ﻿using Din.ExternalModels.Utils;
 
-namespace Din.Service.Classes
+namespace Din.Service.Concrete
 {
     /// <summary>
     ///    MainService that provides the necessary properties.
