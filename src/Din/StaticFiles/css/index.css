@@ -122,6 +122,48 @@ body {
     float: left;
 }
 
+@-moz-keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
+
+    20%, 60% {
+        left: 15px;
+    }
+
+    40%, 80% {
+        left: -15px;
+    }
+}
+
+@-webkit-keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
+
+    20%, 60% {
+        left: 15px;
+    }
+
+    40%, 80% {
+        left: -15px;
+    }
+}
+
+@keyframes wrong-log {
+    0%, 100% {
+        left: 0px;
+    }
+
+    20%, 60% {
+        left: 15px;
+    }
+
+    40%, 80% {
+        left: -15px;
+    }
+}
+
 /* CSS For mobile devices */
 
 @media only screen and (max-width: 500px) {

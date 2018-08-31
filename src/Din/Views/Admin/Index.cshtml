@@ -3,25 +3,12 @@
 @using Newtonsoft.Json
 
 @{
-    if (Context.Session.GetString("User") != null)
-    {
-        var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-        if (user.Account.Role.Equals(AccountRoll.Admin))
-        {
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">Admin Panel</h1>
-                </div>
-            </div>
-        }
-        else
-        {
-            Url.Action("Index", "Main");
-        }
-    }
-    else
-    {
-        Url.Action("Index", "Main");
-    }
+    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
 }
+
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">Admin Panel</h1>
+    </div>
+</div>
 

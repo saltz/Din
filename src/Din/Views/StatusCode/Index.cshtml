@@ -1,50 +1,11 @@
-﻿@using Din.ExternalModels.GeneratedMedia
-@using Din.Service.Utils
-@using Newtonsoft.Json
-@model int
+﻿@using Din.ExternalModels.ViewModels
 
-@{
-    //TODO Clean this up. there is not supposed to be that much logic inside a view.
-    GiphyContainer gif = null;
-    var statusCode = Model;
-    var statusmessage = "";
-    switch (statusCode)
-    {
-        case 400:
-            statusmessage = "Te Fck did you do";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Random));
-            break;
-        case 401:
-            statusmessage = "You're not supposed to do that";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Forbidden));
-            break;
-        case 403:
-            statusmessage = "No No No";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Forbidden));
-            break;
-        case 404:
-            statusmessage = "It's gone";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.PageNotFound));
-            break;
-        case 408:
-            statusmessage = "The server timed out waiting for the request";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.ServerError));
-            break;
-        case 500:
-            statusmessage = "Hmmm seems like I fucked up";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.ServerError));
-            break;
-        default:
-            statusmessage = "Hmmm seems like I fucked up";
-            gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Random));
-            break;
-    }
-}
+@model StatusCodeModel
 
 <div class="gif-container">
     <div class="msg-container">
-        <h2>@statusCode</h2>
-        <h3>@statusmessage</h3>
+        <h2>@Model.StatisCode</h2>
+        <h3>@Model.StatusMessage</h3>
     </div>
-    <img src="@gif?.Data.ImageOriginalUrl"/>
+    <img src="@Model.Gif.Data.ImageOriginalUrl"/>
 </div>

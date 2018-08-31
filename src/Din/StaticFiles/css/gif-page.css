@@ -18,14 +18,15 @@
      z-index: 0;
  }
 
- .msg-container {
-     position: absolute;
-     width: 500px;
-     text-align: center;
-     left: calc(50% - 250px);
-     top: 30%;
-     z-index: 10;
- }
+.msg-container {
+    top: 50%;
+    width: 1000px;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
 
  .msg-container h2 {
      font-size: 200px;

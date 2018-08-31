@@ -1,10 +1,4 @@
-﻿.msg-container {
-    top: 45%;
-    width: 1000px;
-    left: calc(50% - 500px);
-}
-
-.msg-container h3 {
+﻿.msg-container h3 {
     font-size: 70px;
 }
 

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Din.Data;
 using Din.ExternalModels.Utils;
-using Din.Service.Classes;
+using Din.Service.Concrete;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

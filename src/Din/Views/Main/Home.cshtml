@@ -46,12 +46,7 @@
         await Html.RenderPartialAsync("~/Views/Main/Partials/_AddTvShow.cshtml");
     }
     <div class="ajax-div"></div>
-    <div class="sk-folding-cube">
-        <div class="sk-cube1 sk-cube"></div>
-        <div class="sk-cube2 sk-cube"></div>
-        <div class="sk-cube4 sk-cube"></div>
-        <div class="sk-cube3 sk-cube"></div>
-    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
     @section scripts {
         <script type="text/javascript">
@@ -103,7 +98,7 @@
                 /* Content Searching */
 
                 $('#search-movie-form').submit(function (e) {
-                    $('.sk-folding-cube').css('display', 'block');
+                    showLoader();
                     e.preventDefault();
                     e.stopPropagation();
                     var data = {
@@ -114,7 +109,7 @@
                         type: 'POST',
                         data: data,
                         success: function (view) {
-                            $('.sk-folding-cube').css('display', 'none');
+                            hideLoader();
                             $('div.ajax-div').replaceWith(view);
                             $('#add-movie').modal('hide');
                             $('.ajax-div').modal('show');
@@ -127,7 +122,7 @@
                 });
 
                 $('#search-show-form').submit(function (e) {
-                    $('.sk-folding-cube').css('display', 'block');
+                    showLoader();
                     e.preventDefault();
                     e.stopPropagation();
                     var data = {
@@ -138,7 +133,7 @@
                         type: 'POST',
                         data: data,
                         success: function (view) {
-                            $('.sk-folding-cube').css('display', 'none');
+                            hideLoader();
                             $('div.ajax-div').replaceWith(view);
                             $('#add-tvshow').modal('hide');
                             $('.ajax-div').modal('show');

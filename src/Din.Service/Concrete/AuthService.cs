@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UAParser;
 
-namespace Din.Service.Classes
+namespace Din.Service.Concrete
 {
     /// <inheritdoc />
     public class AuthService : IAuthService
