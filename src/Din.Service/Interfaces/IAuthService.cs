@@ -15,11 +15,17 @@ namespace Din.Service.Interfaces
         /// </summary>
         /// <param name="username">Username of the user</param>
         /// <param name="password">Password in hash (BCrypt) format</param>
-        /// <returns>
-        /// The user object corresponding with supplied credentials and the generated claims principle for authoraztion.
-        /// </returns>
-        Task<Tuple<User, ClaimsPrincipal>> LoginAsync(string username, string password);
+        /// <returns>The generated claims principle for authoraztion</returns>
+        Task<ClaimsPrincipal> LoginAsync(string username, string password);
 
+        /// <summary>
+        /// Logging of the LoginAsync attempt
+        /// </summary>
+        /// <param name="username">Username supplied in the user input</param>
+        /// <param name="userAgentString">user-agent string supplied by the browser</param>
+        /// <param name="publicIp">Users puplic ip</param>
+        /// <param name="status">Status returned by LoginAsync</param>
+        /// <returns></returns>
         Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status);
     }
 }

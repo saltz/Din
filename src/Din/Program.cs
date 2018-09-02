@@ -20,9 +20,9 @@ namespace Din
                 var services = scope.ServiceProvider;
                 try
                 {
+                    MainService.PropertyFile = !Debugger.IsAttached ? new PropertyFile("/propdir/PropertyFile") : new PropertyFile(@"PropertyFile");
                     var context = services.GetRequiredService<DinContext>();
                     DbInitializer.Initialize(context);
-                    MainService.PropertyFile = !Debugger.IsAttached ? new PropertyFile("/propdir/PropertyFile") : new PropertyFile(@"PropertyFile");
                 }
                 catch (Exception ex)
                 {

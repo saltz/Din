@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Din.ExternalModels.ViewModels
 {
-    public class StatusCodeModel
+    public class StatusCodeViewModel
     {
         public GiphyContainer Gif { get; set; }
         public int StatisCode { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using Newtonsoft.Json;
 
 namespace Din
 {
@@ -31,20 +31,21 @@ namespace Din
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/"; });
-            services.AddMvc();
-            services.AddDistributedMemoryCache();
-            services.AddSession(options => {
-                options.Cookie.Name = "DinCookie";
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
-            var mysqlConnectionString = Configuration.GetConnectionString("MysqlConnectionString");
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => { options.Cookie.Name = "DinCookie"; }); 
             services.AddDbContext<DinContext>(options =>
                 options.UseMySql(
-                    mysqlConnectionString)
+                    MainService.PropertyFile.Get("DbConnectionString"))
             );
 
             //Adding My Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IStatusCodeService, StatusCodeService>();
         }
 

@@ -1,4 +1,6 @@
 ﻿/// <binding BeforeBuild='build' />
+/*eslint-disable */
+
 "use strict";
 
 var gulp = require("gulp"),

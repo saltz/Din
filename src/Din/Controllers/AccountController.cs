@@ -1,32 +1,46 @@
-﻿using System.Threading.Tasks;
-using Din.Data;
-using Din.ExternalModels.Entities;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Din.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly DinContext _context;
+        #region fields
 
-        public AccountController(DinContext context)
+        private readonly IAccountService _service;
+
+        #endregion fields
+
+        #region constructors
+
+        public AccountController(IAccountService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        [Authorize]
-        public async Task CreateUser(User user)
-        {
-            await _context.User.AddAsync(user);
-            _context.SaveChanges();
-        }
+        #endregion constructors
 
+        #region endpoints
 
         [Authorize, HttpGet]
-        public IActionResult GetUserView()
+        public async Task<IActionResult> GetUserViewAsync()
         {
-            return PartialView("~/Views/Account/_Account.cshtml");
+            return PartialView("~/Views/Account/_Account.cshtml",
+                await _service.GetAccountDataAsync(GetCurrentSessionId(), HttpContext.Request.Headers["User-Agent"].ToString()));
         }
+
+        [Authorize, HttpPost]
+        public async Task<IActionResult> UploadAccountImageAsync(IFormFile file)
+        {
+            var ms = new MemoryStream();
+            await file.OpenReadStream().CopyToAsync(ms);
+            return PartialView("~/Views/Main/Partials/_Result.cshtml", await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+        }
+
+        #endregion endpoints
     }
 }

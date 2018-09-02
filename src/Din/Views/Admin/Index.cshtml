@@ -1,11 +1,4 @@
-﻿@using Din.ExternalModels.Entities
-@using Microsoft.AspNetCore.Http
-@using Newtonsoft.Json
-
-@{
-    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-}
-
+﻿
 <div class="container">
     <div class="page-header">
         <h1 class="page-title">Admin Panel</h1>
