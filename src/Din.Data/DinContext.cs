@@ -11,6 +11,7 @@ namespace Din.Data
 
         public DbSet<User> User { get; set; }
         public DbSet<Account> Account { get; set; }
+        public DbSet<AccountImage> AccountImage { get; set; }
         public DbSet<AddedContent> AddedContent { get; set; }
         public DbSet<LoginAttempt> LoginAttempt { get; set; }
         public DbSet<LoginLocation> LoginLocation { get; set; }
@@ -27,6 +28,11 @@ namespace Din.Data
             modelBuilder.Entity<Account>()
                 .HasMany(a => a.AddedContent)
                 .WithOne(ac => ac.Account);
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Image)
+                .WithOne(ai => ai.Account)
+                .HasForeignKey<AccountImage>(ai => ai.AccountRef);
+            modelBuilder.Entity<AccountImage>().ToTable("AccountImage");
             modelBuilder.Entity<AddedContent>().ToTable("AddedContent");
             modelBuilder.Entity<LoginAttempt>().ToTable("LoginAttempt")
                 .HasOne(la => la.Location);

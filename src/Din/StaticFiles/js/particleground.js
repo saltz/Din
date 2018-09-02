@@ -8,6 +8,8 @@
  * Inspired by http://requestlab.fr/ and http://disruptivebydesign.com/
  */
 
+/*eslint-disable */
+
 ; (function (window, document) {
     "use strict";
     var pluginName = 'particleground';

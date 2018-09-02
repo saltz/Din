@@ -1,15 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Din.ExternalModels.Entities;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TMDbLib.Objects.Search;
 
 namespace Din.Controllers
 {
-    public class ContentController : Controller
+    public class ContentController : BaseController 
     {
         private readonly IContentService _service;
 
@@ -43,8 +41,7 @@ namespace Din.Controllers
             {
                 var movie = JsonConvert.DeserializeObject<SearchMovie>(movieData);
                 if (movie == null) return RedirectToAction("Index", "StatusCode", 500);
-                return PartialView("~/Views/Main/Partials/_AddResult.cshtml", await _service.AddMovieAsync(movie,
-                    JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account));
+                return PartialView("~/Views/Main/Partials/_Result.cshtml", await _service.AddMovieAsync(movie, GetCurrentSessionId()));
             }
             catch
             {
@@ -60,9 +57,8 @@ namespace Din.Controllers
             {
                 var tvShow = JsonConvert.DeserializeObject<SearchTv>(tvShowData);
                 if (tvShow == null) return RedirectToAction("Index", "StatusCode", 500);
-                return PartialView("~/Views/main/Partials/_AddResult.cshtml",
-                    await _service.AddTvShowAsync(tvShow,
-                        JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User")).Account));
+                return PartialView("~/Views/main/Partials/_Result.cshtml",
+                    await _service.AddTvShowAsync(tvShow, GetCurrentSessionId()));
             }
             catch
             {

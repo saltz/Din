@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Din.Service.Concrete
 {
+    /// <inheritdoc />
     public class StatusCodeService : IStatusCodeService
     {
-        public async Task<StatusCodeModel> GenerateDataToDisplayAsync(int statusCode)
+        public async Task<StatusCodeViewModel> GenerateDataToDisplayAsync(int statusCode)
         {
-            var model = new StatusCodeModel
+            var model = new StatusCodeViewModel
             {
                 StatisCode = statusCode
             };

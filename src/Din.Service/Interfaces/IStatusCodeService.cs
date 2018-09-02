@@ -5,6 +5,6 @@ namespace Din.Service.Interfaces
 {
     public interface IStatusCodeService
     {
-        Task<StatusCodeModel> GenerateDataToDisplayAsync(int statusCode);
+        Task<StatusCodeViewModel> GenerateDataToDisplayAsync(int statusCode);
     }
 }
