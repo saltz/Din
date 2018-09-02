@@ -26,6 +26,7 @@ namespace Din.ExternalModels.Entities
         public string Hash { get; set; }
         public AccountRoll Role { get; set; }
         public User User { get; set; }
+        public AccountImage Image { get; set; }
         public List<AddedContent> AddedContent { get; set; }
         public int UserRef { get; set; }
 
@@ -44,5 +45,24 @@ namespace Din.ExternalModels.Entities
         User,
         Moderator,
         Admin
+    }
+
+    public class AccountImage
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public byte[] Data { get; set; }
+        public Account Account { get; set; }
+        public int AccountRef { get; set; }
+
+
+        public AccountImage() { }
+
+        public AccountImage(int iD, string name, byte[] data)
+        {
+            ID = iD;
+            Name = name;
+            Data = data;
+        }
     }
 }

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Din.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();

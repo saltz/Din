@@ -1,17 +1,14 @@
-﻿@using Din.ExternalModels.Entities
-@using Microsoft.AspNetCore.Http
-@using Newtonsoft.Json
-@using UAParser
+﻿@using Din.ExternalModels.ViewModels
+
+@model AccountViewModel
 
 @{
-    var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-    var client = Parser.GetDefault().Parse(Context.Session.GetString("UserAgent"));
-    var os = client.OS.Family.ToLower();
-    if (os.Equals("ubuntu"))
+    var os = Model.Client.OS.Family.ToLower();
+    if (Model.Client.OS.Family.ToLower().Equals("ubuntu"))
     {
         os = "linux";
-
-    } else if (os.Contains("mac"))
+    }
+    else if (os.Contains("mac"))
     {
         os = "apple";
     }
@@ -24,15 +21,15 @@
                 <img src="" alt=""/>
             </div>
             <div class="user-info">
-                <h3>@user.FirstName @user.LastName</h3>
-                <i class="fab fa-@client.UA.Family.ToLower()"></i>
+                <h3>@Model.User.FirstName @Model.User.LastName</h3>
+                <i class="fab fa-@Model.Client.UA.Family.ToLower()"></i>
                 <i class="fab fa-@os"></i>
             </div>
         </div>
         <aside class="sidebar">
             <div id="leftside-navigation">
                 <ul class="nav">
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link">
                             <i class="fas fa-user"></i><span>Information</span>
                         </a>

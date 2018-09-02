@@ -1,15 +1,14 @@
-﻿using System.Net;
-using Din.Data;
-using Din.Service.Classes;
+﻿using Din.Data;
+using Din.Service.Concrete;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Din
 {
@@ -32,18 +31,22 @@ namespace Din
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/"; });
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddDistributedMemoryCache();
-            services.AddSession(options => { options.Cookie.Name = "DinCookie"; });
-            var mysqlConnectionString = Configuration.GetConnectionString("MysqlConnectionString");
+            services.AddSession(options => { options.Cookie.Name = "DinCookie"; }); 
             services.AddDbContext<DinContext>(options =>
                 options.UseMySql(
-                    mysqlConnectionString)
+                    MainService.PropertyFile.Get("DbConnectionString"))
             );
 
             //Adding My Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IStatusCodeService, StatusCodeService>();
         }
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

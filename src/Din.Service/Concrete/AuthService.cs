@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UAParser;
 
-namespace Din.Service.Classes
+namespace Din.Service.Concrete
 {
     /// <inheritdoc />
     public class AuthService : IAuthService
@@ -22,18 +22,16 @@ namespace Din.Service.Classes
             _context = context;
         }
 
-        public async Task<Tuple<User, ClaimsPrincipal>> LoginAsync(string username, string password)
+        public async Task<ClaimsPrincipal> LoginAsync(string username, string password)
         {
-            var user = await _context.User.Include(u => u.Account)
-                .FirstOrDefaultAsync(u => u.Account.Username.Equals(username));
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Account.Hash)) return null;
+            var account = await _context.Account.FirstAsync(a => a.Username.Equals(username));
+            if (account == null || !BCrypt.Net.BCrypt.Verify(password, account.Hash)) return null;
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, user.Account.Role.ToString()),
-                new Claim(ClaimTypes.Name, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName)
+                new Claim("ID", account.ID.ToString()),
+                new Claim(ClaimTypes.Role, account.Role.ToString())
             };
-            return new Tuple<User, ClaimsPrincipal>(user, new ClaimsPrincipal(new ClaimsIdentity(claims, "login")));
+            return new ClaimsPrincipal(new ClaimsIdentity(claims, "login"));
         }
 
         public async Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status)

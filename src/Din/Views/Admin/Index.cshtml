@@ -1,27 +1,7 @@
-﻿@using Din.ExternalModels.Entities
-@using Microsoft.AspNetCore.Http
-@using Newtonsoft.Json
-
-@{
-    if (Context.Session.GetString("User") != null)
-    {
-        var user = JsonConvert.DeserializeObject<User>(Context.Session.GetString("User"));
-        if (user.Account.Role.Equals(AccountRoll.Admin))
-        {
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">Admin Panel</h1>
-                </div>
-            </div>
-        }
-        else
-        {
-            Url.Action("Index", "Main");
-        }
-    }
-    else
-    {
-        Url.Action("Index", "Main");
-    }
-}
+﻿
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">Admin Panel</h1>
+    </div>
+</div>
 

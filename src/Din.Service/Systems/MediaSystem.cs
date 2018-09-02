@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.MediaSystem;
 using Din.ExternalModels.Utils;
-using Din.Service.Classes;
+using Din.Service.Concrete;
 using Newtonsoft.Json;
 using TMDbLib.Objects.Search;
 

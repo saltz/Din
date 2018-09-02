@@ -1,92 +1,85 @@
-﻿@using Microsoft.AspNetCore.Http
-@using Newtonsoft.Json
+﻿@using Newtonsoft.Json
+@using Din.ExternalModels.ViewModels
 
-@model Din.ExternalModels.ViewModels.MovieResultsModel
+@model MovieResultsViewModel
 
-@if (Context.Session.GetString("User") != null)
+@if (Model.QueryResult.Count.Equals(0))
 {
-    if (Model.QueryResult.Count.Equals(0))
-    {
-        <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="custom-modal-header">
-                        <i class="fas fa-times" data-dismiss="modal"></i>
-                        <h3 id="modal-title">No movies where found</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p id="modal-message">Your search query resulted in 0 hits 😵<br/>Check for typo's</p>
-                    </div>
+    <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="custom-modal-header">
+                    <i class="fas fa-times" data-dismiss="modal"></i>
+                    <h3 id="modal-title">No movies where found</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-message">Your search query resulted in 0 hits 😵<br/>Check for typo's</p>
                 </div>
             </div>
         </div>
-    }
-    else
-    {
-        <div id="search-results" class="modal fade ajax-div" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">             
-                    <div class="modal-body">
-                        <div class="card-frame">
-                            @foreach (var movie in Model.QueryResult)
-                            {
-                                var date = Convert.ToDateTime(movie.ReleaseDate).Year;
-                                var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
-
-                                <div class="item poster card">
-                                    <div class="image">
-                                        @{
-                                            if (string.IsNullOrEmpty(movie.PosterPath))
-                                            {
-                                                <img class="poster" sizes="185px" src="~/images/not-found.png" )/>
-                                            }
-                                            else
-                                            {
-                                                <img class="poster" sizes="185px" src="@posterPath"/>
-                                            }
-                                        }
-                                    </div>
-                                    <div class="info">
-                                        <p class="flex">
-                                            <a title="@movie.Title">@movie.Title</a>
-                                            <span class="vote_avarage">
-                                                @movie.VoteAverage
-                                                <span class="oi oi-star"></span>
-                                            </span>
-                                        </p>
-                                        <p class="flex">
-                                            <span>
-                                                <i class="far fa-calendar-alt"></i>
-                                                @date.ToString()
-                                            </span>
-                                        </p>
-                                        <p class="overview">
-                                            @movie.Overview
-                                        </p>
-                                        <div class="add-button">
-                                            @{
-                                                if (Model.CurrentIdList.Contains(movie.Id))
-                                                {
-                                                    <button disabled type="button" class="btn btn-default">Already Exists</button>
-                                                }
-                                                else
-                                                {
-                                                    <button data-model="@JsonConvert.SerializeObject(movie)" class="btn btn-primary add-movie">Add Movie</button>
-                                                    <input class="selected-movie" name="selected-movie"/>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+    </div>
 }
 else
 {
-    Url.Action("Index", "Main");
+    <div id="search-results" class="modal fade ajax-div" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-frame">
+                        @foreach (var movie in Model.QueryResult)
+                        {
+                            var date = Convert.ToDateTime(movie.ReleaseDate).Year;
+                            var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
+
+                            <div class="item poster card">
+                                <div class="image">
+                                    @{
+                                        if (string.IsNullOrEmpty(movie.PosterPath))
+                                        {
+                                            <img class="poster" sizes="185px" src="~/images/not-found.png" )/>
+                                        }
+                                        else
+                                        {
+                                            <img class="poster" sizes="185px" src="@posterPath"/>
+                                        }
+                                    }
+                                </div>
+                                <div class="info">
+                                    <p class="flex">
+                                        <a title="@movie.Title">@movie.Title</a>
+                                        <span class="vote_avarage">
+                                            @movie.VoteAverage
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                    </p>
+                                    <p class="flex">
+                                        <span>
+                                            <i class="far fa-calendar-alt"></i>
+                                            @date.ToString()
+                                        </span>
+                                    </p>
+                                    <p class="overview">
+                                        @movie.Overview
+                                    </p>
+                                    <div class="add-button">
+                                        @{
+                                            if (Model.CurrentIdList.Contains(movie.Id))
+                                            {
+                                                <button disabled type="button" class="btn btn-default">Already Exists</button>
+                                            }
+                                            else
+                                            {
+                                                <button data-model="@JsonConvert.SerializeObject(movie)" class="btn btn-primary add-movie">Add Movie</button>
+                                                <input class="selected-movie" name="selected-movie"/>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
