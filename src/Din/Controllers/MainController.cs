@@ -5,10 +5,14 @@ namespace Din.Controllers
 {
     public class MainController : BaseController
     {
+        #region endpoints
+
         [HttpGet, AllowAnonymous]
         public IActionResult Index()
         {
-            return HttpContext.User.Identity.AuthenticationType != null ? View("Home") : View();
+            return HttpContext.User.Identity.AuthenticationType != null ? View("Home") : View("Index");
         }
+
+        #endregion endpoints
     }
 }

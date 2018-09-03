@@ -11,12 +11,22 @@ namespace Din.Controllers
 {
     public class AuthenticationController : BaseController
     {
+        #region fields
+
         private readonly IAuthService _service;
+
+        #endregion fields
+
+        #region constructors
 
         public AuthenticationController(IAuthService service)
         {
             _service = service;
         }
+
+        #endregion constructors
+
+        #region endpoints
 
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string username, string password)
@@ -33,7 +43,7 @@ namespace Din.Controllers
                 return View("~/Views/Main/Home.cshtml");
             }
             catch (Exception)
-            { 
+            {
                 await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Failed);
                 return BadRequest();
             }
@@ -46,5 +56,7 @@ namespace Din.Controllers
             HttpContext.Session.Clear();
             return View("~/Views/Main/Logout.cshtml");
         }
+
+        #endregion endpoints
     }
 }

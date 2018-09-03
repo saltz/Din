@@ -49,13 +49,13 @@ namespace Din.Service.Concrete
                 {
                     Title = "Failed At adding Movie",
                     TitleColor = "#b43232",
-                    Message = "Somethning went wrong 😵   Try again later!"
+                    Message = "Something went wrong 😵   Try again later!"
                 };
             }
             await LogContentAsync(movie.Title, await _context.Account.FirstAsync(a => a.ID.Equals(id)));
             return new ResultViewModel
             {
-                Title = "Movie Added Succesfully",
+                Title = "Movie Added Successfully",
                 TitleColor = "#00d77c",
                 Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
             };
@@ -70,13 +70,13 @@ namespace Din.Service.Concrete
                 {
                     Title = "Failed At adding Tv Show",
                     TitleColor = "#b43232",
-                    Message = "Somethning went wrong 😵   Try again later!"
+                    Message = "Something went wrong 😵   Try again later!"
                 };
             }
             await LogContentAsync(tvShow.Name, await _context.Account.FirstAsync(a => a.ID.Equals(id)));
             return new ResultViewModel
             {
-                Title = "Tv Show Added Succesfully",
+                Title = "Tv Show Added Successfully",
                 TitleColor = "#00d77c",
                 Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
             };
