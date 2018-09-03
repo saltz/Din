@@ -25,14 +25,16 @@
 
     /* Home Menu elements */
 
-    $('.account-btn').click(function(e) {
+    $('.account-btn').click(function (e) {
+        showLoader();
         e.preventDefault();
         e.stopPropagation();
         $.ajax({
             url: '/Account/GetUserViewAsync',
             type: 'GET',
             success: function(view) {
-                $('div.ajax-div').replaceWith(function() {
+                $('div.ajax-div').replaceWith(function () {
+                    hideLoader();
                     return $(view).hide().fadeIn();
                 });
                 toggleMenu();

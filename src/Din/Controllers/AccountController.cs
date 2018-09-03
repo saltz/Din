@@ -30,7 +30,7 @@ namespace Din.Controllers
         public async Task<IActionResult> GetUserViewAsync()
         {
             return PartialView("~/Views/Account/_Account.cshtml",
-                await _service.GetAccountDataAsync(GetCurrentSessionId(), HttpContext.Request.Headers["User-Agent"].ToString()));
+                await _service.GetAccountDataAsync(GetCurrentSessionId(), GetCurrentUaString()));
         }
 
         [Authorize, HttpPost]
@@ -38,7 +38,8 @@ namespace Din.Controllers
         {
             var ms = new MemoryStream();
             await file.OpenReadStream().CopyToAsync(ms);
-            return PartialView("~/Views/Main/Partials/_Result.cshtml", await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+            return PartialView("~/Views/Main/Partials/_Result.cshtml",
+                await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
         }
 
         #endregion endpoints
