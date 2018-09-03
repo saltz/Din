@@ -7,15 +7,24 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Controllers
 {
-    public class ContentController : BaseController 
+    public class ContentController : BaseController
     {
+        #region fields
+
         private readonly IContentService _service;
+
+        #endregion fields
+
+        #region constructors
 
         public ContentController(IContentService service)
         {
             _service = service;
         }
 
+        #endregion constructors
+
+        #region endpoints
 
         [HttpPost, Authorize]
         public async Task<IActionResult> SearchMovieAsync(string query)
@@ -41,7 +50,8 @@ namespace Din.Controllers
             {
                 var movie = JsonConvert.DeserializeObject<SearchMovie>(movieData);
                 if (movie == null) return RedirectToAction("Index", "StatusCode", 500);
-                return PartialView("~/Views/Main/Partials/_Result.cshtml", await _service.AddMovieAsync(movie, GetCurrentSessionId()));
+                return PartialView("~/Views/Main/Partials/_Result.cshtml",
+                    await _service.AddMovieAsync(movie, GetCurrentSessionId()));
             }
             catch
             {
@@ -65,5 +75,7 @@ namespace Din.Controllers
                 return RedirectToAction("Index", "StatusCode", 500);
             }
         }
+
+        #endregion endpoints
     }
 }

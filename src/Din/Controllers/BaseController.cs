@@ -6,9 +6,13 @@ namespace Din.Controllers
 {
     public class BaseController : Controller
     {
+        #region methods
+
         protected int GetCurrentSessionId()
         {
             return Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type.Equals("ID")).Value);
         }
+
+        #endregion methods
     }
 }
