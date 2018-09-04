@@ -1,10 +1,77 @@
-﻿@model Din.ExternalModels.ViewModels.AccountViewModel
+﻿@using Din.ExternalModels.Entities
+@model Din.ExternalModels.ViewModels.AccountViewModel
 
-<div id="account-view-addedcontent" style="display:none">
+<div class="account-partial" id="account-view-addedcontent" style="display: none">
     <div class="row account-view-header">
         <h2>Added Content</h2>
     </div>
     <div class="row account-view-container">
-
+        <div class="col-md-10 added-content-container">
+            <div class="row added-content-card-headers">
+                <div class="custom-col-5">
+                    <h3>Title</h3>
+                </div>
+                <div class="custom-col-5">
+                    <h3>Date Added</h3>
+                </div>
+                <div class="custom-col-5">
+                    <h3>Status</h3>
+                </div>
+                <div class="custom-col-5">
+                    <h3>Percentage done</h3>
+                </div>
+                <div class="custom-col-5">
+                    <h3>Estimated time</h3>
+                </div>
+            </div>
+            <div class="added-content-card-container">
+                @{
+                    foreach (var e in Model.AddedContent)
+                    {
+                        <div class="row added-content-card content-status-@e.Status.ToString().ToLower()">
+                            <div class="custom-col-5">
+                                <p>@e.Title</p>
+                            </div>
+                            <div class="custom-col-5">
+                                <p>@e.DateAdded</p>
+                            </div>
+                            @{
+                                if (e.Status.Equals(ContentStatus.Done))
+                                {
+                                    <div class="custom-col-3">
+                                        <p>Its done go watch it! 🎉</p>
+                                    </div>
+                                }
+                                //TODO move this to the service layer
+                                else if (e.Status.Equals(ContentStatus.Queued))
+                                {
+                                    <div class="custom-col-3">
+                                        <p>Its queued, others are ahead of you 🤷‍♀️</p>
+                                    </div>
+                                }
+                                else if (e.Status.Equals(ContentStatus.Downloading))
+                                {
+                                    <div class="custom-col-5">
+                                        <p>@e.Status</p>
+                                    </div>
+                                    <div class="custom-col-5">
+                                        <p>@(e.Percentage * 100)%</p>
+                                    </div>
+                                    <div class="custom-col-5">
+                                        <p>@TimeSpan.FromSeconds(e.Eta).ToString(@"hh\:mm\:ss")</p>
+                                    </div>
+                                }
+                                else if (e.Status.Equals(ContentStatus.NotAvailable))
+                                {
+                                    <div class="custom-col-3">
+                                        <p>The content can not be downloaded at this time 💩</p>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     </div>
 </div>

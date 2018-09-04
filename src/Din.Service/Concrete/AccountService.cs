@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.ViewModels;
 using Din.Service.Interfaces;
+using Din.Service.Systems;
 using Microsoft.EntityFrameworkCore;
 using UAParser;
 
@@ -47,6 +46,17 @@ namespace Din.Service.Concrete
                 TitleColor = "#00d77c",
                 Message = "Your profile picture is succesfully uploaded"
             };
+        }
+
+        public async Task GetMovieCalendarAsync()
+        {
+            var mediaSystem = new MediaSystem();
+            await mediaSystem.GetMovieCalendarAsync();
+        }
+
+        public Task GetTvShowCalendarAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

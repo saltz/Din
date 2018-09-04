@@ -37,6 +37,7 @@
                     hideLoader();
                     return $(view).hide().fadeIn();
                 });
+                $('#account-view-info').val('visible');
                 toggleMenu();
             },
             error: function(error) {

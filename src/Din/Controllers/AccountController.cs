@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,19 @@ namespace Din.Controllers
             await file.OpenReadStream().CopyToAsync(ms);
             return PartialView("~/Views/Main/Partials/_Result.cshtml",
                 await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> GetMovieCalendarAsync()
+        {
+            await _service.GetMovieCalendarAsync();
+            return Ok();
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> GetTvShowCalendarAsync()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion endpoints
