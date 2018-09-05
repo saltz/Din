@@ -49,7 +49,7 @@ namespace Din.Tests.Controllers
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
             var model = Assert.IsType<MovieResultsViewModel>(viewResult.Model);
-            Assert.Equal("Thor", model.QueryResult[0].Title);
+            Assert.Equal("Thor", (model.QueryResult as List<SearchMovie>)?[0].Title);
             Assert.True(model.CurrentIdList.Count > 0);
         }
 
@@ -74,7 +74,7 @@ namespace Din.Tests.Controllers
 
             var tvShowResultsViewModel = new TvShowResultsViewModel
             {
-                CurrentTtileList = new List<string>
+                CurrentTitleList = new List<string>
                 {
                     "detective"
                 },
@@ -102,7 +102,7 @@ namespace Din.Tests.Controllers
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
             var model = Assert.IsType<TvShowResultsViewModel>(viewResult.Model);
-            Assert.True(model.CurrentTtileList.Count > 0);
+            Assert.True(model.CurrentTitleList.Count > 0);
             Assert.True(model.QueryResult.Count > 0);
         }
 

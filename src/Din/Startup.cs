@@ -1,4 +1,5 @@
-﻿using Din.Data;
+﻿using Din.Config;
+using Din.Data;
 using Din.Service.Concrete;
 using Din.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,14 +15,19 @@ namespace Din
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
-// This method gets called by the runtime. Use this method to add services to the container.
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .AddEncryptedProvider()
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ForwardedHeadersOptions>(options =>
@@ -36,13 +42,15 @@ namespace Din
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             services.AddDistributedMemoryCache();
-            services.AddSession(options => { options.Cookie.Name = "DinCookie"; }); 
+            services.AddSession(options => { options.Cookie.Name = "DinCookie"; });
             services.AddDbContext<DinContext>(options =>
-                options.UseMySql(
-                    MainService.PropertyFile.Get("DbConnectionString"))
+                options.UseMySql(Configuration["Database:ConString"])
             );
 
-            //Adding My Services
+            //Inject Configuration
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            //Inject Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IContentService, ContentService>();
             services.AddTransient<IAccountService, AccountService>();

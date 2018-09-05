@@ -37,8 +37,9 @@ namespace Din.Service.Concrete
         public async Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status)
         {
             var userAgent = Parser.GetDefault().Parse(userAgentString);
-            var geoUrl = MainService.PropertyFile.Get("ipstackBaseUrl") + publicIp +
-                         MainService.PropertyFile.Get("ipstackAccessToken");
+            //TODO fix this
+            //var geoUrl = MainService.PropertyFile.Get("ipstackBaseUrl") + publicIp + MainService.PropertyFile.Get("ipstackAccessToken");
+            var geoUrl = "";
             try
             {
                 var location =
@@ -48,11 +49,17 @@ namespace Din.Service.Concrete
                     userAgent.UA.Family, publicIp, location, DateTime.Now, status));
                 await _context.SaveChangesAsync();
             }
-            catch (JsonReaderException)
+            catch (HttpRequestException) //Location Api is down
+            {
+                await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand,
+                    userAgent.OS.Family, userAgent.UA.Family, publicIp, null, DateTime.Now, status));
+                await _context.SaveChangesAsync();
+            }
+            catch (JsonReaderException) // supplied public ip address results in null
             {
                 await _context.LoginAttempt.AddAsync(new LoginAttempt(username, userAgent.Device.Brand,
                     userAgent.OS.Family,
-                    userAgent.UA.Family, publicIp, new LoginLocation(), DateTime.Now, status));
+                    userAgent.UA.Family, publicIp, null, DateTime.Now, status));
                 await _context.SaveChangesAsync();
             }
         }

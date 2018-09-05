@@ -38,7 +38,20 @@ namespace Din.Controllers
         {
             var ms = new MemoryStream();
             await file.OpenReadStream().CopyToAsync(ms);
-            return PartialView("~/Views/Main/Partials/_Result.cshtml", await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+            return PartialView("~/Views/Main/Partials/_Result.cshtml",
+                await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> GetMovieCalendarAsync()
+        {
+            return Ok(await _service.GetMovieCalendarAsync());
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> GetTvShowCalendarAsync()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion endpoints

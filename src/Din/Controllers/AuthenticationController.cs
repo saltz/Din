@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Din.ExternalModels.Entities;
 using Din.ExternalModels.Utils;
@@ -42,7 +43,7 @@ namespace Din.Controllers
                 await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Success);
                 return View("~/Views/Main/Home.cshtml");
             }
-            catch (Exception)
+            catch (LoginException e)
             {
                 await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Failed);
                 return BadRequest();

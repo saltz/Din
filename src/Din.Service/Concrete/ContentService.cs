@@ -36,7 +36,7 @@ namespace Din.Service.Concrete
             var results = new TvShowResultsViewModel()
             {
                 QueryResult = await new TmdbSystem().SearchTvShowAsync(query),
-                CurrentTtileList = await new MediaSystem().GetCurrentTvShowsAsync()
+                //TODO CurrentTitleList = await new MediaSystem().GetCurrentTvShowsAsync()
             };
             return results;
         }

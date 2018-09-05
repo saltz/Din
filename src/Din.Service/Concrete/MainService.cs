@@ -6,7 +6,7 @@ namespace Din.Service.Concrete
     ///    MainService that provides the necessary properties.
     /// </summary>
     public static class MainService
-    {         
-        public static PropertyFile PropertyFile;
+    {   //DEPRECATED      
+        //public static PropertyFile PropertyFile;
     }
 }

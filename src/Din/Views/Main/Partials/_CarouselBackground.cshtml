@@ -2,7 +2,9 @@
 @using Din.Service.Utils
 @using Newtonsoft.Json
 @{
-    var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(await MediaGeneration.GenerateBackgroundAsync());
+    //TODO fix parent and create viewmodel
+    //var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(await MediaGeneration.GenerateBackgroundAsync
+    var images = new List<UnsplashContainer>();
 }
 
 <div class="carousel slide" data-ride="carousel">

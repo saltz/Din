@@ -3,14 +3,15 @@
 @using Newtonsoft.Json
 
 @{
-    var gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Logout));
+    //TODO fix parent anc create corresponding viewmodel
+    //var gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Logout));
 }
 
 <div class="gif-container">
     <div class="msg-container">
         <h3>smell ya later</h3>
     </div>
-    <img src="@gif.Data.ImageOriginalUrl" />
+    <img src="" />
 </div>
 
 @section scripts {

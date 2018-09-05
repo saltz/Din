@@ -5,7 +5,7 @@ namespace Din.ExternalModels.ViewModels
 {
     public class TvShowResultsViewModel
     {
-        public List<SearchTv> QueryResult { get; set; }
-        public List<string> CurrentTtileList { get; set; }
+        public ICollection<SearchTv> QueryResult { get; set; }
+        public ICollection<string> CurrentTitleList { get; set; }
     }
 }

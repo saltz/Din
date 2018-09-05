@@ -6,13 +6,15 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Service.Systems
 {
+    //TODO this class can maybe be removed ????
     public class TmdbSystem
     {
         private readonly TMDbClient _tmDbClient;
 
         public TmdbSystem()
         {
-            _tmDbClient = new TMDbClient(MainService.PropertyFile.Get("tmdb"));
+            //TODO needs key
+            _tmDbClient = new TMDbClient("");
         }
 
         public async Task<List<SearchMovie>> SearchMovieAsync(string searchQuery)

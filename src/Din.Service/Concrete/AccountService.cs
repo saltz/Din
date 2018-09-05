@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.ExternalModels.Entities;
+using Din.ExternalModels.MediaSystem;
 using Din.ExternalModels.ViewModels;
 using Din.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -45,8 +46,19 @@ namespace Din.Service.Concrete
             {
                 Title = "Profile picture updated",
                 TitleColor = "#00d77c",
-                Message = "Your profile picture is succesfully uploaded"
+                Message = "Your profile picture is successfully uploaded"
             };
+        }
+
+        public async Task<CalendarViewModel> GetMovieCalendarAsync()
+        {
+            throw new NotImplementedException();
+
+        }
+
+        public async Task<CalendarViewModel> GetTvShowCalendarAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
