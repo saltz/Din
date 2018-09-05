@@ -86,7 +86,7 @@ namespace Din.Service.Services.Concrete
             if(a.AddedContent == null)
                 a.AddedContent = new List<AddedContent>();
             _context.Attach(a);
-            a.AddedContent.Add(new AddedContent(title, DateTime.Now, ContentStatus.Added, a));
+            a.AddedContent.Add(new AddedContent(title, DateTime.Now, ContentStatus.Downloading, a));
             await _context.SaveChangesAsync();
         }
 

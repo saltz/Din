@@ -30,7 +30,7 @@ namespace Din.Controllers
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string username, string password)
         {
-            var userAgentString = Request.Headers["User-Agent"].ToString();
+            var userAgentString = GetCurrentUaString();
             var publicIp = Request.Headers["X-Real-IP"].ToString();
             try
             {

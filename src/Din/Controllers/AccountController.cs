@@ -31,7 +31,7 @@ namespace Din.Controllers
         public async Task<IActionResult> GetUserViewAsync()
         {
             return PartialView("~/Views/Account/_Account.cshtml",
-                await _service.GetAccountDataAsync(GetCurrentSessionId(), HttpContext.Request.Headers["User-Agent"].ToString()));
+                await _service.GetAccountDataAsync(GetCurrentSessionId(), GetCurrentUaString()));
         }
 
         [Authorize, HttpPost]
@@ -46,7 +46,7 @@ namespace Din.Controllers
         [Authorize, HttpGet]
         public async Task<IActionResult> GetMovieCalendarAsync()
         {
-            return Ok(await _service.GetMovieCalendarAsync());
+            throw new NotImplementedException();
         }
 
         [Authorize, HttpGet]

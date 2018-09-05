@@ -5,7 +5,7 @@ using TMDbLib.Objects.Search;
 
 namespace Din.ExternalModels.MediaSystem
 {
-    public abstract class MediaSystemObject
+    public abstract class MediaSystemContentObject
     {
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -30,7 +30,7 @@ namespace Din.ExternalModels.MediaSystem
         }
     }
 
-    public class MediaSystemMovie : MediaSystemObject
+    public class MediaSystemMovie : MediaSystemContentObject
     {
         [JsonProperty("year")]
         public int Year { get; set; }
@@ -61,7 +61,7 @@ namespace Din.ExternalModels.MediaSystem
         }
     }
 
-    public class MediaSystemTvShow : MediaSystemObject
+    public class MediaSystemTvShow : MediaSystemContentObject
     {
         [JsonProperty("tvdbid")]
         public string TvShowId { get; set; }
