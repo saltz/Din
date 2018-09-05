@@ -10,8 +10,8 @@ namespace Din.ExternalModels.DownloadClient
         [JsonProperty("name")] public string Name { get; set; }
         [JsonProperty("save_path")] public string SavePath { get; set; }
         [JsonProperty("eta")] public int Eta { get; set; }
-        [JsonProperty("files")] public List<DownloadClientFile> Files { get; set; }
-        [JsonProperty("file_progress")] public List<double> FileProgress { get; set; }
+        [JsonProperty("files")] public ICollection<DownloadClientFile> Files { get; set; }
+        [JsonProperty("file_progress")] public ICollection<double> FileProgress { get; set; }
     }
 
     public class DownloadClientFile

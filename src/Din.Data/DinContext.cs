@@ -1,4 +1,4 @@
-﻿using Din.ExternalModels.Entities;
+﻿using Din.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Din.Data
@@ -9,34 +9,34 @@ namespace Din.Data
         {
         }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Account> Account { get; set; }
-        public DbSet<AccountImage> AccountImage { get; set; }
-        public DbSet<AddedContent> AddedContent { get; set; }
-        public DbSet<LoginAttempt> LoginAttempt { get; set; }
-        public DbSet<LoginLocation> LoginLocation { get; set; }
+        public DbSet<UserEntity> User { get; set; }
+        public DbSet<AccountEntity> Account { get; set; }
+        public DbSet<AccountImageEntity> AccountImage { get; set; }
+        public DbSet<AddedContentEntity> AddedContent { get; set; }
+        public DbSet<LoginAttemptEntity> LoginAttempt { get; set; }
+        public DbSet<LoginLocationEntity> LoginLocation { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("User")
+            modelBuilder.Entity<UserEntity>().ToTable("User")
                 .HasOne(u => u.Account)
                 .WithOne(a => a.User)
-                .HasForeignKey<Account>(a => a.UserRef);
-            modelBuilder.Entity<Account>().ToTable("Account")
+                .HasForeignKey<AccountEntity>(a => a.UserRef);
+            modelBuilder.Entity<AccountEntity>().ToTable("Account")
                 .HasIndex(a => a.Username)
                 .IsUnique();
-            modelBuilder.Entity<Account>()
+            modelBuilder.Entity<AccountEntity>()
                 .HasMany(a => a.AddedContent)
                 .WithOne(ac => ac.Account);
-            modelBuilder.Entity<Account>()
+            modelBuilder.Entity<AccountEntity>()
                 .HasOne(a => a.Image)
                 .WithOne(ai => ai.Account)
-                .HasForeignKey<AccountImage>(ai => ai.AccountRef);
-            modelBuilder.Entity<AccountImage>().ToTable("AccountImage");
-            modelBuilder.Entity<AddedContent>().ToTable("AddedContent");
-            modelBuilder.Entity<LoginAttempt>().ToTable("LoginAttempt")
+                .HasForeignKey<AccountImageEntity>(ai => ai.AccountRef);
+            modelBuilder.Entity<AccountImageEntity>().ToTable("AccountImage");
+            modelBuilder.Entity<AddedContentEntity>().ToTable("AddedContent");
+            modelBuilder.Entity<LoginAttemptEntity>().ToTable("LoginAttempt")
                 .HasOne(la => la.Location);
-            modelBuilder.Entity<LoginLocation>().ToTable("LoginLocation");
+            modelBuilder.Entity<LoginLocationEntity>().ToTable("LoginLocation");
         }
     }
 }

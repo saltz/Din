@@ -1,9 +1,7 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Din.ExternalModels.Entities;
+﻿using System.Threading.Tasks;
+using Din.Data.Entities;
 using Din.ExternalModels.Utils;
-using Din.Service.Interfaces;
+using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

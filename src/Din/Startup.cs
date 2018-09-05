@@ -1,7 +1,7 @@
 ﻿using Din.Config;
 using Din.Data;
-using Din.Service.Concrete;
-using Din.Service.Interfaces;
+using Din.Service.Services.Concrete;
+using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

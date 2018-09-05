@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Din.Service.Interfaces;
+using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

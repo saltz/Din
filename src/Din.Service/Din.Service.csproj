@@ -17,4 +17,8 @@
       <HintPath>..\..\..\..\.nuget\packages\bcrypt.net-core\1.4.0\lib\netstandard1.3\BCrypt.Net-Core.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\ResponseObjects\" />
+    <Folder Include="DTO\RequestObjetcs\" />
+  </ItemGroup>
 </Project>

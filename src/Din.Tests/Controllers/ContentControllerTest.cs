@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Din.Controllers;
 using Din.ExternalModels.ViewModels;
-using Din.Service.Interfaces;
+using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

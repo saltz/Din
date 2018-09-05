@@ -1,9 +1,9 @@
-﻿using Din.Service.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Din.Service.Services.Interfaces;
 
 namespace Din.Controllers
 {
