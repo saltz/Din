@@ -1,11 +1,9 @@
-﻿@using Din.ExternalModels.ViewModels
-
-@model StatusCodeViewModel
+﻿@model Din.ViewModels.StatusCodeViewModel
 
 <div class="gif-container">
     <div class="msg-container">
-        <h2>@Model.StatisCode</h2>
-        <h3>@Model.StatusMessage</h3>
+        <h2>@Model.Data.StatusCode</h2>
+        <h3>@Model.Data.StatusMessage</h3>
     </div>
-    <img src="@Model.Gif.Data.ImageOriginalUrl"/>
+    <img src="@Model.Data.Gif.Data.ImageOriginalUrl"/>
 </div>

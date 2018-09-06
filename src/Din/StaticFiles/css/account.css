@@ -24,9 +24,7 @@
     color: white;
 }
 
-.user-section .user-picture {
-    height: 12vw;
-}
+.user-section .user-picture { height: 12vw; }
 
 .user-section .user-picture img {
     height: 9vw;
@@ -41,13 +39,10 @@
     height: 4vw;
     text-align: center;
 }
-.user-section .user-info i {
-    padding: 10px;
-}
 
-    .user-section .user-info h3 {
-        font-size: 24px;
-    }
+.user-section .user-info i { padding: 10px; }
+
+.user-section .user-info h3 { font-size: 24px; }
 
 
 .sidebar {
@@ -61,53 +56,46 @@
     margin: -2px 0 0;
     padding: 0;
 }
+
 .sidebar #leftside-navigation ul li {
     list-style-type: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-left: 2px transparent solid;
 }
 
-.nav {
-    display: block;
-}
+.nav { display: block; }
 
-.nav-link {
-    padding: 0;
-}
+.nav-link { padding: 18px 0 18px 25px; }
 
 .nav .active {
     border-left: 2px solid #ff8d1c !important;
     background-color: #394f66;
 }
 
-.sidebar #leftside-navigation ul li.active ul {
-    display: block;
-}
+.sidebar #leftside-navigation ul li.active ul { display: block; }
+
 .sidebar #leftside-navigation ul li {
     color: #aeb2b7;
     text-decoration: none;
     display: block;
-    padding: 18px 0 18px 25px;
     font-size: 12px;
     outline: 0;
 }
-    .sidebar #leftside-navigation ul li a:hover {
-        cursor: pointer;
-        color: #ff8d1c;
-    }
-.sidebar #leftside-navigation ul li span {
-    display: inline-block;
+
+.sidebar #leftside-navigation ul li a:hover {
+    cursor: pointer;
+    color: #ff8d1c;
 }
-.sidebar #leftside-navigation ul li i {
-    width: 20px;
-}
+
+.sidebar #leftside-navigation ul li span { display: inline-block; }
+
+.sidebar #leftside-navigation ul li i { width: 20px; }
+
 .sidebar #leftside-navigation ul li i .fa-angle-left,
-.sidebar #leftside-navigation ul li i .fa-angle-right {
-    padding-top: 3px;
-}
-.sidebar #leftside-navigation ul ul {
-    display: none;
-}
+.sidebar #leftside-navigation ul li i .fa-angle-right { padding-top: 3px; }
+
+.sidebar #leftside-navigation ul ul { display: none; }
+
 .sidebar #leftside-navigation ul ul li {
     background: #23313f;
     margin-bottom: 0;
@@ -115,6 +103,7 @@
     margin-right: 0;
     border-bottom: none;
 }
+
 .sidebar #leftside-navigation ul ul li {
     font-size: 12px;
     padding-top: 13px;
@@ -128,4 +117,103 @@
     height: 100%;
     margin-left: 2%;
     background: rgba(41, 57, 73, 0.7);
+}
+
+/* Account general CSS Rules */
+
+.account-view-header {
+    margin: 2.5% 0 0 2.5%;
+    margin-left: 2.5%;
+    text-align: center;
+    border-bottom: 1px solid #ff8d1c;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.account-view-header h2 {
+    width: 100%;
+    color: white;
+}
+
+.account-view-container {
+    height: 90%;
+    width: 90%;
+    margin: 0 0 0 5%;
+}
+
+/* Account Information */
+
+
+
+
+/* Account AddedContent */
+
+#account-view-addedcontent { height: 90%; }
+
+.added-content-container {
+    margin: 2% auto;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.added-content-card-container {
+    padding: 0 17px 0 17px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-sizing: content-box;
+    width: 100%;
+    height: 85%;
+}
+
+.added-content-card-container h2 {
+    margin: 10%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.custom-col-5 {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.custom-col-3 {
+    flex: 0 0 60%;
+    max-width: 60%;
+}
+
+.added-content-card-headers {
+    width: 100%;
+    margin: 2% 0 0 32px;
+    text-align: left;
+    padding: 0 17px 0 17px;
+}
+
+.added-content-card-headers h3 {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.added-content-card {
+    width: 100%;
+    background: rgba(41, 57, 73, 0.5);
+    text-align: left;
+    margin: 10px 0 10px 30px;
+    border: 1px solid #293949;
+}
+
+.content-status-notavailable { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(180, 50, 50, 0.6); }
+
+.content-status-queued { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(55, 136, 206, 0.6); }
+
+.content-status-downloading { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 141, 28, 0.6); }
+
+.content-status-done { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 215, 124, 0.6); }
+
+.added-content-card p {
+    color: #ffffff;
+    font-size: 14px;
+    margin: 10px 0 10px 0;
+    padding-left: 10px;
 }

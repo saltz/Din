@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Din.ExternalModels.Entities;
-using Din.ExternalModels.Utils;
-using Din.Service.Interfaces;
+﻿using System.Threading.Tasks;
+using Din.Data.Entities;
+using Din.Service.Services.Interfaces;
+using Din.Service.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,20 +30,21 @@ namespace Din.Controllers
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string username, string password)
         {
-            var userAgentString = Request.Headers["User-Agent"].ToString();
-            var publicIp = Request.Headers["X-Real-IP"].ToString();
             try
             {
                 var loginResult = await _service.LoginAsync(username, password);
+
                 if (loginResult == null)
                     throw new LoginException("Credentials Incorrect");
+
                 await HttpContext.SignInAsync(loginResult);
-                await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Success);
-                return View("~/Views/Main/Home.cshtml");
+
+                await _service.LogLoginAttempt(username, GetClientUaString(), GetClientIp(), LoginStatus.Success);
+                return RedirectToAction("Index", "Main");
             }
-            catch (Exception)
+            catch (LoginException)
             {
-                await _service.LogLoginAttempt(username, userAgentString, publicIp, LoginStatus.Failed);
+                await _service.LogLoginAttempt(username, GetClientUaString(), GetClientIp(), LoginStatus.Failed);
                 return BadRequest();
             }
         }
@@ -54,7 +54,7 @@ namespace Din.Controllers
         {
             await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
-            return View("~/Views/Main/Logout.cshtml");
+            return RedirectToAction("Exit", "Main");
         }
 
         #endregion endpoints

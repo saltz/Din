@@ -1,10 +1,8 @@
-﻿@using Din.ExternalModels.ViewModels
-
-@model AccountViewModel
+﻿@model Din.ViewModels.AccountViewModel
 
 @{
-    var os = Model.Client.OS.Family.ToLower();
-    if (Model.Client.OS.Family.ToLower().Equals("ubuntu"))
+    var os = Model.ClientInfo.OS.Family.ToLower();
+    if (Model.ClientInfo.OS.Family.ToLower().Equals("ubuntu"))
     {
         os = "linux";
     }
@@ -21,30 +19,30 @@
                 <img src="" alt=""/>
             </div>
             <div class="user-info">
-                <h3>@Model.User.FirstName @Model.User.LastName</h3>
-                <i class="fab fa-@Model.Client.UA.Family.ToLower()"></i>
+                <h3>@Model.Data.User.FirstName @Model.Data.User.LastName</h3>
+                <i class="fab fa-@Model.ClientInfo.UA.Family.ToLower()"></i>
                 <i class="fab fa-@os"></i>
             </div>
         </div>
         <aside class="sidebar">
             <div id="leftside-navigation">
                 <ul class="nav">
-                    <li class="nav-item active">
+                    <li class="nav-item active" id="account-menu-btn-information">
                         <a class="nav-link">
                             <i class="fas fa-user"></i><span>Information</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="account-menu-btn-addedcontent">
                         <a class="nav-link">
                             <i class="fas fa-file-video"></i><span>Added Content</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="account-menu-btn-moviecalender">
                         <a class="nav-link">
                             <i class="fas fa-calendar-alt"></i><span>Movie Calender</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="account-menu-btn-tvshowcalender">
                         <a class="nav-link">
                             <i class="fas fa-calendar-alt"></i><span>TvShow Calender</span>
                         </a>
@@ -54,6 +52,11 @@
         </aside>
     </div>
     <div class="data-pane shadow rounded">
-        <div class="account-ajax-div"></div>
+        @{
+            await Html.RenderPartialAsync("~/Views/Account/_AccountInfo.cshtml");
+            await Html.RenderPartialAsync("~/Views/Account/_AccountAddedContent.cshtml");
+            await Html.RenderPartialAsync("~/Views/Account/_AccountMovieCalender.cshtml");
+            await Html.RenderPartialAsync("~/Views/Account/_AccountTvShowCalender.cshtml");
+        }
     </div>
 </div>

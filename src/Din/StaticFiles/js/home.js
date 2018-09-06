@@ -25,16 +25,19 @@
 
     /* Home Menu elements */
 
-    $('.account-btn').click(function(e) {
+    $('.account-btn').click(function (e) {
+        showLoader();
         e.preventDefault();
         e.stopPropagation();
         $.ajax({
             url: '/Account/GetUserViewAsync',
             type: 'GET',
             success: function(view) {
-                $('div.ajax-div').replaceWith(function() {
+                $('div.ajax-div').replaceWith(function () {
+                    hideLoader();
                     return $(view).hide().fadeIn();
                 });
+                $('#account-view-info').val('visible');
                 toggleMenu();
             },
             error: function(error) {
@@ -60,7 +63,7 @@
             query: $('.search-movie').val()
         };
         $.ajax({
-            url: '/Content/SearchMovieAsync',
+            url: '/Movie/SearchMovieAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -86,7 +89,7 @@
             query: $('.search-show').val()
         };
         $.ajax({
-            url: '/Content/SearchTvShowAsync',
+            url: '/TvShow/SearchTvShowAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -113,7 +116,7 @@ $(document).delegate('.add-movie',
             movieData: $(this).attr('data-model')
         };
         $.ajax({
-            url: '/Content/AddMovieAsync',
+            url: '/Movie/AddMovieAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -137,7 +140,7 @@ $(document).delegate('.add-tvshow',
             tvShowData: $(this).attr('data-model')
         };
         $.ajax({
-            url: '/Content/AddTvShowAsync',
+            url: '/TvShow/AddTvShowAsync',
             type: 'POST',
             data: data,
             success: function(view) {

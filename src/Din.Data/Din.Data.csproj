@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2-preview1-20180816143335" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
   </ItemGroup>
 
 </Project>
