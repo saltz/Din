@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,6 +6,7 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Controllers
 {
+    /* DEPRECATED
     public class ContentController : BaseController
     {
         #region fields
@@ -78,4 +78,5 @@ namespace Din.Controllers
 
         #endregion endpoints
     }
+    */
 }

@@ -5,7 +5,7 @@ namespace Din.ViewModels
 {
     public class TvShowResultsViewModel
     {
-        public IEnumerable<SearchTv> QueryResult { get; set; }
+        public ICollection<SearchTv> QueryResult { get; set; }
         public IEnumerable<string> CurrentTitleList { get; set; }
     }
 }

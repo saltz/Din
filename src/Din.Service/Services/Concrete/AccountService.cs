@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
+using Din.Service.DTO;
+using Din.Service.DTO.Account;
+using Din.Service.DTO.Context;
 using Din.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using UAParser;
 
 namespace Din.Service.Services.Concrete
 {
     /// <inheritdoc />
     public class AccountService : IAccountService
+
     {
         private readonly DinContext _context;
 
@@ -19,26 +24,28 @@ namespace Din.Service.Services.Concrete
             _context = context;
         }
 
-        public async Task<AccountViewModel> GetAccountDataAsync(int id, string useragent)
+        public async Task<DataDTO> GetAccountDataAsync(int id)
         {
-            return new AccountViewModel
+            return new DataDTO
             {
-                User = await _context.User.Include(u => u.Account.AddedContent).Include(u => u.Account.Image).FirstAsync(u => u.ID.Equals(id)),
-                Client = Parser.GetDefault().Parse(useragent),
-                AddedContent = await _context.AddedContent.Where(a => a.Account.User.ID.Equals(id)).ToListAsync()
+                User = Mapper.Map<UserDTO>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
+                Account = Mapper.Map<AccountDTO>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
+                AddedContent = Mapper.Map<IEnumerable<AddedContentDTO>>(await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync())
             };
         }
 
-        public async Task<ResultViewModel> UploadAccountImageAsync(int id, string name, byte[] data)
+        public async Task<ResultDTO> UploadAccountImageAsync(int id, string name, byte[] data)
         {
-            var account = await _context.Account.FirstAsync(a => a.User.ID.Equals(id));
-            account.Image = new AccountImage
+            var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
+            account.Image = new AccountImageEntity
             {
                 Data = data,
                 Name = name
             };
+
             await _context.SaveChangesAsync();
-            return new ResultViewModel
+
+            return new ResultDTO
             {
                 Title = "Profile picture updated",
                 TitleColor = "#00d77c",
@@ -46,13 +53,13 @@ namespace Din.Service.Services.Concrete
             };
         }
 
-        public async Task<CalendarViewModel> GetMovieCalendarAsync()
+        public async Task<CalendarDTO> GetMovieCalendarAsync()
         {
             throw new NotImplementedException();
 
         }
 
-        public async Task<CalendarViewModel> GetTvShowCalendarAsync()
+        public async Task<CalendarDTO> GetTvShowCalendarAsync()
         {
             throw new NotImplementedException();
         }

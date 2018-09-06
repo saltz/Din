@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+using Din.Service.DTO.Context;
 
 namespace Din.Service.Clients.Interfaces
 {
-    public interface IIpstackClient
+    public interface IIpStackClient
     {
+        Task<LoginLocationDTO> GetLocation(string ip);
     }
 }

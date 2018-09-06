@@ -1,5 +1,5 @@
-﻿@using Din.ExternalModels.Entities
-@model Din.ExternalModels.ViewModels.AccountViewModel
+﻿@using Din.Data.Entities
+@model Din.ViewModels.AccountViewModel
 
 <div class="account-partial" id="account-view-addedcontent" style="display: none">
     <div class="row account-view-header">
@@ -26,7 +26,7 @@
             </div>
             <div class="added-content-card-container">
                 @{
-                    foreach (var e in Model.AddedContent)
+                    foreach (var e in Model.Data.AddedContent)
                     {
                         <div class="row added-content-card content-status-@e.Status.ToString().ToLower()">
                             <div class="custom-col-5">

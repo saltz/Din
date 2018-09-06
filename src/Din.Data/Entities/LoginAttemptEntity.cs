@@ -12,8 +12,14 @@ namespace Din.Data.Entities
         public string PublicIp { get; set; }
         public LoginLocationEntity Location { get; set; }
         public DateTime DateAndTime { get; set; }
-        internal LoginStatus Status { get; set; }
+        public LoginStatus Status { get; set; }
 
+    }
+
+    public enum LoginStatus
+    {
+        Failed,
+        Success
     }
 
     public class LoginLocationEntity
@@ -29,11 +35,5 @@ namespace Din.Data.Entities
         public string ZipCode { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-    }
-
-    internal enum LoginStatus
-    {
-        Failed,
-        Success
     }
 }

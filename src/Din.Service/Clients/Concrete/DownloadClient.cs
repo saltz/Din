@@ -1,25 +1,41 @@
 ﻿using System.Collections.Generic;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Din.ExternalModels.DownloadClient;
-using Din.ExternalModels.Utils;
 using Din.Service.Clients.Interfaces;
+using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.ResponseObjects;
+using Din.Service.Config.Interfaces;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete
 {
-    public class DownloadClient : IDownloadClient
+    public class DownloadClient : BaseClient, IDownloadClient
     {
-        private HttpRequestHelper _httpRequest;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IDownloadClientConfig _config;
 
-        public DownloadClient(string url, string pwd)
+        public DownloadClient(IHttpClientFactory httpClientFactory, IDownloadClientConfig config)
         {
-            Authenticate(url, pwd).Wait();
+            _httpClientFactory = httpClientFactory;
+            _config = config;
+            Authenticate().Wait();
         }
 
-        private async Task Authenticate(string url, string pwd)
+        private async Task Authenticate()
         {
-            var payload = new DcSingleParam("auth.login", new List<string> {pwd}, 1);
+            var payload = new DCSingleParamRequest
+            {
+                Id = 1,
+                Method = "auth.login",
+                Params = new List<string> {_config.Password}
+            };
+
+            //TODO Check if the cookiecontainer and decopression methods are needed
+            var client = _httpClientFactory.CreateClient();
+
+            await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
+
+            /* OLD CODE NEEDED FOR TODO
             _httpRequest = new HttpRequestHelper(url, true);
             _httpRequest.SetDecompressionMethods(new List<DecompressionMethods>(){DecompressionMethods.Deflate, DecompressionMethods.GZip});        
             try
@@ -30,11 +46,24 @@ namespace Din.Service.Clients.Concrete
             {
                 throw new DownloadClientException("Error occured while authenticating");
             }
+            */
         }
 
-        public async Task<ICollection<DownloadClientItem>> GetAllItemsAsync()
+        public async Task<DCResponse> GetAllItemsAsync()
         {
-            var payload = new DcSingleParam("webapi.get_torrents", new List<string>(), 1);
+            var payload = new DCSingleParamRequest
+            {
+                Id = 1,
+                Method = "webapi.get_torrents",
+                Params = new List<string>()
+            };
+
+            var client = _httpClientFactory.CreateClient();
+
+            //TODO
+            var response = await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
+            return new DCResponse();
+            /* OLD CODE
             try
             {
                 var response = JsonConvert.DeserializeObject<DcResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2);
@@ -44,23 +73,36 @@ namespace Din.Service.Clients.Concrete
             {
                 throw new DownloadClientException("Failed to get all items");
             }
+            */
         }
 
-        public async Task<DownloadClientItem> GetItemStatusAsync(string itemHash)
+        public async Task<DCResponseItem> GetItemStatusAsync(string itemHash)
         {
-            var payload = new DcSCollectionParam("webapi.get_torrents", new List<List<string>>
+            var payload = new DCCParamCollectionRequest
             {
-                new List<string>
+                Id = 1,
+                Method = "webapi.get_torrents",
+                Params = new List<ICollection<string>>
                 {
-                    itemHash
-                },
-                new List<string>
-                {
-                    "eta",
-                    "files",
-                    "file_progress"
+                    new List<string>
+                    {
+                        itemHash
+                    },
+                    new List<string>
+                    {
+                        "eta",
+                        "files",
+                        "file_progress"
+                    }
                 }
-            }, 1);
+            };
+
+            var client = _httpClientFactory.CreateClient();
+            //TODO
+            var response = await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
+            return new DCResponseItem();
+
+            /* OLD CODE
             try
             {
                 return JsonConvert.DeserializeObject<DcResponseObject>((await _httpRequest.PerformPostRequestAsync(JsonConvert.SerializeObject(payload))).Item2).Result.Items[0];
@@ -69,6 +111,7 @@ namespace Din.Service.Clients.Concrete
             {
                 throw new DownloadClientException("Failed to get item status");
             }
+            */
         }
     }
 }

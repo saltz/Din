@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Din.ExternalModels.DownloadClient;
+﻿using System.Threading.Tasks;
+using Din.Service.Clients.ResponseObjects;
 
 namespace Din.Service.Clients.Interfaces
 {
     public interface IDownloadClient
     {
-        Task<ICollection<DownloadClientItem>> GetAllItemsAsync();
-        Task<DownloadClientItem> GetItemStatusAsync(string itemHash);
+        Task<DCResponse> GetAllItemsAsync();
+        Task<DCResponseItem> GetItemStatusAsync(string itemHash);
     }
 }

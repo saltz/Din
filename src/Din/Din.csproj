@@ -15,7 +15,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Din.ExternalModels\Din.ExternalModels.csproj" />
     <ProjectReference Include="..\Din.Service\Din.Service.csproj" />
   </ItemGroup>
 </Project>

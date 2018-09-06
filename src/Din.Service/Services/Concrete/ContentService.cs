@@ -3,93 +3,43 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.Data.Entities;
-using Din.Service.Services.Interfaces;
-using Din.Service.Systems;
 using Microsoft.EntityFrameworkCore;
-using TMDbLib.Objects.Search;
 
 namespace Din.Service.Services.Concrete
 {
-    /// <inheritdoc />
-    public class ContentService : IContentService
+    public abstract class ContentService
     {
         private readonly DinContext _context;
 
-        public ContentService(DinContext context)
+        protected ContentService(DinContext context)
         {
             _context = context;
-        } 
-
-        public async Task<MovieResultsViewModel> SearchMovieAsync(string query)
-        {
-            var results = new MovieResultsViewModel
-            {
-                QueryResult = await new TmdbSystem().SearchMovieAsync(query),
-                CurrentIdList = await new MediaSystem().GetCurrentMoviesAsync()
-            };
-            return results;
         }
 
-        public async Task<TvShowResultsViewModel> SearchTvShowAsync(string query)
+        protected async Task LogContentAdditionAsync(string title, int id)
         {
-            var results = new TvShowResultsViewModel()
-            {
-                QueryResult = await new TmdbSystem().SearchTvShowAsync(query),
-                //TODO CurrentTitleList = await new MediaSystem().GetCurrentTvShowsAsync()
-            };
-            return results;
-        }
+            var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
 
-        public async Task<ResultViewModel> AddMovieAsync(SearchMovie movie, int id)
-        { 
-            if (!(await new MediaSystem().AddMovieAsync(movie)).Equals(201))
-            {
-                return new ResultViewModel
-                {
-                    Title = "Failed At adding Movie",
-                    TitleColor = "#b43232",
-                    Message = "Something went wrong 😵   Try again later!"
-                };
-            }
-            await LogContentAsync(movie.Title, await _context.Account.FirstAsync(a => a.ID.Equals(id)));
-            return new ResultViewModel
-            {
-                Title = "Movie Added Successfully",
-                TitleColor = "#00d77c",
-                Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
-            };
-        }
+            if(account.AddedContent == null)
+                account.AddedContent = new List<AddedContentEntity>();
 
-        public async Task<ResultViewModel> AddTvShowAsync(SearchTv tvShow, int id)
-        {
-            var tmdbSystem = new TmdbSystem();
-            if (!(await new MediaSystem().AddTvShowAsync(tvShow, await tmdbSystem.GetTvShowTvdbId(tvShow.Id), await tmdbSystem.GetTvShowSeasons(tvShow.Id))).Equals(201))
+            _context.Attach(account);
+            account.AddedContent.Add(new AddedContentEntity
             {
-                return new ResultViewModel
-                {
-                    Title = "Failed At adding Tv Show",
-                    TitleColor = "#b43232",
-                    Message = "Something went wrong 😵   Try again later!"
-                };
-            }
-            await LogContentAsync(tvShow.Name, await _context.Account.FirstAsync(a => a.ID.Equals(id)));
-            return new ResultViewModel
-            {
-                Title = "Tv Show Added Successfully",
-                TitleColor = "#00d77c",
-                Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
-            };
-        }
-
-        private async Task LogContentAsync(string title, Account a)
-        {
-            if(a.AddedContent == null)
-                a.AddedContent = new List<AddedContent>();
-            _context.Attach(a);
-            a.AddedContent.Add(new AddedContent(title, DateTime.Now, ContentStatus.Downloading, a));
+                Title = title,
+                DateAdded = DateTime.Now,
+                Status = ContentStatus.Queued,
+                Account = account
+            });
+                
             await _context.SaveChangesAsync();
         }
 
+        protected string GenerateTitleSlug(string title, DateTime date)
+        {
+            var slug = title.ToLower().Replace(" ", "-") + "-";
+            return $"{slug}{date.Year.ToString().ToLower()}";
+        }     
 
         //private async Task<List<AddedContent>> PerformUpdateAsync(Account account)
         //{

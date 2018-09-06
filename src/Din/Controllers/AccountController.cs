@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using AutoMapper;
 using Din.Service.Services.Interfaces;
+using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UAParser;
 
 namespace Din.Controllers
 {
@@ -30,8 +33,12 @@ namespace Din.Controllers
         [Authorize, HttpGet]
         public async Task<IActionResult> GetUserViewAsync()
         {
-            return PartialView("~/Views/Account/_Account.cshtml",
-                await _service.GetAccountDataAsync(GetCurrentSessionId(), GetCurrentUaString()));
+            var accountDataViewModel = new AccountViewModel
+            {
+                Data = await _service.GetAccountDataAsync(GetCurrentSessionId()),
+                ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
+            };
+            return PartialView("~/Views/Account/_Account.cshtml", accountDataViewModel);
         }
 
         [Authorize, HttpPost]
@@ -39,8 +46,12 @@ namespace Din.Controllers
         {
             var ms = new MemoryStream();
             await file.OpenReadStream().CopyToAsync(ms);
-            return PartialView("~/Views/Main/Partials/_Result.cshtml",
-                await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+
+            var resultModel =
+                Mapper.Map<ResultViewModel>(
+                    await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
+
+            return PartialView("~/Views/Main/Partials/_Result.cshtml", resultModel);
         }
 
         [Authorize, HttpGet]

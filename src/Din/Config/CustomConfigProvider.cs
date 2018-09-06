@@ -20,10 +20,10 @@ namespace Din.Config
     {
         public override void Load()
         {
-            Data = UnencryptMyConfiguration();
+            Data = UnEncryptMyConfiguration();
         }
 
-        private IDictionary<string, string> UnencryptMyConfiguration()
+        private IDictionary<string, string> UnEncryptMyConfiguration()
         {
             IDictionary<string, string> unEncryptedCollection = new Dictionary<string, string>();
             JObject rawJObject;
@@ -38,7 +38,8 @@ namespace Din.Config
             {
                 foreach (var childProperty in property.Value)
                 {
-                    unEncryptedCollection.Add(property.Name + ":" + (childProperty as JProperty)?.Name, (childProperty as JProperty)?.Value.ToString());
+                    var realProp = (JProperty) childProperty;
+                    unEncryptedCollection.Add($"{property.Name}:{realProp.Name}", realProp.Value.ToString());
                 }
             }
                

@@ -38,7 +38,7 @@ namespace Din.Tests.Controllers
                 }
             };
 
-            var account = new Account
+            var account = new AccountEntity()
             {
                 ID = 1,
                 Role = AccountRoll.User

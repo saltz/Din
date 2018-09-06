@@ -1,10 +1,8 @@
-﻿@using Din.ExternalModels.ViewModels
-
-@model AccountViewModel
+﻿@model Din.ViewModels.AccountViewModel
 
 @{
-    var os = Model.Client.OS.Family.ToLower();
-    if (Model.Client.OS.Family.ToLower().Equals("ubuntu"))
+    var os = Model.ClientInfo.OS.Family.ToLower();
+    if (Model.ClientInfo.OS.Family.ToLower().Equals("ubuntu"))
     {
         os = "linux";
     }
@@ -21,8 +19,8 @@
                 <img src="" alt=""/>
             </div>
             <div class="user-info">
-                <h3>@Model.User.FirstName @Model.User.LastName</h3>
-                <i class="fab fa-@Model.Client.UA.Family.ToLower()"></i>
+                <h3>@Model.Data.User.FirstName @Model.Data.User.LastName</h3>
+                <i class="fab fa-@Model.ClientInfo.UA.Family.ToLower()"></i>
                 <i class="fab fa-@os"></i>
             </div>
         </div>

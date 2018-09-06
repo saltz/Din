@@ -1,52 +1,59 @@
 ﻿using System.Threading.Tasks;
-using Din.ExternalModels.GeneratedMedia;
+using Din.Service.Clients.Concrete;
+using Din.Service.Clients.Interfaces;
+using Din.Service.DTO;
 using Din.Service.Services.Interfaces;
-using Din.Service.Utils;
-using Newtonsoft.Json;
 
 namespace Din.Service.Services.Concrete
 {
     /// <inheritdoc />
     public class StatusCodeService : IStatusCodeService
     {
-        public async Task<StatusCodeViewModel> GenerateDataToDisplayAsync(int statusCode)
+        private readonly IGiphyClient _client;
+
+        public StatusCodeService(IGiphyClient client)
         {
-            var model = new StatusCodeViewModel
+            _client = client;
+        }
+
+        public async Task<StatusCodeDTO> GenerateDataToDisplayAsync(int statusCode)
+        {
+            var dto = new StatusCodeDTO
             {
-                StatisCode = statusCode
+                StatusCode = statusCode
             };
             switch (statusCode)
             {
                 case 400:
-                    model.StatusMessage = "Te Fck did you do";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Random));
+                    dto.StatusMessage = "Te Fck did you do";
+                    dto.Gif =  await _client.GetRandomGifAsync(GiphyTag.Trending);
                     break;
                 case 401:
-                    model.StatusMessage = "You're not supposed to do that";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Forbidden));
+                    dto.StatusMessage = "You're not supposed to do that";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry); 
                     break;
                 case 403:
-                    model.StatusMessage = "No No No";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Forbidden));
+                    dto.StatusMessage = "No No No";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry);
                     break;
                 case 404:
-                    model.StatusMessage = "It's gone";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.PageNotFound));
+                    dto.StatusMessage = "It's gone";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Funny);
                     break;
                 case 408:
-                    model.StatusMessage = "The server timed out waiting for the request";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.ServerError));
+                    dto.StatusMessage = "The server timed out waiting for the request";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
                 case 500:
-                    model.StatusMessage = "Hmmm seems like I fucked up";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.ServerError));
+                    dto.StatusMessage = "Hmmm seems like I fucked up";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
                 default:
-                    model.StatusMessage = "Hmmm seems like I fucked up";
-                    model.Gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Random));
+                    dto.StatusMessage = "Hmmm seems like I fucked up";
+                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
             }
-            return model;
+            return dto;
         }
     }
 }
