@@ -26,6 +26,10 @@
             </div>
             <div class="added-content-card-container">
                 @{
+                    if (!Model.Data.AddedContent.GetEnumerator().MoveNext())
+                    {
+                         <h2>You have not added any content yet 🤯</h2>
+                    }
                     foreach (var e in Model.Data.AddedContent)
                     {
                         <div class="row added-content-card content-status-@e.Status.ToString().ToLower()">
@@ -33,7 +37,7 @@
                                 <p>@e.Title</p>
                             </div>
                             <div class="custom-col-5">
-                                <p>@e.DateAdded</p>
+                                <p>@e.DateAdded.ToString(@"dd-MM-yyyy")</p>
                             </div>
                             @{
                                 if (e.Status.Equals(ContentStatus.Done))

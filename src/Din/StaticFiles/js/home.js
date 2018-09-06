@@ -63,7 +63,7 @@
             query: $('.search-movie').val()
         };
         $.ajax({
-            url: '/Content/SearchMovieAsync',
+            url: '/Movie/SearchMovieAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -89,7 +89,7 @@
             query: $('.search-show').val()
         };
         $.ajax({
-            url: '/Content/SearchTvShowAsync',
+            url: '/TvShow/SearchTvShowAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -116,7 +116,7 @@ $(document).delegate('.add-movie',
             movieData: $(this).attr('data-model')
         };
         $.ajax({
-            url: '/Content/AddMovieAsync',
+            url: '/Movie/AddMovieAsync',
             type: 'POST',
             data: data,
             success: function(view) {
@@ -140,7 +140,7 @@ $(document).delegate('.add-tvshow',
             tvShowData: $(this).attr('data-model')
         };
         $.ajax({
-            url: '/Content/AddTvShowAsync',
+            url: '/TvShow/AddTvShowAsync',
             type: 'POST',
             data: data,
             success: function(view) {

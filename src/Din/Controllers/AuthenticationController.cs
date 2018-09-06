@@ -40,7 +40,7 @@ namespace Din.Controllers
                 await HttpContext.SignInAsync(loginResult);
 
                 await _service.LogLoginAttempt(username, GetClientUaString(), GetClientIp(), LoginStatus.Success);
-                return View("~/Views/Main/Home.cshtml");
+                return RedirectToAction("Index", "Main");
             }
             catch (LoginException)
             {
@@ -54,7 +54,7 @@ namespace Din.Controllers
         {
             await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
-            return View("~/Views/Main/Logout.cshtml");
+            return RedirectToAction("Exit", "Main");
         }
 
         #endregion endpoints

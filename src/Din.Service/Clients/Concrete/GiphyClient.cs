@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
+using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete
 {
@@ -20,15 +21,14 @@ namespace Din.Service.Clients.Concrete
         public async Task<GiphyResponse> GetRandomGifAsync(GiphyTag tag)
         {
             var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync(BuildUrl(new[] {_config.Url, _config.Key, tag.ToString().ToLower()}));
 
-            //TODO
-            return new GiphyResponse();
+            return JsonConvert.DeserializeObject<GiphyResponse>(await client
+                .GetStringAsync(BuildUrl(new[] {_config.Url, _config.Key, tag.ToString().ToLower()})));
         }
 
         protected override string BuildUrl(string[] parameters)
         {
-            return $"{parameters[0]}?api_key={parameters[1]}&amp;tag={parameters[2]}&amp;rating=G";
+            return $"{parameters[0]}?api_key={parameters[1]}&tag={parameters[2]}&rating=G";
         }
     }
 

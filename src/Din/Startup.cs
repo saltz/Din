@@ -1,10 +1,17 @@
-﻿using Din.Config;
+﻿using AutoMapper;
+using Din.Config;
 using Din.Data;
+using Din.Data.Entities;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
+using Din.Service.Config.Interfaces;
+using Din.Service.DTO;
+using Din.Service.DTO.Content;
+using Din.Service.DTO.Context;
 using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
+using Din.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace Din
 {
@@ -54,21 +62,22 @@ namespace Din
             services.AddHttpClient();
 
             //Inject Configurations
-            services.AddSingleton(new DownloadClientConfig(Configuration["DownloadClient:Url"],
+            services.AddSingleton<IDownloadClientConfig>(new DownloadClientConfig(Configuration["DownloadClient:Url"],
                 Configuration["DownloadClient:Pwd"]));
-            services.AddSingleton(new GiphyClientConfig(Configuration["GiphyClient:Url"],
+            services.AddSingleton<IGiphyClientConfig>(new GiphyClientConfig(Configuration["GiphyClient:Url"],
                 Configuration["GiphyClient:Key"]));
-            services.AddSingleton(new IpStackClientConfig(Configuration["IpStackClient:Url"],
+            services.AddSingleton<IIpStackClientConfig>(new IpStackClientConfig(Configuration["IpStackClient:Url"],
                 Configuration["IpStackClient:Key"]));
-            services.AddSingleton(new MovieClientConfig(Configuration["MovieClient:Url"],
+            services.AddSingleton<IMovieClientConfig>(new MovieClientConfig(Configuration["MovieClient:Url"],
                 Configuration["MovieClient:Key"], Configuration["MovieClient:SaveLocation"]));
-            services.AddSingleton(new TvShowClientConfig(Configuration["TvShowClient:Url"],
+            services.AddSingleton<ITvShowClientConfig>(new TvShowClientConfig(Configuration["TvShowClient:Url"],
                 Configuration["TvShowClient:Key"], Configuration["SaveLocation"]));
-            services.AddSingleton(new UnsplashClientConfig(Configuration["UnsplashClient:Url"],
+            services.AddSingleton<IUnsplashClientConfig>(new UnsplashClientConfig(Configuration["UnsplashClient:Url"],
                 Configuration["UnsplashClient:Key"]));
-            services.AddSingleton(new TMDBClientConfig(Configuration["TMDBClient:Key"]));
+            services.AddSingleton<ITMDBClientConfig>(new TMDBClientConfig(Configuration["TMDBClient:Key"]));
 
             //Inject Services
+            services.AddSingleton<IMediaService, MediaService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<ITvShowService, TvShowService>();
@@ -82,6 +91,17 @@ namespace Din
             services.AddTransient<IMovieClient, MovieClient>();
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
+
+            //Initialize Mapper
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<MovieResultsViewModel, MovieDTO>();
+                cfg.CreateMap<TvShowResultsViewModel, TvShowDTO>();
+                cfg.CreateMap<ResultViewModel, ResultDTO>();
+                cfg.CreateMap<UserEntity, UserDTO>();
+                cfg.CreateMap<AccountEntity, AccountDTO>();
+                cfg.CreateMap<AddedContentEntity, AddedContentDTO>();
+            });
         }
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

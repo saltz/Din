@@ -7,7 +7,6 @@ namespace Din.Service.DTO.Context
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public AccountDTO Account { get; set; }
     }
 
     public class AccountDTO

@@ -5,7 +5,8 @@ namespace Din.ViewModels
 {
     public class MovieResultsViewModel
     {
-        public ICollection<SearchMovie> QueryResult { get; set; }
-        public IEnumerable<int> CurrentIdList { get; set; }
+        public IEnumerable<int> CurrentMovieCollection { get; set; }
+        public ICollection<SearchMovie> QueryCollection { get; set; }
+
     }
 }

@@ -1,13 +1,10 @@
-﻿@{
-    //TODO fix parent anc create corresponding viewmodel
-    //var gif = JsonConvert.DeserializeObject<GiphyContainer>(await MediaGeneration.GetRandomGifAsync(GiphyQuery.Logout));
-}
+﻿@model Din.ViewModels.MediaViewModel
 
 <div class="gif-container">
     <div class="msg-container">
         <h3>smell ya later</h3>
     </div>
-    <img src="" />
+    <img src="@Model.Media.Gif.Data.ImageOriginalUrl" />
 </div>
 
 @section scripts {

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
 using Newtonsoft.Json;
 
@@ -24,10 +26,9 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = await client.GetAsync(BuildUrl(new[] {_config.Url, "movie", _config.Key}));
+            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(new[] {_config.Url, "movie", _config.Key})));
 
-            //TODO Filter trough response collection LINQ get all movieId
-            return new List<int>();
+            return response.Select(r => r.Id).AsEnumerable();
         }
 
         public async Task<bool> AddMovieAsync(MCRequest movie)
@@ -37,7 +38,7 @@ namespace Din.Service.Clients.Concrete
 
             var response = await client.PostAsync(BuildUrl(new[] {_config.Url, "movie", _config.Key}),
                 new StringContent(JsonConvert.SerializeObject(movie)));
-            //TODO
+
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 

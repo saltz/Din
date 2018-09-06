@@ -2,7 +2,7 @@
 
 @model Din.ViewModels.MovieResultsViewModel
 
-@if (Model.QueryResult.Count.Equals(0))
+@if (Model.QueryCollection.Count.Equals(0))
 {
     <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
         <div class="modal-dialog">
@@ -25,7 +25,7 @@ else
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="card-frame">
-                        @foreach (var movie in Model.QueryResult)
+                        @foreach (var movie in Model.QueryCollection)
                         {
                             var date = Convert.ToDateTime(movie.ReleaseDate).Year;
                             var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.PosterPath;
@@ -62,7 +62,7 @@ else
                                     </p>
                                     <div class="add-button">
                                         @{
-                                            if (Model.CurrentIdList.Contains(movie.Id))
+                                            if (Model.CurrentMovieCollection.Contains(movie.Id))
                                             {
                                                 <button disabled type="button" class="btn btn-default">Already Exists</button>
                                             }

@@ -6,6 +6,6 @@ namespace Din.Service.DTO.Content
     public class TvShowDTO
     {
         public IEnumerable<string> CurrentTvShowCollection { get; set; }
-        public IEnumerable<SearchTv> QueryCollection { get; set; }
+        public ICollection<SearchTv> QueryCollection { get; set; }
     }
 }

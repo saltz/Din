@@ -38,6 +38,7 @@ namespace Din.Controllers
                 Data = await _service.GetAccountDataAsync(GetCurrentSessionId()),
                 ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
             };
+
             return PartialView("~/Views/Account/_Account.cshtml", accountDataViewModel);
         }
 
@@ -47,11 +48,8 @@ namespace Din.Controllers
             var ms = new MemoryStream();
             await file.OpenReadStream().CopyToAsync(ms);
 
-            var resultModel =
-                Mapper.Map<ResultViewModel>(
-                    await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray()));
-
-            return PartialView("~/Views/Main/Partials/_Result.cshtml", resultModel);
+            return PartialView("~/Views/Main/Partials/_Result.cshtml", Mapper.Map<ResultViewModel>(
+                await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray())));
         }
 
         [Authorize, HttpGet]

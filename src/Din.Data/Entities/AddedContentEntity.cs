@@ -12,6 +12,7 @@ namespace Din.Data.Entities
         public int Eta { get; set; }
         public double Percentage { get; set; }
         public AccountEntity Account { get; set; }
+        public int AccountRef { get; set; }
     }
     public enum ContentStatus
     {

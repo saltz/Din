@@ -1,18 +1,15 @@
 ﻿@using Din.Service.Clients.ResponseObjects
+@model Din.ViewModels.MediaViewModel
 
-@{
-    //TODO fix parent and create viewmodel, controller en service (maybe singleton)
-    //var images = JsonConvert.DeserializeObject<List<UnsplashContainer>>(await MediaGeneration.GenerateBackgroundAsync
-    var images = new List<UnsplashResponse>();
-}
 
 <div class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         @{
-            var image = images[0].FileTypes.Regular;
-            images.Remove(images[0]);
-            <div class="carousel-item active"><img src="@image" /></div>
-            foreach (var i in images)
+            var image = Model.Media.BackgroundImageCollection.First();
+            var collectionCopy = new List<UnsplashResponseObject>(Model.Media.BackgroundImageCollection);
+            <div class="carousel-item active"><img src="@image.FileTypes.Regular" /></div>
+            collectionCopy.Remove(image);
+            foreach (var i in collectionCopy)
             {
                 <div class="carousel-item"><img src="@i.FileTypes.Regular" /></div>
             }

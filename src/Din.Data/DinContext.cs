@@ -27,7 +27,8 @@ namespace Din.Data
                 .IsUnique();
             modelBuilder.Entity<AccountEntity>()
                 .HasMany(a => a.AddedContent)
-                .WithOne(ac => ac.Account);
+                .WithOne(ac => ac.Account)
+                .HasForeignKey(ac => ac.AccountRef);
             modelBuilder.Entity<AccountEntity>()
                 .HasOne(a => a.Image)
                 .WithOne(ai => ai.Account)

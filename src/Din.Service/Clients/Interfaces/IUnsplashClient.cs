@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Din.Service.Clients.ResponseObjects;
 
 namespace Din.Service.Clients.Interfaces
 {
     public interface IUnsplashClient
     {
-        Task<UnsplashResponse> GetBackgroundCollection();
+        Task<ICollection<UnsplashResponseObject>> GetBackgroundCollection();
     }
 }

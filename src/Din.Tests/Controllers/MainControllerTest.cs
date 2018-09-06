@@ -2,8 +2,11 @@
 using System.Security.Claims;
 using Din.Controllers;
 using Din.Data.Entities;
+using Din.Service.DTO;
+using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Xunit;
 
 namespace Din.Tests.Controllers
@@ -13,7 +16,9 @@ namespace Din.Tests.Controllers
         [Fact]
         public void IndexUnAuthenticatedTest()
         {
-            var controller = new MainController
+            var mockService = new Mock<IMediaService>();
+
+            var controller = new MainController(mockService.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -23,14 +28,17 @@ namespace Din.Tests.Controllers
 
             var result = controller.Index();
 
-            var viewResult = Assert.IsType<ViewResult>(result);
+            var viewResult = Assert.IsType<ViewResult>(result.Result);
             Assert.Equal("Index", viewResult.ViewName);
         }
 
         [Fact]
         public void IndexAuthenticatedTest()
         {
-            var controller = new MainController
+            var mockService = new Mock<IMediaService>();
+            mockService.Setup(service => service.GenerateBackgroundImages()).ReturnsAsync(new MediaDTO());
+
+            var controller = new MainController(mockService.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -54,7 +62,7 @@ namespace Din.Tests.Controllers
 
             var result = controller.Index();
 
-            var viewResult = Assert.IsType<ViewResult>(result);
+            var viewResult = Assert.IsType<ViewResult>(result.Result);
             Assert.Equal("Home", viewResult.ViewName);
         }
     }
