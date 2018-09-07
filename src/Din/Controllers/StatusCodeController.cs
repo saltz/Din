@@ -10,12 +10,12 @@ namespace Din.Controllers
 {
     public class StatusCodeController : BaseController
     {
-        #region fields
+        #region injections
 
         private readonly ILogger<MainController> _logger;
         private readonly IStatusCodeService _service;
 
-        #endregion fields
+        #endregion injections
 
         #region constructors
 

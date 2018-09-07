@@ -18,7 +18,7 @@ namespace Din.Service.Clients.Concrete
         {
             _httpClientFactory = httpClientFactory;
             _config = config;
-            Authenticate().Wait();
+            Authenticate().Wait(); //TODO check singleton
         }
 
         private async Task Authenticate()
@@ -112,6 +112,11 @@ namespace Din.Service.Clients.Concrete
                 throw new DownloadClientException("Failed to get item status");
             }
             */
+        }
+
+        protected override string BuildUrl(string[] parameters)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

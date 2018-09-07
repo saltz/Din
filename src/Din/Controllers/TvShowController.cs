@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
+using Din.Service.Mappers.Interfaces;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +12,12 @@ namespace Din.Controllers
     public class TvShowController : BaseController
     {
         private readonly ITvShowService _service;
+        private readonly IViewModelMapper _mapper;
 
-        public TvShowController(ITvShowService service)
+        public TvShowController(ITvShowService service, IViewModelMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpPost, Authorize]
@@ -24,7 +26,7 @@ namespace Din.Controllers
             if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
 
             return PartialView("~/Views/Main/Partials/_TvShowResults.cshtml",
-                Mapper.Map<TvShowResultsViewModel>(await _service.SearchTvShowAsync(query)));
+                _mapper.Instance.Map<TvShowResultsViewModel>(await _service.SearchTvShowAsync(query)));
         }
 
         [HttpPost, Authorize]
@@ -37,7 +39,7 @@ namespace Din.Controllers
                 if (tvShow == null) return RedirectToAction("Index", "StatusCode", 500);
 
                 return PartialView("~/Views/main/Partials/_Result.cshtml",
-                    Mapper.Map<ResultViewModel>(await _service.AddTvShowAsync(tvShow, GetCurrentSessionId())));
+                    _mapper.Instance.Map<ResultViewModel>(await _service.AddTvShowAsync(tvShow, GetCurrentSessionId())));
             }
             catch
             {

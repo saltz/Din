@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using Din.Controllers;
+using Din.Service.DTO;
+using Din.Service.DTO.Content;
+using Din.Tests.Fixtures;
+using Din.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Newtonsoft.Json;
+using TMDbLib.Objects.Search;
+using Xunit;
+
+namespace Din.Tests.Controllers
+{
+    public class TvShowControllerTest : IClassFixture<TvShowFixture>
+    {
+        private readonly TvShowFixture _fixture;
+
+        public TvShowControllerTest(TvShowFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
+        [Fact]
+        public void SearchTvShowAsync()
+        {
+            const string query = "TvShowTitle";
+            var tvShowDto = new TvShowDTO
+            {
+                CurrentTvShowCollection = new List<string>
+                {
+                    "True Detective"
+                },
+                QueryCollection = new List<SearchTv>()
+            };
+            _fixture.MockService.Setup(_ => _.SearchTvShowAsync(query)).ReturnsAsync(tvShowDto);
+            var controller = new TvShowController(_fixture.MockService.Object, _fixture.Mapper);
+
+            var result = controller.SearchTvShowAsync(query);
+
+            var viewResult = Assert.IsType<PartialViewResult>(result.Result);
+            Assert.IsType<TvShowResultsViewModel>(viewResult.Model);
+        }
+
+        [Fact]
+        public void AddTvShowAsyncTest()
+        {
+            var tvShowToAdd = new SearchTv
+            {
+                Name = "TvShowTitle"
+            };
+            var resultDto = new ResultDTO
+            {
+                Title = "Success"
+            };
+            _fixture.MockService.Setup(_ => _.AddTvShowAsync(tvShowToAdd, Convert.ToInt32(TestConsts.Id)))
+                .ReturnsAsync(resultDto);
+
+            var controller = new TvShowController(_fixture.MockService.Object, _fixture.Mapper)
+            {
+                ControllerContext = _fixture.ControllerContextWithSession()
+            };
+
+            var result = controller.AddTvShowAsync(JsonConvert.SerializeObject(tvShowToAdd));
+
+            var viewResult = Assert.IsType<PartialViewResult>(result.Result);
+            //Assert.IsType<ResultViewModel>(viewResult.Model);
+        }
+    }
+}

@@ -1,12 +1,10 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
-using Din.Service.DTO.Content;
+using Din.Service.Mappers.Interfaces;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using StackExchange.Redis;
 using TMDbLib.Objects.Search;
 
 namespace Din.Controllers
@@ -14,19 +12,21 @@ namespace Din.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieService _service;
+        private readonly IViewModelMapper _mapper;
 
-        public MovieController(IMovieService service)
+        public MovieController(IMovieService service, IViewModelMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpPost, Authorize]
         public async Task<IActionResult> SearchMovieAsync(string query)
         {
-            if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
+            if (string.IsNullOrEmpty(query)) return BadRequest();
 
             return PartialView("~/Views/Main/Partials/_MovieResults.cshtml",
-                      Mapper.Map<MovieResultsViewModel>(await _service.SearchMovieAsync(query)));
+                      _mapper.Instance.Map<MovieResultsViewModel>(await _service.SearchMovieAsync(query)));
         }
 
         [HttpPost, Authorize]
@@ -38,10 +38,8 @@ namespace Din.Controllers
 
                 if (movie == null) return RedirectToAction("Index", "StatusCode", 500);
 
-
-
                 return PartialView("~/Views/Main/Partials/_Result.cshtml",
-                    Mapper.Map<ResultViewModel>(await _service.AddMovieAsync(movie, GetCurrentSessionId())));
+                   _mapper.Instance.Map<ResultViewModel>(await _service.AddMovieAsync(movie, GetCurrentSessionId())));
             }
             catch
             {

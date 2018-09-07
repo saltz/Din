@@ -21,12 +21,12 @@ namespace Din.Service.Clients.Concrete
         public async Task<LoginLocationDTO> GetLocation(string ip)
         {
             var client = _httpClientFactory.CreateClient();
-            return JsonConvert.DeserializeObject<LoginLocationDTO>(await client.GetStringAsync(BuildUrl(new[] {ip})));
+            return JsonConvert.DeserializeObject<LoginLocationDTO>(await client.GetStringAsync(BuildUrl(new[] {_config.Url, ip, _config.Key})));
         }
 
         protected override string BuildUrl(string[] parameters)
         {
-            return $"{_config.Url}{parameters[0]}?access_key={_config.Key}";
+            return $"{parameters[0]}{parameters[1]}?access_key={parameters[2]}";
         }
     }
 }

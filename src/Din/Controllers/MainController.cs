@@ -9,12 +9,20 @@ namespace Din.Controllers
 {
     public class MainController : BaseController
     {
+        #region injections
+
         private readonly IMediaService _service;
+
+        #endregion injections
+
+        #region constructors
 
         public MainController(IMediaService service)
         {
             _service = service;
         }
+
+        #endregion constructors
 
         #region endpoints
 

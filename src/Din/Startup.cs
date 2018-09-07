@@ -9,6 +9,8 @@ using Din.Service.Config.Interfaces;
 using Din.Service.DTO;
 using Din.Service.DTO.Content;
 using Din.Service.DTO.Context;
+using Din.Service.Mappers.Concrete;
+using Din.Service.Mappers.Interfaces;
 using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
@@ -20,7 +22,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using StackExchange.Redis;
 
 namespace Din
 {
@@ -78,6 +79,7 @@ namespace Din
 
             //Inject Services
             services.AddSingleton<IMediaService, MediaService>();
+
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<ITvShowService, TvShowService>();
@@ -92,16 +94,22 @@ namespace Din
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
 
-            //Initialize Mapper
-            Mapper.Initialize(cfg =>
+            //Initialize Mapper Configurations
+            services.AddSingleton<IEntityMapper>(new EntityMapper(new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<UserEntity, UserDTO>();
+                cfg.CreateMap<AccountEntity, AccountDTO>();
+                cfg.CreateMap<AddedContentEntity, AddedContentDTO>();
+                cfg.CreateMap<LoginAttemptEntity, LoginAttemptDTO>();
+                cfg.CreateMap<LoginLocationEntity, LoginLocationDTO>();
+                cfg.CreateMap<LoginLocationDTO, LoginLocationEntity>();
+            })));
+            services.AddSingleton<IViewModelMapper>(new ViewModelMapper(new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<MovieResultsViewModel, MovieDTO>();
                 cfg.CreateMap<TvShowResultsViewModel, TvShowDTO>();
                 cfg.CreateMap<ResultViewModel, ResultDTO>();
-                cfg.CreateMap<UserEntity, UserDTO>();
-                cfg.CreateMap<AccountEntity, AccountDTO>();
-                cfg.CreateMap<AddedContentEntity, AddedContentDTO>();
-            });
+            })));
         }
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,7 +127,7 @@ namespace Din
                 routes.MapRoute("Login", "",
                     defaults: new {controller = "Authentication", action = "LoginAsync"});
                 routes.MapRoute("Logout", "Logout",
-                    defaults: new {controller = "Authentication", action = "LogoutAsync"});
+                    defaults: new {controller = "Main", action = "Exit"});
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");

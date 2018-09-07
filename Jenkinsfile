@@ -17,10 +17,13 @@ node {
             docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                 if (branch == 'master') {
                   app.push("latest")
+                  echo 'latest release'
                 } else if (branch == 'dev') {
                   app.push("nightly")
+                  echo 'nightly release'
                 }
             }
         }
     }
+    echo 'Everything went smoothly :)'
 }

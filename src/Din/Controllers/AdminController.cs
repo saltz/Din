@@ -5,9 +5,9 @@ namespace Din.Controllers
 {
     public class AdminController : BaseController
     {
-        #region fields
+        #region injections
 
-        #endregion fields
+        #endregion injections
 
         #region constructors
 
