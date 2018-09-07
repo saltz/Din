@@ -1,19 +1,13 @@
 ﻿using AutoMapper;
 using Din.Config;
 using Din.Data;
-using Din.Data.Entities;
+using Din.MapperProfiles;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
 using Din.Service.Config.Interfaces;
-using Din.Service.DTO;
-using Din.Service.DTO.Content;
-using Din.Service.DTO.Context;
-using Din.Service.Mappers.Concrete;
-using Din.Service.Mappers.Interfaces;
 using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
-using Din.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -79,7 +73,6 @@ namespace Din
 
             //Inject Services
             services.AddSingleton<IMediaService, MediaService>();
-
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<ITvShowService, TvShowService>();
@@ -94,22 +87,15 @@ namespace Din
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
 
-            //Initialize Mapper Configurations
-            services.AddSingleton<IEntityMapper>(new EntityMapper(new MapperConfiguration(cfg =>
+            //Initialize Mapper Profiles
+            var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UserEntity, UserDTO>();
-                cfg.CreateMap<AccountEntity, AccountDTO>();
-                cfg.CreateMap<AddedContentEntity, AddedContentDTO>();
-                cfg.CreateMap<LoginAttemptEntity, LoginAttemptDTO>();
-                cfg.CreateMap<LoginLocationEntity, LoginLocationDTO>();
-                cfg.CreateMap<LoginLocationDTO, LoginLocationEntity>();
-            })));
-            services.AddSingleton<IViewModelMapper>(new ViewModelMapper(new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<MovieResultsViewModel, MovieDTO>();
-                cfg.CreateMap<TvShowResultsViewModel, TvShowDTO>();
-                cfg.CreateMap<ResultViewModel, ResultDTO>();
-            })));
+                cfg.AddProfile(new ViewModelProfile());
+                cfg.AddProfile(new EntityProfile());
+                cfg.AddProfile(new DtoProfile());
+            }));
+
+            services.AddSingleton<IMapper>(mapper);
         }
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

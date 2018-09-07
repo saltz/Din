@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Din.Service.Mappers.Interfaces;
+using AutoMapper;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,9 +12,9 @@ namespace Din.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieService _service;
-        private readonly IViewModelMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public MovieController(IMovieService service, IViewModelMapper mapper)
+        public MovieController(IMovieService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace Din.Controllers
             if (string.IsNullOrEmpty(query)) return BadRequest();
 
             return PartialView("~/Views/Main/Partials/_MovieResults.cshtml",
-                      _mapper.Instance.Map<MovieResultsViewModel>(await _service.SearchMovieAsync(query)));
+                      _mapper.Map<MovieResultsViewModel>(await _service.SearchMovieAsync(query)));
         }
 
         [HttpPost, Authorize]
@@ -39,7 +39,7 @@ namespace Din.Controllers
                 if (movie == null) return RedirectToAction("Index", "StatusCode", 500);
 
                 return PartialView("~/Views/Main/Partials/_Result.cshtml",
-                   _mapper.Instance.Map<ResultViewModel>(await _service.AddMovieAsync(movie, GetCurrentSessionId())));
+                   _mapper.Map<ResultViewModel>(await _service.AddMovieAsync(movie, GetCurrentSessionId())));
             }
             catch
             {

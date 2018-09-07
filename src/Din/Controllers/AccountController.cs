@@ -1,13 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
-using Din.Service.Mappers.Interfaces;
+using AutoMapper;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using UAParser;
+using Microsoft.AspNetCore.Mvc;using UAParser;
+
 
 namespace Din.Controllers
 {
@@ -16,13 +15,13 @@ namespace Din.Controllers
         #region injections
 
         private readonly IAccountService _service;
-        private readonly IViewModelMapper _mapper;
+        private readonly IMapper _mapper;
 
         #endregion injections
 
         #region constructors
 
-        public AccountController(IAccountService service, IViewModelMapper mapper)
+        public AccountController(IAccountService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;

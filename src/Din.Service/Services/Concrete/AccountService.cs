@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
 using Din.Service.DTO;
 using Din.Service.DTO.Account;
 using Din.Service.DTO.Context;
-using Din.Service.Mappers.Interfaces;
 using Din.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,9 +17,9 @@ namespace Din.Service.Services.Concrete
     public class AccountService : IAccountService
     {
         private readonly DinContext _context;
-        private readonly IEntityMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public AccountService(DinContext context, IEntityMapper mapper)
+        public AccountService(DinContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -29,9 +29,9 @@ namespace Din.Service.Services.Concrete
         {
             return new DataDTO
             {
-                User = _mapper.Instance.Map<UserDTO>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
-                Account = _mapper.Instance.Map<AccountDTO>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
-                AddedContent = _mapper.Instance.Map<IEnumerable<AddedContentDTO>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
+                User = _mapper.Map<UserDTO>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
+                Account = _mapper.Map<AccountDTO>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
+                AddedContent = _mapper.Map<IEnumerable<AddedContentDTO>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
             };
         }
 
