@@ -46,24 +46,20 @@ namespace Din.Tests.Controllers
         [Fact]
         public void AddMovieAsyncTest()
         {
-            var movieToAdd = new SearchMovie
-            {
-                Title = "MovieTitle"
-            };
             var resultDto = new ResultDTO
             {
                 Title = "Success"
             };
-            _fixture.MockService.Setup(_ => _.AddMovieAsync(movieToAdd, Convert.ToInt32(TestConsts.Id))).ReturnsAsync(resultDto);
+            _fixture.MockService.Setup(_ => _.AddMovieAsync(It.IsAny<SearchMovie>(), Convert.ToInt32(TestConsts.Id))).ReturnsAsync(resultDto);
             var controller = new MovieController(_fixture.MockService.Object, _fixture.Mapper)
             {
                 ControllerContext = _fixture.ControllerContextWithSession()
             };
 
-            var result = controller.AddMovieAsync(JsonConvert.SerializeObject(movieToAdd));
+            var result = controller.AddMovieAsync(JsonConvert.SerializeObject(new SearchMovie()));
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
-            //Assert.IsType<ResultViewModel>(viewResult.Model); //TODO no clue why it returns null
+            Assert.IsType<ResultViewModel>(viewResult.Model);
         }
     }
 }

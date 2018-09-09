@@ -46,15 +46,11 @@ namespace Din.Tests.Controllers
         [Fact]
         public void AddTvShowAsyncTest()
         {
-            var tvShowToAdd = new SearchTv
-            {
-                Name = "TvShowTitle"
-            };
             var resultDto = new ResultDTO
             {
                 Title = "Success"
             };
-            _fixture.MockService.Setup(_ => _.AddTvShowAsync(tvShowToAdd, Convert.ToInt32(TestConsts.Id)))
+            _fixture.MockService.Setup(_ => _.AddTvShowAsync(It.IsAny<SearchTv>(), Convert.ToInt32(TestConsts.Id)))
                 .ReturnsAsync(resultDto);
 
             var controller = new TvShowController(_fixture.MockService.Object, _fixture.Mapper)
@@ -62,10 +58,10 @@ namespace Din.Tests.Controllers
                 ControllerContext = _fixture.ControllerContextWithSession()
             };
 
-            var result = controller.AddTvShowAsync(JsonConvert.SerializeObject(tvShowToAdd));
+            var result = controller.AddTvShowAsync(JsonConvert.SerializeObject(new SearchTv()));
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
-            //Assert.IsType<ResultViewModel>(viewResult.Model);
+            Assert.IsType<ResultViewModel>(viewResult.Model);
         }
     }
 }
