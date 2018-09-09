@@ -13,6 +13,7 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Service.Services.Concrete
 {
+    /// <inheritdoc cref="IMovieService" />
     public class MovieService : ContentService, IMovieService
     {
         private readonly IMovieClient _movieClient;
@@ -66,7 +67,7 @@ namespace Din.Service.Services.Concrete
                 {
                     Title = "Movie Added Successfully",
                     TitleColor = "#00d77c",
-                    Message = "The Movie has been added 🤩   You can track the progress under your account profile tab."
+                    Message = "The Movie has been added 🤩<br>You can track the progress under your account profile tab."
                 };
             }
             else

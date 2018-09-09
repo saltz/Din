@@ -25,7 +25,7 @@
 
     /* Home Menu elements */
 
-    $('.account-btn').click(function (e) {
+    $('.account-btn').click(function(e) {
         showLoader();
         e.preventDefault();
         e.stopPropagation();
@@ -33,7 +33,7 @@
             url: '/Account/GetUserViewAsync',
             type: 'GET',
             success: function(view) {
-                $('div.ajax-div').replaceWith(function () {
+                $('div.ajax-div').replaceWith(function() {
                     hideLoader();
                     return $(view).hide().fadeIn();
                 });
@@ -50,65 +50,69 @@
     /* TEMP Launch Client */
 
     $('#launch-client').click(function() {
-        window.location.href = 'https://plex.tv';
+        window.location.href = 'https://app.plex.tv';
     });
 
     /* Search Movie */
 
     $('#search-movie-form').submit(function (e) {
-        if (e.val() === "") {
-            //TODO
-            $('.search-movie').addClass('wrong-entry');
-            $('.alert').fadeIn(500);
-            setTimeout("$('.alert').fadeOut(1500);", 3000);
-        }
-        showLoader();
         e.preventDefault();
         e.stopPropagation();
-        var data = {
-            query: $('.search-movie').val()
-        };
-        $.ajax({
-            url: '/Movie/SearchMovieAsync',
-            type: 'POST',
-            data: data,
-            success: function(view) {
-                hideLoader();
-                $('div.ajax-div').replaceWith(view);
-                $('#add-movie').modal('hide');
-                $('.ajax-div').modal('show');
-                $('.search-movie').val("");
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+        if ($('.search-movie').val() === "") {
+            $('.alert').fadeIn(500);
+            setTimeout("$('.alert').fadeOut(1500);", 3000);
+        } else {
+            showLoader();
+            var data = {
+                query: $('.search-movie').val()
+            };
+            $.ajax({
+                url: '/Movie/SearchMovieAsync',
+                type: 'POST',
+                data: data,
+                success: function(view) {
+                    hideLoader();
+                    $('div.ajax-div').replaceWith(view);
+                    $('#add-movie').modal('hide');
+                    $('.ajax-div').modal('show');
+                    $('.search-movie').val("");
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
     });
 
     /* Search TvShow */
 
     $('#search-show-form').submit(function(e) {
-        showLoader();
         e.preventDefault();
         e.stopPropagation();
-        var data = {
-            query: $('.search-show').val()
-        };
-        $.ajax({
-            url: '/TvShow/SearchTvShowAsync',
-            type: 'POST',
-            data: data,
-            success: function(view) {
-                hideLoader();
-                $('div.ajax-div').replaceWith(view);
-                $('#add-tvshow').modal('hide');
-                $('.ajax-div').modal('show');
-                $('.search-show').val("");
-            },
-            error: function() {
-                console.log("error");
-            }
-        });
+        if ($('.search-show').val() === "") {
+            $('.alert').fadeIn(500);
+            setTimeout("$('.alert').fadeOut(1500);", 3000);
+        } else {
+            showLoader();
+            var data = {
+                query: $('.search-show').val()
+            };
+            $.ajax({
+                url: '/TvShow/SearchTvShowAsync',
+                type: 'POST',
+                data: data,
+                success: function(view) {
+                    hideLoader();
+                    $('div.ajax-div').replaceWith(view);
+                    $('#add-tvshow').modal('hide');
+                    $('.ajax-div').modal('show');
+                    $('.search-show').val("");
+                },
+                error: function() {
+                    console.log("error");
+                }
+            });
+        }
     });
 });
 

@@ -13,7 +13,7 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Service.Services.Concrete
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ITvShowService" />
     public class TvShowService : ContentService, ITvShowService
     {
         private readonly ITvShowClient _tvShowClient;
@@ -61,7 +61,7 @@ namespace Din.Service.Services.Concrete
                 {
                     Title = "Tv Show Added Successfully",
                     TitleColor = "#00d77c",
-                    Message = "The Movie has been added 🤩 You can track the progress under your account profile tab."
+                    Message = "The Movie has been added 🤩<br>You can track the progress under your account profile tab."
                 };
             }
             else
