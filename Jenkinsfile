@@ -5,24 +5,30 @@ node {
     stage('Clone repository') {
         checkout scm
         branch = env.BRANCH_NAME
+        echo 'Successful clone'
     }
 
     stage('Build image') {
         app = docker.build("saltz/din")
+        echo 'Successful build'
     }
 
     stage('Push image') {
         if(branch == 'master' || branch == 'dev') {
-            echo 'image will be pushed to dockerhub'
+            echo 'This is a release build'
             docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                 if (branch == 'master') {
                   app.push("latest")
-                  app.push("${env.BUILD_NUMBER}-latest-build")
+                  echo 'latest release'
                 } else if (branch == 'dev') {
                   app.push("nightly")
-                  app.push("${env.BUILD_NUMBER}-nightly-build")
+                  echo 'nightly release'
                 }
             }
         }
+        else {
+          echo 'This build will not be released'
+        }
     }
+    echo 'Everything went smoothly :)'
 }

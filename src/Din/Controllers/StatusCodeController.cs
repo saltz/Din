@@ -1,20 +1,21 @@
-﻿using Din.Service.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Din.Service.Services.Interfaces;
+using Din.ViewModels;
 
 namespace Din.Controllers
 {
     public class StatusCodeController : BaseController
     {
-        #region fields
+        #region injections
 
         private readonly ILogger<MainController> _logger;
         private readonly IStatusCodeService _service;
 
-        #endregion fields
+        #endregion injections
 
         #region constructors
 
@@ -34,7 +35,8 @@ namespace Din.Controllers
         {
             var reExecute = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
             _logger.LogInformation($"Unexpected Status Code: {statusCode}, OriginalPath: {reExecute.OriginalPath}");
-            return View(await _service.GenerateDataToDisplayAsync(statusCode));
+
+            return View(new StatusCodeViewModel {Data = await _service.GenerateDataToDisplayAsync(statusCode)});
         }
 
         #endregion endpoints

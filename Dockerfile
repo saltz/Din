@@ -7,7 +7,6 @@ RUN apt-get update \
 
 # Copy csproj and restore as distinct layers
 COPY src/Din/*.csproj ./Din/
-COPY src/Din.ExternalModels/*.csproj ./Din.ExternalModels/
 COPY src/Din.Data/*.csproj ./Din.Data/
 COPY src/Din.Service/*.csproj ./Din.Service/
 COPY src/Din.Tests/*.csproj ./Din.Tests/
@@ -17,6 +16,9 @@ RUN dotnet restore ./
 
 # Copy everything else
 COPY src/ ./
+
+# Run Tests
+RUN dotnet test ./Din.Tests/
 
 # Restore npm packages
 WORKDIR ./Din

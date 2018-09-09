@@ -1,7 +1,7 @@
 language: csharp
 sudo: required
 mono: none
-dotnet: 2.1
+dotnet: 2.1.400
 solution: src/Din.sln
 os:
   - linux

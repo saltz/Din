@@ -1,9 +1,8 @@
 ﻿@using Newtonsoft.Json
-@using Din.ExternalModels.ViewModels
 
-@model TvShowResultsViewModel
+@model Din.ViewModels.TvShowResultsViewModel
 
-@if (Model.QueryResult.Count.Equals(0))
+@if (Model.QueryCollection.Count.Equals(0))
 {
     <div id="search-results-failed" class="modal fade ajax-div" role="dialog">
         <div class="modal-dialog">
@@ -26,7 +25,7 @@ else
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="card-frame">
-                        @foreach (var show in Model.QueryResult)
+                        @foreach (var show in Model.QueryCollection)
                         {
                             var date = Convert.ToDateTime(show.FirstAirDate).Year;
                             var posterPath = "https://image.tmdb.org/t/p/w185_and_h278_bestv2" + show.PosterPath;
@@ -63,7 +62,7 @@ else
                                     </p>
                                     <div class="add-button">
                                         @{
-                                            if (Model.CurrentTtileList.Contains(show.Name.ToLower()))
+                                            if (Model.CurrentTvShowCollection.Contains(show.Name.ToLower()))
                                             {
                                                 <button disabled type="button" class="btn btn-default">Already Exists</button>
                                             }
