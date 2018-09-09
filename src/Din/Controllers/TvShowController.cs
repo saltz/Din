@@ -12,10 +12,12 @@ namespace Din.Controllers
     public class TvShowController : BaseController
     {
         private readonly ITvShowService _service;
+        private readonly IMapper _mapper;
 
-        public TvShowController(ITvShowService service)
+        public TvShowController(ITvShowService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpPost, Authorize]
@@ -24,7 +26,7 @@ namespace Din.Controllers
             if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
 
             return PartialView("~/Views/Main/Partials/_TvShowResults.cshtml",
-                Mapper.Map<TvShowResultsViewModel>(await _service.SearchTvShowAsync(query)));
+                _mapper.Map<TvShowResultsViewModel>(await _service.SearchTvShowAsync(query)));
         }
 
         [HttpPost, Authorize]
@@ -37,7 +39,7 @@ namespace Din.Controllers
                 if (tvShow == null) return RedirectToAction("Index", "StatusCode", 500);
 
                 return PartialView("~/Views/main/Partials/_Result.cshtml",
-                    Mapper.Map<ResultViewModel>(await _service.AddTvShowAsync(tvShow, GetCurrentSessionId())));
+                    _mapper.Map<ResultViewModel>(await _service.AddTvShowAsync(tvShow, GetCurrentSessionId())));
             }
             catch
             {

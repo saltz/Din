@@ -10,11 +10,11 @@ namespace Din.Controllers
 {
     public class AuthenticationController : BaseController
     {
-        #region fields
+        #region injections
 
         private readonly IAuthService _service;
 
-        #endregion fields
+        #endregion injections
 
         #region constructors
 

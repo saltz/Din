@@ -1,29 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using Din.Controllers;
-using Din.Data.Entities;
+﻿using Din.Controllers;
 using Din.Service.DTO;
-using Din.Service.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Din.Tests.Fixtures;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
 namespace Din.Tests.Controllers
 {
-    public class MainControllerTest
+    public class MainControllerTest : IClassFixture<MainFixture>
     {
+        private readonly MainFixture _fixture;
+
+        public MainControllerTest(MainFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public void IndexUnAuthenticatedTest()
         {
-            var mockService = new Mock<IMediaService>();
-
-            var controller = new MainController(mockService.Object)
+            var controller = new MainController(_fixture.MockService.Object)
             {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = new DefaultHttpContext()
-                }
+                ControllerContext = _fixture.DefaultControllerContext()
             };
 
             var result = controller.Index();
@@ -35,30 +33,12 @@ namespace Din.Tests.Controllers
         [Fact]
         public void IndexAuthenticatedTest()
         {
-            var mockService = new Mock<IMediaService>();
-            mockService.Setup(service => service.GenerateBackgroundImages()).ReturnsAsync(new MediaDTO());
+            _fixture.MockService.Setup(service => service.GenerateBackgroundImages()).ReturnsAsync(new MediaDTO());
 
-            var controller = new MainController(mockService.Object)
+            var controller = new MainController(_fixture.MockService.Object)
             {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = new DefaultHttpContext()
-                }
+                ControllerContext = _fixture.ControllerContextWithSession()
             };
-
-            var account = new AccountEntity()
-            {
-                ID = 1,
-                Role = AccountRoll.User
-            };
-
-            //Fake SignInAsync method from HttpContext
-            controller.ControllerContext.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(
-                new List<Claim>
-                {
-                    new Claim("ID", account.ID.ToString()),
-                    new Claim(ClaimTypes.Role, account.Role.ToString())
-                }, "login"));
 
             var result = controller.Index();
 

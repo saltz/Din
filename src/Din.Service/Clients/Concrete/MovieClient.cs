@@ -42,7 +42,7 @@ namespace Din.Service.Clients.Concrete
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
-        protected override string BuildUrl(string[] parameters)
+        protected override string BuildUrl(params string[] parameters)
         {
             return $"{parameters[0]}{parameters[1]}?apikey={parameters[2]}";
         }

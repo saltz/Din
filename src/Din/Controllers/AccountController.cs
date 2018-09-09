@@ -1,29 +1,30 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using UAParser;
+using Microsoft.AspNetCore.Mvc;using UAParser;
+
 
 namespace Din.Controllers
 {
     public class AccountController : BaseController
     {
-        #region fields
+        #region injections
 
         private readonly IAccountService _service;
+        private readonly IMapper _mapper;
 
-        #endregion fields
+        #endregion injections
 
         #region constructors
 
-        public AccountController(IAccountService service)
+        public AccountController(IAccountService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         #endregion constructors
@@ -45,11 +46,7 @@ namespace Din.Controllers
         [Authorize, HttpPost]
         public async Task<IActionResult> UploadAccountImageAsync(IFormFile file)
         {
-            var ms = new MemoryStream();
-            await file.OpenReadStream().CopyToAsync(ms);
-
-            return PartialView("~/Views/Main/Partials/_Result.cshtml", Mapper.Map<ResultViewModel>(
-                await _service.UploadAccountImageAsync(GetCurrentSessionId(), file.Name, ms.ToArray())));
+            throw new NotImplementedException();
         }
 
         [Authorize, HttpGet]

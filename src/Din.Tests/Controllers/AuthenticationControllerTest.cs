@@ -52,8 +52,8 @@ namespace Din.Tests.Controllers
                 }
             };
 
-            controller.ControllerContext.HttpContext.Request.Headers["User-Agent"] = Consts.UserAgent;
-            controller.ControllerContext.HttpContext.Request.Headers["X-Real-IP"] = Consts.PublicIp;
+            controller.ControllerContext.HttpContext.Request.Headers["User-Agent"] = TestConsts.UserAgent;
+            controller.ControllerContext.HttpContext.Request.Headers["X-Real-IP"] = TestConsts.PublicIp;
 
             var result = controller.LoginAsync("username", "password");
 

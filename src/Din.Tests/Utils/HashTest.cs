@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 
 namespace Din.Tests.Utils
 {
@@ -10,13 +8,12 @@ namespace Din.Tests.Utils
         [Fact]
         public void HashTestSimpleString()
         {
-            const string plainText = "test";
-
-            var hashed = BCrypt.Net.BCrypt.HashPassword(plainText);
+            var hashed = BCrypt.Net.BCrypt.HashPassword(TestConsts.Password);
 
             Assert.NotNull(hashed);
             Assert.NotEmpty(hashed);
-            Assert.True(BCrypt.Net.BCrypt.Verify(plainText, hashed));
+            Assert.NotEqual(TestConsts.Password, hashed);
+            Assert.True(BCrypt.Net.BCrypt.Verify(TestConsts.Password, hashed));
         }
     }
 }

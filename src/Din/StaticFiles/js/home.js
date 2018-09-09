@@ -55,7 +55,13 @@
 
     /* Search Movie */
 
-    $('#search-movie-form').submit(function(e) {
+    $('#search-movie-form').submit(function (e) {
+        if (e.val() === "") {
+            //TODO
+            $('.search-movie').addClass('wrong-entry');
+            $('.alert').fadeIn(500);
+            setTimeout("$('.alert').fadeOut(1500);", 3000);
+        }
         showLoader();
         e.preventDefault();
         e.stopPropagation();

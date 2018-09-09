@@ -19,6 +19,8 @@ namespace Din.Service.Services.Concrete
 
         public MediaService(IGiphyClient giphyClient, IUnsplashClient unsplashClient)
         {
+            //TODO Tuple<> and new way of dealing with tuples in c# 7+
+
             _giphyClient = giphyClient;
             _unsplashClient = unsplashClient;
             _creationDate = DateTime.Now;

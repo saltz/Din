@@ -17,6 +17,9 @@ RUN dotnet restore ./
 # Copy everything else
 COPY src/ ./
 
+# Run Tests
+RUN dotnet test ./Din.Tests/
+
 # Restore npm packages
 WORKDIR ./Din
 RUN npm i

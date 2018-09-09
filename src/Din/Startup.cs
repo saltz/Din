@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
 using Din.Config;
 using Din.Data;
-using Din.Data.Entities;
+using Din.MapperProfiles;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
 using Din.Service.Config.Interfaces;
-using Din.Service.DTO;
-using Din.Service.DTO.Content;
-using Din.Service.DTO.Context;
 using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
-using Din.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using StackExchange.Redis;
 
 namespace Din
 {
@@ -92,16 +87,15 @@ namespace Din
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
 
-            //Initialize Mapper
-            Mapper.Initialize(cfg =>
+            //Initialize Mapper Profiles
+            var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<MovieResultsViewModel, MovieDTO>();
-                cfg.CreateMap<TvShowResultsViewModel, TvShowDTO>();
-                cfg.CreateMap<ResultViewModel, ResultDTO>();
-                cfg.CreateMap<UserEntity, UserDTO>();
-                cfg.CreateMap<AccountEntity, AccountDTO>();
-                cfg.CreateMap<AddedContentEntity, AddedContentDTO>();
-            });
+                cfg.AddProfile(new ViewModelProfile());
+                cfg.AddProfile(new EntityProfile());
+                cfg.AddProfile(new DtoProfile());
+            }));
+
+            services.AddSingleton<IMapper>(mapper);
         }
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,7 +113,7 @@ namespace Din
                 routes.MapRoute("Login", "",
                     defaults: new {controller = "Authentication", action = "LoginAsync"});
                 routes.MapRoute("Logout", "Logout",
-                    defaults: new {controller = "Authentication", action = "LogoutAsync"});
+                    defaults: new {controller = "Main", action = "Exit"});
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
