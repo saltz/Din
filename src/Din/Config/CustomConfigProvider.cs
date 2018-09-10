@@ -28,7 +28,7 @@ namespace Din.Config
             IDictionary<string, string> unEncryptedCollection = new Dictionary<string, string>();
             JObject rawJObject;
 
-            using (var sr =  new StreamReader("appsettings-encrypted.json"))
+            using (var sr =  new StreamReader($"appsettings-{Environment.GetEnvironmentVariable("ENV")}.json"))
             {
                 rawJObject = JsonConvert.DeserializeObject<JObject>(EncryptProvider.AESDecrypt(sr.ReadToEnd(),
                     Environment.GetEnvironmentVariable("AES_KEY"), Environment.GetEnvironmentVariable("AES_IV")));

@@ -27,8 +27,7 @@ namespace Din
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .AddEncryptedProvider()
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddEncryptedProvider();
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
