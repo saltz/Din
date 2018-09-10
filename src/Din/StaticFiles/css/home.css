@@ -142,6 +142,8 @@
 
 .modal-body p { color: white; }
 
+#modal-message {white-space: pre-line}
+
 .modal-body #search {
     width: 100%;
     height: 50px;
