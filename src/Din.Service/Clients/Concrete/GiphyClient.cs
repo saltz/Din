@@ -23,12 +23,12 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
 
             return JsonConvert.DeserializeObject<GiphyResponse>(await client
-                .GetStringAsync(BuildUrl(new[] {_config.Url, _config.Key, tag.ToString().ToLower()})));
+                .GetStringAsync(BuildUrl(_config.Url, _config.Key, tag.ToString().ToLower())));
         }
 
-        protected override string BuildUrl(string[] parameters)
+        protected override string BuildUrl(params string[] p)
         {
-            return $"{parameters[0]}?api_key={parameters[1]}&tag={parameters[2]}&rating=G";
+            return $"{p[0]}?api_key={p[1]}&tag={p[2]}&rating=G";
         }
     }
 

@@ -1,14 +1,7 @@
 ﻿using System;
 
 namespace Din.Service.Utils
-{
-    public class DatabaseException : Exception
-    {
-        public DatabaseException(string message) : base(message)
-        {
-        }
-    }
-    
+{ 
     public class DownloadClientException : Exception
     {
         public DownloadClientException(string message) : base(message)
@@ -18,8 +11,10 @@ namespace Din.Service.Utils
     
     public class LoginException : Exception
     {
-        public LoginException(string message) : base(message)
+        public int Identifier { get; set; }
+        public LoginException(string message, int id) : base(message)
         {
+            Identifier = id;
         }
     }
 }
