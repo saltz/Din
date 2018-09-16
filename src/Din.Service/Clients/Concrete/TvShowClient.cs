@@ -28,7 +28,7 @@ namespace Din.Service.Clients.Concrete
 
             var response = JsonConvert.DeserializeObject<List<TCTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
 
-            return response.Select(r => r.Title).AsEnumerable();
+            return response.Select(r => r.Title.ToLower()).AsEnumerable();
         }
 
         public async Task<bool> AddTvShowAsync(TCRequest tvShow)
