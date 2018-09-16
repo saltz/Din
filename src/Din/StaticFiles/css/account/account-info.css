@@ -1,0 +1,195 @@
+﻿.statistic-block {
+    width: 100%;
+    position: relative;
+    background: rgba(49, 70, 89, .6);
+    margin-bottom: 5%;
+    box-shadow: 10px 10px 7px rgba(41, 57, 73, 0.9);
+}
+
+    .statistic-block .color-bar {
+        position: absolute;
+        top: 4%;
+        left: 1%;
+        width: 6px;
+        height: 92%;
+        background: linear-gradient(#ffc041, #ff8d1c);
+        border-radius: 20px;
+    }
+
+    .statistic-block h4 {
+        text-align: center;
+        color: #d0d2d5;
+        margin-top: 2%;
+    }
+
+.statistic-item {
+    width: 40%;
+    float: left;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+    .statistic-item .fas {
+        font-size: 70px;
+        color: #ffa82f;
+    }
+
+    .statistic-item p {
+        margin: 0;
+        color: #d0d2d5;
+    }
+
+.management-block {
+    width: 100%;
+    position: relative;
+    background: rgba(49, 70, 89, .6);
+    margin-bottom: 5%;
+    box-shadow: 10px 10px 7px rgba(41, 57, 73, 0.9);
+}
+
+    .management-block h4 {
+        text-align: center;
+        color: #d0d2d5;
+        margin-top: 2%;
+    }
+
+    .management-block .color-bar {
+        position: absolute;
+        top: 4%;
+        left: 1%;
+        width: 6px;
+        height: 92%;
+        background: linear-gradient(#3788ce, #115691);
+        border-radius: 20px;
+    }
+
+.management-item {
+    width: 45%;
+    float: left;
+    margin-left: 5%;
+}
+
+    .management-item p {
+        display: block;
+        margin: 10% auto;
+        text-align: center;
+        color: #d0d2d5;
+    }
+
+    .management-item input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #236eae;
+        text-align: center;
+        display: block;
+        margin: 10% auto 10% auto;
+        color: #d0d2d5;
+    }
+
+    .management-item button {
+        display: block;
+        margin: 5% auto 5% auto;
+        padding: 10px;
+        border: 1px solid #236eae !important;
+        background: none;
+        border-radius: 4px;
+        text-align: center;
+        width: 60%;
+        color: #d0d2d5;
+    }
+
+        .management-item button:hover {
+            cursor: pointer;
+            color: #236eae;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(35, 110, 174, 0.6);
+        }
+
+        .management-item button:disabled {
+            border: 1px solid #7a7e84 !important;
+        }
+
+            .management-item button:disabled:hover {
+                cursor: not-allowed;
+                color: #d0d2d5;
+                box-shadow: none;
+            }
+
+.main-information-block {
+    position: relative;
+    margin-left: 5%;
+    width: 100%;
+    background: rgba(49, 70, 89, .6);
+    box-shadow: 10px 10px 7px rgba(41, 57, 73, 0.9);
+}
+
+    .main-information-block .color-bar {
+        position: absolute;
+        top: 2%;
+        left: 0.5%;
+        width: 6px;
+        height: 96%;
+        background: linear-gradient(#00d77c, #0b9158);
+        border-radius: 20px;
+    }
+
+.section-seperator {
+    position: absolute;
+    top: 4%;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 92%;
+    background: rgba(41,57,73,.9);
+    border-radius: 20px;
+}
+
+
+.main-information-section {
+    width: 45%;
+    float: left;
+    margin-left: 5%;
+}
+
+    .main-information-section form {
+        width: 95%;
+        margin-left: 5%;
+    }
+
+    .main-information-section h3 {
+        text-align: center;
+        color: #d0d2d5;
+        margin-top: 2%;
+    }
+
+.section-item label {
+    width: 30%;
+    padding: 2% 0 2% 0;
+    color: #d0d2d5;
+}
+
+.section-item input {
+    color: #d0d2d5;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #06b269;
+}
+
+    .section-item input:disabled {
+        color: #aeb2b7;
+        border-bottom: 2px solid #7a7e84;
+    }
+
+.section-btn {
+    background: transparent;
+    border: 1px solid rgba(6, 178, 105, .6);
+    padding: 10px;
+    border-radius: 4px;
+    color: #d0d2d5;
+    margin: 5% auto;
+    display: block;
+}
+
+    .section-btn:hover {
+        cursor: pointer;
+        color: rgba(6, 178, 105, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(6, 178, 105, 0.4);
+    }
