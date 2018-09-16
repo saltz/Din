@@ -113,10 +113,5 @@ namespace Din.Service.Clients.Concrete
             }
             */
         }
-
-        protected override string BuildUrl(string[] parameters)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

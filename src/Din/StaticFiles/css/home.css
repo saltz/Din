@@ -21,6 +21,37 @@
 
 .header { height: 1px; }
 
+.donate-container {
+    position: absolute;
+    left: 2%;
+    top: 2%;
+    padding: 20px;
+}
+
+    .donate-container:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+        .donate-container:hover i {
+            color: #00d77c;
+        }
+
+        .donate-container:hover a {
+            color: #00d77c;
+        }
+
+    .donate-container i {
+        float: left;
+        font-size: 20px;
+        padding-right: 10px;
+        margin-top: 2px;
+    }
+
+.donate-container a {
+    float: left;
+    text-decoration: none;
+    color: #000000;
+}
 
 .menu {
     position: absolute;

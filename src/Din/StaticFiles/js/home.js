@@ -4,6 +4,9 @@
         interval: 5000
     });
 
+    /* Donate link tooltop js */
+    $('.donate-container').tooltip();
+
     /* Home Menu animations */
 
     var menu = {

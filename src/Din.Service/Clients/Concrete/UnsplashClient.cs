@@ -24,12 +24,7 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
 
             return new List<UnsplashResponseObject>(JsonConvert.DeserializeObject<ICollection<UnsplashResponseObject>>(
-                await client.GetStringAsync(BuildUrl(new[] {_config.Url, _config.Key}))));
-        }
-
-        protected override string BuildUrl(string[] parameters)
-        {
-            return $"{parameters[0]}?client_id={parameters[1]}&orientation=landscape&count=20&featured";
+                await client.GetStringAsync(BuildUrl(_config.Url, $"?client_id={_config.Key}", "&query=nature&orientation=landscape&count=20&featured"))));
         }
     }
 }

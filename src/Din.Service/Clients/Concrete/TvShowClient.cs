@@ -26,7 +26,7 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<TCTvShowResponse>>(await client.GetAsync(BuildUrl(new[] { _config.Url, "series", _config.Key })).Result.Content.ReadAsStringAsync());
+            var response = JsonConvert.DeserializeObject<List<TCTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
 
             return response.Select(r => r.Title).AsEnumerable();
         }
@@ -36,15 +36,10 @@ namespace Din.Service.Clients.Concrete
             tvShow.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
 
-            var response = await client.PostAsync(BuildUrl(new[] { _config.Url, "series", _config.Key }),
+            var response = await client.PostAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(tvShow)));
             
             return response.StatusCode.Equals(HttpStatusCode.Created);
-        }
-
-        protected override string BuildUrl(string[] parameters)
-        {
-            return $"{parameters[0]}{parameters[1]}?apikey={parameters[2]}";
         }
     }
 }

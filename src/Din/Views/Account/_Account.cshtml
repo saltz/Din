@@ -37,14 +37,9 @@
                             <i class="fas fa-file-video"></i><span>Added Content</span>
                         </a>
                     </li>
-                    <li class="nav-item" id="account-menu-btn-moviecalender">
+                    <li class="nav-item" id="account-menu-btn-calendar">
                         <a class="nav-link">
-                            <i class="fas fa-calendar-alt"></i><span>Movie Calender</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="account-menu-btn-tvshowcalender">
-                        <a class="nav-link">
-                            <i class="fas fa-calendar-alt"></i><span>TvShow Calender</span>
+                            <i class="fas fa-calendar-alt"></i><span>Release Calender</span>
                         </a>
                     </li>
                 </ul>
@@ -55,8 +50,7 @@
         @{
             await Html.RenderPartialAsync("~/Views/Account/_AccountInfo.cshtml");
             await Html.RenderPartialAsync("~/Views/Account/_AccountAddedContent.cshtml");
-            await Html.RenderPartialAsync("~/Views/Account/_AccountMovieCalender.cshtml");
-            await Html.RenderPartialAsync("~/Views/Account/_AccountTvShowCalender.cshtml");
+            await Html.RenderPartialAsync("~/Views/Account/_AccountReleaseCalendar.cshtml");
         }
     </div>
 </div>

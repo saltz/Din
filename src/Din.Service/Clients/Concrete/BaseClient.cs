@@ -6,6 +6,16 @@ namespace Din.Service.Clients.Concrete
 {
     public abstract class BaseClient
     {
-        protected abstract string BuildUrl(string[] parameters);
+        protected string BuildUrl(params string[] p)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var i in p)
+            {
+                sb.Append(i);
+            }
+
+            return sb.ToString();
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Din.Data.Entities
     {
         public int ID { get; set; }
         public string Title { get; set; }
+        public ContentType Type { get; set; }
         public DateTime DateAdded { get; set; }
         public ContentStatus Status { get; set; }
         public int Eta { get; set; }
@@ -14,6 +15,13 @@ namespace Din.Data.Entities
         public AccountEntity Account { get; set; }
         public int AccountRef { get; set; }
     }
+
+    public enum ContentType
+    {
+        Movie,
+        TvShow
+    }
+
     public enum ContentStatus
     {
         NotAvailable,
