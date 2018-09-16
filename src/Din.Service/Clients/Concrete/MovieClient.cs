@@ -26,7 +26,7 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", _config.Key)));
+            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
 
             return response.Select(r => r.Id).AsEnumerable();
         }
@@ -36,15 +36,10 @@ namespace Din.Service.Clients.Concrete
             movie.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
 
-            var response = await client.PostAsync(BuildUrl(_config.Url, "movie", _config.Key),
+            var response = await client.PostAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(movie)));
 
             return response.StatusCode.Equals(HttpStatusCode.Created);
-        }
-
-        protected override string BuildUrl(params string[] p)
-        {
-            return $"{p[0]}{p[1]}?apikey={p[2]}";
         }
     }
 }

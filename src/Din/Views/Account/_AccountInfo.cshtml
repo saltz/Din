@@ -1,13 +1,55 @@
-﻿@model Din.ViewModels.AccountViewModel
+﻿@using Din.Data.Entities
+@model Din.ViewModels.AccountViewModel
 
 <div class="account-partial" id="account-view-info">
     <div class="row account-view-header">
         <h2>Information</h2>
     </div>
-    <div class="row account-view-container">
-        <div class="col-md-12">
-            <div class="information-block col-md-6 rounded">
-                <h1>Statistics</h1>
+    <div class="row account-view-container container-fluid" style="margin-top: 5%">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="information-block rounded">
+                    <div class="color-bar"></div>
+                    <h4>Statistics</h4>
+                    <div style="margin-left: 10%" class="information-block-item">
+                        <i class="fas fa-film"></i>
+                        <p>@Model.Data.AddedContent.Where(_ => _.Type.Equals(ContentType.Movie)).ToArray().Count()</p>
+                        <p>Added</p>
+                    </div>
+                    <div class="information-block-item">
+                        <i class="fas fa-tv" style="transform: scale(0.8)"></i>
+                        <p>@Model.Data.AddedContent.Where(_ => _.Type.Equals(ContentType.TvShow)).ToArray().Count()</p>
+                        <p>Added</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="information-block rounded">
+                    <div class="color-bar"></div>
+                    <h4>second one</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="main-information-block rounded">
+                    <div class="color-bar"></div>
+                    <div class="margin-spacing"></div>
+                    <h3>Personal information</h3>
+                    <form>
+                        <div class="main-block-item">
+                            <label>First name</label>
+                            <input type="text" name="firstname" value="@Model.Data.User.FirstName"/>
+                        </div>
+                        <div class="main-block-item">
+                            <label>Last name</label>
+                            <input type="text" name="lastname" value="@Model.Data.User.LastName"/>
+                        </div>
+                        <button class="personal-information-btn" type="submit">update</button>
+                    </form>
+                    <div class="horizontal-margin"></div>
+                    <h3>Account information</h3>
+                </div>
             </div>
         </div>
     </div>

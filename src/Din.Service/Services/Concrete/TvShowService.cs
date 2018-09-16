@@ -70,7 +70,7 @@ namespace Din.Service.Services.Concrete
                 {
                     Title = "Failed At adding Tv Show",
                     TitleColor = "#b43232",
-                    Message = "Something went wrong 😵   Try again later!"
+                    Message = "Something went wrong 😵\nTry again later!"
                 };
             }
         }
