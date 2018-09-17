@@ -3,13 +3,13 @@ using Newtonsoft.Json;
 
 namespace Din.Service.Clients.RequestObjects
 {
-    public class TCRequest : ContentRequestObject
+    public class TcRequest : ContentRequestObject
     {
         [JsonProperty("tvdbid")] public string TvShowId { get; set; }
-        [JsonProperty("seasons")] public List<TCRequestSeason> Seasons { get; set; }
+        [JsonProperty("seasons")] public List<TcRequestSeason> Seasons { get; set; }
     }
 
-    public class TCRequestSeason
+    public class TcRequestSeason
     {
         [JsonProperty("seasonNumber")] public string SeasonNumber { get; set; }
         [JsonProperty("monitored")] public bool Monitored { get; set; }

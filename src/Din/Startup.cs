@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Din.Config;
 using Din.Data;
-using Din.MapperProfiles;
+using Din.Mapping.Profiles;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
@@ -65,7 +65,7 @@ namespace Din
             services.AddSingleton<IMovieClientConfig>(new MovieClientConfig(Configuration["MovieClient:Url"],
                 Configuration["MovieClient:Key"], Configuration["MovieClient:SaveLocation"]));
             services.AddSingleton<ITvShowClientConfig>(new TvShowClientConfig(Configuration["TvShowClient:Url"],
-                Configuration["TvShowClient:Key"], Configuration["SaveLocation"]));
+                Configuration["TvShowClient:Key"], Configuration["TvShowClient:SaveLocation"]));
             services.AddSingleton<IUnsplashClientConfig>(new UnsplashClientConfig(Configuration["UnsplashClient:Url"],
                 Configuration["UnsplashClient:Key"]));
             services.AddSingleton<ITMDBClientConfig>(new TMDBClientConfig(Configuration["TMDBClient:Key"]));

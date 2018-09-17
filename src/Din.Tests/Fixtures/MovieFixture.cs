@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Din.MapperProfiles;
+using Din.Mapping.Profiles;
 using Din.Service.Services.Interfaces;
 using Moq;
 

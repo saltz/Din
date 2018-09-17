@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Din.Service.Dto.Account;
+using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -42,8 +45,6 @@ namespace Din.Controllers
             var accountDataViewModel = new AccountViewModel
             {
                 Data = await _accountService.GetAccountDataAsync(GetCurrentSessionId()),
-                MovieCalendar = await _movieService.GetMovieCalendarAsync(),
-                TvShowCalendar = await _tvShowService.GetTvShowCalendarAsync(),
                 ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
             };
 
@@ -54,6 +55,19 @@ namespace Din.Controllers
         public async Task<IActionResult> UploadAccountImageAsync(IFormFile file)
         {
             throw new NotImplementedException();
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> GetReleaseCalendarAsync()
+        {
+            var calendarDto = new CalendarDto
+            {
+                Items = (await _movieService.GetMovieCalendarAsync()).Concat(await _tvShowService.GetTvShowCalendarAsync()),
+                DateRange = new Tuple<DateTime, DateTime>(DateTime.Now, DateTime.Now.AddMonths(1))
+             
+            };
+
+            return Ok(calendarDto);
         }
 
         #endregion endpoints

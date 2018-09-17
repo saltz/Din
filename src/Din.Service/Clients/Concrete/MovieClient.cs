@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
@@ -28,12 +27,12 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
+            var response = JsonConvert.DeserializeObject<List<McMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
 
             return response.Select(r => r.Id).AsEnumerable();
         }
 
-        public async Task<bool> AddMovieAsync(MCRequest movie)
+        public async Task<bool> AddMovieAsync(McRequest movie)
         {
             movie.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
@@ -44,12 +43,16 @@ namespace Din.Service.Clients.Concrete
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
-        public async Task<MCCalendarResponse> GetCalendar()
+        public async Task<IEnumerable<McCalendarResponse>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<MCCalendarResponse>(
-                    await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", $"&start={DateTime.Now}&end={DateTime.Now.AddMonths(1)}")));
+            return JsonConvert.DeserializeObject<IEnumerable<McCalendarResponse>>(
+                    await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespanMonth())));
+        }
+        private string GetTimespanMonth()
+        {
+            return $"&start={DateTime.Now:MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
         }
     }
 }

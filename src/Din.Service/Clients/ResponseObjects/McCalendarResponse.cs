@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    public class MCCalendarResponse
+    public class McCalendarResponse : ContentCalendarResponse
     {
         [JsonProperty("status")]
         public string Status { get; set; }

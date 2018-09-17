@@ -1,9 +1,9 @@
-﻿using Din.Service.DTO;
+﻿using Din.Service.Dto;
 
 namespace Din.ViewModels
 {
     public class StatusCodeViewModel
     {
-        public StatusCodeDTO Data { get; set; }
+        public StatusCodeDto Data { get; set; }
     }
 }

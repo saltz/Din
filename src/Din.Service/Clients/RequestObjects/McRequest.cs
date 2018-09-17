@@ -2,15 +2,15 @@
 
 namespace Din.Service.Clients.RequestObjects
 {
-    public class MCRequest : ContentRequestObject
+    public class McRequest : ContentRequestObject
     {
         [JsonProperty("year")] public int Year { get; set; }
         [JsonProperty("tmdbid")] public int TmdbId { get; set; }
         [JsonProperty("downloaded")] public bool Downloaded { get; set; }
-        [JsonProperty("addOptions")] public MCRequestOptions MovieOptions { get; set; }
+        [JsonProperty("addOptions")] public McRequestOptions MovieOptions { get; set; }
     }
 
-    public class MCRequestOptions
+    public class McRequestOptions
     {
         [JsonProperty("ignoreEpisodesWithFiles")]
         public bool IgnoreEpisodesWithFiles { get; set; }

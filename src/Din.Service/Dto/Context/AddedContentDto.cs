@@ -1,9 +1,9 @@
 ﻿using System;
 using Din.Data.Entities;
 
-namespace Din.Service.DTO.Context
+namespace Din.Service.Dto.Context
 {
-    public class AddedContentDTO
+    public class AddedContentDto
     {
         public string Title { get; set; }
         public ContentType Type { get; set; }

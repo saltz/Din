@@ -15,50 +15,66 @@ var paths = {
     NodeLibs: "./node_modules/",
 };
 
-paths.js = [paths.NodeLibs + "jquery/dist/jquery.js",
+paths.js = [
+    paths.NodeLibs + "jquery/dist/jquery.js",
     paths.NodeLibs + "popper.js/dist/umd/popper.js",
     paths.NodeLibs + "bootstrap/dist/js/bootstrap.js",
-    paths.StaticFiles + "js/**/*.js"];
-paths.css = [paths.NodeLibs + "bootstrap/dist/css/bootstrap.css",
+    paths.NodeLibs + "moment/moment.js",
+    paths.NodeLibs + "fullcalendar/dist/fullcalendar.js",
+    paths.StaticFiles + "js/**/*.js"
+];
+paths.css = [
+    paths.NodeLibs + "bootstrap/dist/css/bootstrap.css",
     paths.NodeLibs + "@fortawesome/fontawesome-free/css/all.css",
-    paths.StaticFiles + "css/**/*.css"];
-paths.webfonts = [paths.NodeLibs + "@fortawesome/fontawesome-free/webfonts/*.*",
-    paths.StaticFiles + "webfonts/**/*.ttf"];
+    paths.NodeLibs + "fullcalendar/dist/fullcalendar.css",
+    paths.StaticFiles + "css/**/*.css"
+];
+paths.webfonts = [
+    paths.NodeLibs + "@fortawesome/fontawesome-free/webfonts/*.*",
+    paths.StaticFiles + "webfonts/**/*.ttf"
+];
+
 paths.concatJsDest = paths.webroot + "dist/site.min.js";
 paths.concatCssDest = paths.webroot + "dist/site.min.css";
 paths.webfontsDest = paths.webroot + "webfonts/";
 
-gulp.task("clean:js", function (cb) {
-    rimraf(paths.concatJsDest, cb);
-});
+gulp.task("clean:js",
+    function(cb) {
+        rimraf(paths.concatJsDest, cb);
+    });
 
-gulp.task("clean:css", function (cb) {
-    rimraf(paths.concatCssDest, cb);
-});
+gulp.task("clean:css",
+    function(cb) {
+        rimraf(paths.concatCssDest, cb);
+    });
 
-gulp.task("clean:webfonts", function(cb) {
-    rimraf(paths.webfontsDest, cb);
-})
+gulp.task("clean:webfonts",
+    function(cb) {
+        rimraf(paths.webfontsDest, cb);
+    })
 
 gulp.task("clean", ["clean:js", "clean:css", "clean:webfonts"]);
 
-gulp.task("min:js", function () {
-    return gulp.src(paths.js)
-        .pipe(concat(paths.concatJsDest))
-        .pipe(uglify())
-        .pipe(gulp.dest("."));
-});
+gulp.task("min:js",
+    function() {
+        return gulp.src(paths.js)
+            .pipe(concat(paths.concatJsDest))
+            .pipe(uglify())
+            .pipe(gulp.dest("."));
+    });
 
-gulp.task("min:css", function () {
-    return gulp.src(paths.css)
-        .pipe(concat(paths.concatCssDest))
-        .pipe(cssmin())
-        .pipe(gulp.dest("."));
-});
+gulp.task("min:css",
+    function() {
+        return gulp.src(paths.css)
+            .pipe(concat(paths.concatCssDest))
+            .pipe(cssmin())
+            .pipe(gulp.dest("."));
+    });
 
-gulp.task("move-webfonts", function() {
-    return gulp.src(paths.webfonts).pipe(gulp.dest(paths.webfontsDest));
-})
+gulp.task("move-webfonts",
+    function() {
+        return gulp.src(paths.webfonts).pipe(gulp.dest(paths.webfontsDest));
+    })
 
 gulp.task("min", ["min:js", "min:css"]);
 
