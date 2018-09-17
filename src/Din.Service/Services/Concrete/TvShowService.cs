@@ -62,7 +62,7 @@ namespace Din.Service.Services.Concrete
                 {
                     Title = "Tv Show Added Successfully",
                     TitleColor = "#00d77c",
-                    Message = "The Movie has been added 🤩\nYou can track the progress under your account profile tab."
+                    Message = "The Movie has been added 🤩\nYou can track the progress under your account content tab."
                 };
             }
             else
@@ -71,7 +71,7 @@ namespace Din.Service.Services.Concrete
                 {
                     Title = "Failed At adding Tv Show",
                     TitleColor = "#b43232",
-                    Message = "Something went wrong 😵   Try again later!"
+                    Message = "Something went wrong 😵\nTry again later!"
                 };
             }
         }
