@@ -81,7 +81,14 @@ function generateCalendar() {
             $('#release-calendar').fullCalendar({
                 defaultView: 'month',
                 events: data.items,
-                height: 'parent'
+                height: 'parent',
+                eventRender: function(eventObj, $el) {
+                    $el.popover({
+                        content: eventObj.title,
+                        trigger: 'hover',
+                        placement: 'top'
+                    })
+                }
             });
             if ($('.fc-center').find('.legend').length === 0 ) {
                 $('.fc-center').append(

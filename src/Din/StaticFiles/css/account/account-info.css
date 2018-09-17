@@ -20,6 +20,7 @@
         text-align: center;
         color: #d0d2d5;
         margin-top: 2%;
+        font-size: 1vw;
     }
 
 .statistic-item {
@@ -30,13 +31,14 @@
 }
 
     .statistic-item .fas {
-        font-size: 70px;
+        font-size: 3vw;
         color: #ffa82f;
     }
 
     .statistic-item p {
         margin: 0;
         color: #d0d2d5;
+        font-size: 0.6vw
     }
 
 .management-block {
@@ -51,6 +53,7 @@
         text-align: center;
         color: #d0d2d5;
         margin-top: 2%;
+        font-size: 1vw;
     }
 
     .management-block .color-bar {
@@ -74,11 +77,12 @@
         margin: 10% auto;
         text-align: center;
         color: #d0d2d5;
+        font-size: 0.6vw;
     }
 
     .management-item input {
         width: 90%;
-        font-size: 14px;
+        font-size: 0.6vw;
         background: transparent;
         border: none;
         border-bottom: 2px solid #236eae;
@@ -98,6 +102,7 @@
         text-align: center;
         width: 60%;
         color: #d0d2d5;
+        font-size: 0.6vw;
     }
 
         .management-item button:hover {
@@ -160,12 +165,15 @@
         text-align: center;
         color: #d0d2d5;
         margin-top: 2%;
+        font-size: 1.2vw;
     }
 
 .section-item label {
     width: 30%;
     padding: 2% 0 2% 0;
     color: #d0d2d5;
+    margin-right: 3%;
+    font-size: 0.7vw;
 }
 
 .section-item input {
@@ -174,6 +182,7 @@
     border: none;
     border-bottom: 2px solid #06b269;
     width: 50%;
+    font-size: 0.7vw;
 }
 
     .section-item input:disabled {
@@ -189,6 +198,7 @@
     color: #d0d2d5;
     margin: 5% auto;
     display: block;
+    font-size: 0.7vw;
 }
 
     .section-btn:hover {

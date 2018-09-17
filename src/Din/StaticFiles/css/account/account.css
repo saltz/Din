@@ -40,9 +40,12 @@
     text-align: center;
 }
 
-.user-section .user-info i { padding: 10px; }
+    .user-section .user-info i {
+        padding: 10px;
+        font-size: 0.9vw;
+    }
 
-.user-section .user-info h3 { font-size: 24px; }
+.user-section .user-info h3 { font-size: 1.2vw; }
 
 
 .sidebar {
@@ -87,9 +90,15 @@
     color: #ff8d1c;
 }
 
-.sidebar #leftside-navigation ul li span { display: inline-block; }
+    .sidebar #leftside-navigation ul li span {
+        display: inline-block;
+        font-size: 0.6vw;
+    }
 
-.sidebar #leftside-navigation ul li i { width: 20px; }
+    .sidebar #leftside-navigation ul li i {
+        width: 0.9vw;
+        font-size: 0.5vw;
+    }
 
 .sidebar #leftside-navigation ul li i .fa-angle-left,
 .sidebar #leftside-navigation ul li i .fa-angle-right { padding-top: 3px; }
