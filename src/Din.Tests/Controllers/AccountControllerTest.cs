@@ -1,8 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using Din.Controllers;
-using Din.MapperProfiles;
-using Din.Service.DTO.Account;
+using Din.Mapping.Profiles;
+using Din.Service.Dto.Account;
 using Din.Tests.Fixtures;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +19,14 @@ namespace Din.Tests.Controllers
         public AccountControllerTest(AccountFixture fixture)
         {
             _fixture = fixture;
-            _mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile(new EntityProfile()); }));
+            _mapper = new AutoMapper.Mapper(new MapperConfiguration(cfg => { cfg.AddProfile(new EntityProfile()); }));
         }
 
         [Fact]
         public void GetUserViewAsyncTest()
         {
             _fixture.AccountServiceMock.Setup(_ => _.GetAccountDataAsync(Convert.ToInt32(TestConsts.Id)))
-                .ReturnsAsync(new DataDTO());
+                .ReturnsAsync(new DataDto());
             var controller = new AccountController(_fixture.AccountServiceMock.Object, _fixture.MovieServiceMock.Object,
                 _fixture.TvShowServiceMock.Object, _mapper)
             {

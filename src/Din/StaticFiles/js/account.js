@@ -25,7 +25,8 @@ $(document).delegate('#account-menu-btn-addedcontent',
 
 $(document).delegate('#account-menu-btn-calendar',
     'click',
-    function(e) {
+    function (e) {
+        generateCalendar();
         hideAllViews();
         $('#account-view-calendar').css({ display: '', opacity: 0 }).animate({ opacity: 1 }, 500).val('visible');
     });
@@ -71,3 +72,22 @@ $(document).delegate('#delete-account-input',
             $('#delete-account-btn').attr('disabled', true);
         }
     });
+
+function generateCalendar() {
+    showLoader();
+    $.ajax({
+        url: '/Account/GetReleaseCalendarAsync',
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            $('#release-calendar').fullCalendar({
+                defaultView: 'month',
+                events : data.items
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    hideLoader();
+}

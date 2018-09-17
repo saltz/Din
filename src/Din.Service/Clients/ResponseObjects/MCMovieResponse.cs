@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    class MCMovieResponse
+    class McMovieResponse
     {
         [JsonProperty("tmdbid")] public int Id { get; set; }
     }

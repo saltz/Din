@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    public class TCCalendarResponse
+    public class TcCalendarResponse
     {
         [JsonProperty("seasonNumber")]
         public int SeasonNumber { get; set; }
@@ -12,9 +12,9 @@ namespace Din.Service.Clients.ResponseObjects
         public int EpisodeNumber { get; set; }
         [JsonProperty("airDate")]
         public DateTime AirDate { get; set; }
-        [JsonProperty("airDateUtc")]
-        public DateTime AirDateUtc { get; set; }
+        [JsonProperty("airDateUtC")]
+        public DateTime AirDateUtC { get; set; }
         [JsonProperty("series")]
-        public TCRequest Series { get; set; }
+        public TcRequest Series { get; set; }
     }
 }

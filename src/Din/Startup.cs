@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Din.Config;
 using Din.Data;
-using Din.MapperProfiles;
+using Din.Mapping.Profiles;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;

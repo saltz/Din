@@ -27,12 +27,12 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<TCTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
+            var response = JsonConvert.DeserializeObject<List<TcTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
 
             return response.Select(r => r.Title.ToLower()).AsEnumerable();
         }
 
-        public async Task<bool> AddTvShowAsync(TCRequest tvShow)
+        public async Task<bool> AddTvShowAsync(TcRequest tvShow)
         {
             tvShow.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
@@ -43,11 +43,11 @@ namespace Din.Service.Clients.Concrete
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
-        public async Task<IEnumerable<TCCalendarResponse>> GetCalendarAsync()
+        public async Task<IEnumerable<TcCalendarResponse>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<TCCalendarResponse>>(
+            return JsonConvert.DeserializeObject<IEnumerable<TcCalendarResponse>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespanMonth())));
         }
 

@@ -1,8 +1,8 @@
 ﻿using Din.Service.Clients.ResponseObjects;
 
-namespace Din.Service.DTO
+namespace Din.Service.Dto
 {
-    public class StatusCodeDTO
+    public class StatusCodeDto
     {
         public GiphyResponse Gif { get; set; }
         public int StatusCode { get; set; }

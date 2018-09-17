@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Din.Service.DTO.Context;
+using Din.Service.Dto.Context;
 using UAParser;
 
-namespace Din.Service.DTO.Account
+namespace Din.Service.Dto.Account
 {
-    public class DataDTO
+    public class DataDto
     {
-        public UserDTO User { get; set; }
-        public AccountDTO Account { get; set; }
-        public IEnumerable<AddedContentDTO> AddedContent { get; set; }
+        public UserDto User { get; set; }
+        public AccountDto Account { get; set; }
+        public IEnumerable<AddedContentDto> AddedContent { get; set; }
     }
 }

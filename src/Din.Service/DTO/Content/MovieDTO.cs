@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TMDbLib.Objects.Search;
 
-namespace Din.Service.DTO.Content
+namespace Din.Service.Dto.Content
 {
-    public class MovieDTO
+    public class MovieDto
     {
         public IEnumerable<int> CurrentMovieCollection { get; set; }
         public ICollection<SearchMovie> QueryCollection { get; set; }

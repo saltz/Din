@@ -8,7 +8,7 @@ namespace Din.Service.Clients.Interfaces
     public interface ITvShowClient
     {
         Task<IEnumerable<string>> GetCurrentTvShowsAsync();
-        Task<bool> AddTvShowAsync(TCRequest tvShow);
-        Task<IEnumerable<TCCalendarResponse>> GetCalendarAsync();
+        Task<bool> AddTvShowAsync(TcRequest tvShow);
+        Task<IEnumerable<TcCalendarResponse>> GetCalendarAsync();
     }
 }

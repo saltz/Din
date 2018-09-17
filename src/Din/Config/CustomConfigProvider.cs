@@ -8,15 +8,15 @@ using NETCore.Encrypt;
 
 namespace Din.Config
 {
-    public static class CustomConfigProviderExtensions
+    public static class CustoMconfigProviderExtensions
     {
         public static IConfigurationBuilder AddEncryptedProvider(this IConfigurationBuilder builder)
         {
-            return builder.Add(new CustomConfigProvider());
+            return builder.Add(new CustoMconfigProvider());
         }
     }
 
-    public class CustomConfigProvider : ConfigurationProvider, IConfigurationSource
+    public class CustoMconfigProvider : ConfigurationProvider, IConfigurationSource
     {
         public override void Load()
         {
@@ -48,7 +48,7 @@ namespace Din.Config
 
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new CustomConfigProvider();
+            return new CustoMconfigProvider();
         }
     }
 }

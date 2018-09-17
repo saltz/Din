@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Din.Data;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
-using Din.Service.DTO;
-using Din.Service.DTO.Content;
+using Din.Service.Dto;
+using Din.Service.Dto.Account;
+using Din.Service.Dto.Content;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
@@ -20,25 +22,25 @@ namespace Din.Service.Services.Concrete
         private readonly IMovieClient _movieClient;
         private readonly string _tmdbKey;
 
-        public MovieService(DinContext context, IMovieClient movieClient, ITMDBClientConfig config) : base (context)
+        public MovieService(DinContext context, IMovieClient movieClient, ITMDBClientConfig config, IMapper mapper) : base (context, mapper)
         {
             _movieClient = movieClient;
             _tmdbKey = config.Key;
         }
 
-        public async Task<MovieDTO> SearchMovieAsync(string query)
+        public async Task<MovieDto> SearchMovieAsync(string query)
         {
-            return new MovieDTO
+            return new MovieDto
             {
                 CurrentMovieCollection = await _movieClient.GetCurrentMoviesAsync(),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchMovieAsync(query)).Results
             };
         }
 
-        public async Task<ResultDTO> AddMovieAsync(SearchMovie movie, int id)
+        public async Task<ResultDto> AddMovieAsync(SearchMovie movie, int id)
         {
             var movieDate = Convert.ToDateTime(movie.ReleaseDate);
-            var requestObj = new MCRequest
+            var requestObj = new McRequest
             {
                 Title = movie.Title,
                 Year = movieDate.Year,
@@ -55,7 +57,7 @@ namespace Din.Service.Services.Concrete
                         Url = movie.PosterPath
                     }
                 },
-                MovieOptions = new MCRequestOptions
+                MovieOptions = new McRequestOptions
                 {
                     SearchForMovie = true
                 }
@@ -64,7 +66,7 @@ namespace Din.Service.Services.Concrete
             if (await _movieClient.AddMovieAsync(requestObj))
             {
                 await LogContentAdditionAsync(movie.Title, id);
-                return new ResultDTO
+                return new ResultDto
                 {
                     Title = "Movie Added Successfully",
                     TitleColor = "#00d77c",
@@ -73,7 +75,7 @@ namespace Din.Service.Services.Concrete
             }
             else
             {
-                return new ResultDTO
+                return new ResultDto
                 {
                     Title = "Failed At adding Movie",
                     TitleColor = "#b43232",
@@ -82,9 +84,9 @@ namespace Din.Service.Services.Concrete
             }
         }
 
-        public async Task<IEnumerable<MCCalendarResponse>> GetMovieCalendarAsync()
+        public async Task<IEnumerable<CalendarItemDto>> GetMovieCalendarAsync()
         {
-           return await _movieClient.GetCalendarAsync();
+            return Mapper.Map<IEnumerable<CalendarItemDto>>(await _movieClient.GetCalendarAsync());
         }
     }
 }

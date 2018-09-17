@@ -1,9 +1,9 @@
-﻿using Din.Service.DTO;
+﻿using Din.Service.Dto;
 
 namespace Din.ViewModels
 {
     public class MediaViewModel
     {
-        public MediaDTO Media { get; set; }
+        public MediaDto Media { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Din.Service.DTO
+﻿namespace Din.Service.Dto
 {
-    public class ResultDTO
+    public class ResultDto
     {
         public string Title { get; set; }
         public string TitleColor { get; set; }

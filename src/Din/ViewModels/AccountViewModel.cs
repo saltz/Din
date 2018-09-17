@@ -1,12 +1,12 @@
-﻿using Din.Service.DTO.Account;
+﻿using Din.Service.Dto.Account;
 using UAParser;
 
 namespace Din.ViewModels
 {
     public class AccountViewModel
     {
-        public DataDTO Data { get; set; }
+        public DataDto Data { get; set; }
         public ClientInfo ClientInfo { get; set; }
-        public CalendarDTO Calendar { get; set; }
+        public CalendarDto Calendar { get; set; }
     }
 }
