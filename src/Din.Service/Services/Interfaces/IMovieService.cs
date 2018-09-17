@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Din.Service.DTO;
+using Din.Service.DTO.Account;
 using Din.Service.DTO.Content;
 using TMDbLib.Objects.Search;
 
@@ -21,5 +22,10 @@ namespace Din.Service.Services.Interfaces
         /// <param name="id">The account id of the current session.</param>
         /// <returns>The status result.</returns>
         Task<ResultDTO> AddMovieAsync(SearchMovie movie, int id);
+        /// <summary>
+        /// Get the MediaSystem movie release calendar.
+        /// </summary>
+        /// <returns>ViewModel containing calendar data.</returns>
+        Task<CalendarDTO> GetMovieCalendarAsync();
     }
 }

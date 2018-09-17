@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
@@ -26,7 +28,7 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(new[] {_config.Url, "movie", _config.Key})));
+            var response = JsonConvert.DeserializeObject<List<MCMovieResponse>>(await client.GetStringAsync(BuildUrl(new[] {_config.Url, "movie?apikey=", _config.Key})));
 
             return response.Select(r => r.Id).AsEnumerable();
         }
@@ -36,15 +38,26 @@ namespace Din.Service.Clients.Concrete
             movie.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
 
-            var response = await client.PostAsync(BuildUrl(new[] {_config.Url, "movie", _config.Key}),
+            var response = await client.PostAsync(BuildUrl(new[] {_config.Url, "movie?apikey=", _config.Key}),
                 new StringContent(JsonConvert.SerializeObject(movie)));
 
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
+        public async Task<MCCalendarResponse> GetCalendar()
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<MCCalendarResponse>(
+                    await client.GetStringAsync(BuildUrl(new[] {_config.Url, "calendar?apikey=", _config.Key, $"&start={DateTime.Now}&end={DateTime.Now.AddMonths(1)}" })));
+        }
+
         protected override string BuildUrl(params string[] parameters)
         {
-            return $"{parameters[0]}{parameters[1]}?apikey={parameters[2]}";
+            var sb = new StringBuilder();
+            foreach (var e in parameters)
+                sb.Append(e);
+            return sb.ToString();
         }
     }
 }

@@ -42,6 +42,14 @@ namespace Din.Service.Clients.Concrete
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
+        public async Task<TCCalendarResponse> GetCalendar()
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<TCCalendarResponse>(
+                await client.GetStringAsync(BuildUrl(new[] { _config.Url, "calendar", _config.Key })));
+        }
+
         protected override string BuildUrl(string[] parameters)
         {
             return $"{parameters[0]}{parameters[1]}?apikey={parameters[2]}";

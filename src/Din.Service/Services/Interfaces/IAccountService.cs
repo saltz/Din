@@ -23,15 +23,5 @@ namespace Din.Service.Services.Interfaces
         /// <param name="data">Byte array made from supplied user file.</param>
         /// <returns>Default result ViewModel</returns>
         Task<ResultDTO> UploadAccountImageAsync(int id, string name, byte[] data);
-        /// <summary>
-        /// Get the MediaSystem movie release calendar.
-        /// </summary>
-        /// <returns>ViewModel containing calendar data.</returns>
-        Task<CalendarDTO> GetMovieCalendarAsync();
-        /// <summary>
-        /// Get the MediaSystem tvshow release calendar.
-        /// </summary>
-        /// <returns>ViewModel containing calendar data.</returns>
-        Task<CalendarDTO> GetTvShowCalendarAsync();
     }
 }

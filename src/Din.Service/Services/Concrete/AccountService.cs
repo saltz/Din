@@ -54,16 +54,5 @@ namespace Din.Service.Services.Concrete
                 Message = "Your profile picture is successfully uploaded"
             };
         }
-
-        public async Task<CalendarDTO> GetMovieCalendarAsync()
-        {
-            throw new NotImplementedException();
-
-        }
-
-        public async Task<CalendarDTO> GetTvShowCalendarAsync()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
