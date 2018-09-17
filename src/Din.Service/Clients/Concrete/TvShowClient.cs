@@ -38,8 +38,17 @@ namespace Din.Service.Clients.Concrete
 
             var response = await client.PostAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(tvShow)));
-            
+
             return response.StatusCode.Equals(HttpStatusCode.Created);
+        }
+
+        public async Task<TCCalendarResponse> GetCalendar()
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            //TODO
+            return JsonConvert.DeserializeObject<TCCalendarResponse>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", _config.Key)));
         }
     }
 }

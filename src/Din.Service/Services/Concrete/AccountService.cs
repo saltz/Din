@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,17 +52,6 @@ namespace Din.Service.Services.Concrete
                 TitleColor = "#00d77c",
                 Message = "Your profile picture is successfully uploaded"
             };
-        }
-
-        public async Task<CalendarDTO> GetMovieCalendarAsync()
-        {
-            throw new NotImplementedException();
-
-        }
-
-        public async Task<CalendarDTO> GetTvShowCalendarAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

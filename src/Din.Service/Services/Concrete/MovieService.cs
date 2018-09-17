@@ -6,6 +6,7 @@ using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Config.Interfaces;
 using Din.Service.DTO;
+using Din.Service.DTO.Account;
 using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
@@ -79,6 +80,12 @@ namespace Din.Service.Services.Concrete
                     Message = "Something went wrong 😵 Try again later!"
                 };
             }
+        }
+
+        public async Task<CalendarDTO> GetMovieCalendarAsync()
+        {
+            var calendar = await _movieClient.GetCalendar();
+            return null;
         }
     }
 }
