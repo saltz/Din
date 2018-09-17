@@ -43,7 +43,7 @@
 }
 
     .added-content-card-headers h3 {
-        font-size: 15px;
+        font-size: 0.7vw;
         color: #ffffff;
     }
 
@@ -73,7 +73,7 @@
 
 .added-content-card p {
     color: #ffffff;
-    font-size: 14px;
+    font-size: 0.6vw;
     margin: 10px 0 10px 0;
     padding-left: 10px;
 }

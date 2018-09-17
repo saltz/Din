@@ -9,13 +9,17 @@
 
 #release-calendar {
     margin: 2% auto;
-    background: rgba(49,70,89,.6);
+    background: rgba(49,70,89,.9);
     padding: 15px;
     box-shadow: 10px 10px 7px rgba(41,57,73,.9);
 }
 
 .fc-time {
     display: none;
+}
+
+.fc-title {
+    font-size: 90%;
 }
 
 .fc-unthemed td {
@@ -28,6 +32,7 @@
 
 .fc-day-number {
     color: #d0d2d5;
+    padding-right: 5px;
 }
 
 .fc-day-header {
@@ -92,4 +97,22 @@
 
 #not-downloaded {
     background: rgba(180, 50, 50, .5);
+}
+
+.popover {
+    background: rgba(50, 78, 104, .9);
+}
+
+    .popover .arrow:before {
+        border-top-color: #23313f;
+        }
+
+    .popover .arrow:after {
+        border-top-color: rgba(50, 78, 104, .9);
+    }
+
+.popover-body {
+    color:#d0d2d5;
+    font-family: Montserrat, sans-serif !important;
+
 }
