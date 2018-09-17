@@ -9,6 +9,6 @@ namespace Din.Service.Clients.Interfaces
     {
         Task<IEnumerable<int>> GetCurrentMoviesAsync();
         Task<bool> AddMovieAsync(MCRequest movie);
-        Task<MCCalendarResponse> GetCalendar();
+        Task<IEnumerable<MCCalendarResponse>> GetCalendarAsync();
     }
 }

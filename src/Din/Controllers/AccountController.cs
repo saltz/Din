@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Din.Service.DTO.Account;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -42,9 +43,12 @@ namespace Din.Controllers
             var accountDataViewModel = new AccountViewModel
             {
                 Data = await _accountService.GetAccountDataAsync(GetCurrentSessionId()),
-                MovieCalendar = await _movieService.GetMovieCalendarAsync(),
-                TvShowCalendar = await _tvShowService.GetTvShowCalendarAsync(),
-                ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
+                ClientInfo = Parser.GetDefault().Parse(GetClientUaString()),
+                Calendar = new CalendarDTO
+                {
+                    MovieCalendar = await _movieService.GetMovieCalendarAsync(),
+                    TvShowCalendar = await _tvShowService.GetTvShowCalendarAsync()
+                }
             };
 
             return PartialView("~/Views/Account/_Account.cshtml", accountDataViewModel);

@@ -7,7 +7,6 @@ namespace Din.ViewModels
     {
         public DataDTO Data { get; set; }
         public ClientInfo ClientInfo { get; set; }
-        public CalendarDTO MovieCalendar { get; set; }
-        public CalendarDTO TvShowCalendar { get; set; }
+        public CalendarDTO Calendar { get; set; }
     }
 }

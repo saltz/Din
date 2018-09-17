@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Din.Data;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
 using Din.Service.DTO;
-using Din.Service.DTO.Account;
 using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
@@ -82,10 +82,9 @@ namespace Din.Service.Services.Concrete
             }
         }
 
-        public async Task<CalendarDTO> GetMovieCalendarAsync()
+        public async Task<IEnumerable<MCCalendarResponse>> GetMovieCalendarAsync()
         {
-            var calendar = await _movieClient.GetCalendar();
-            return null;
+           return await _movieClient.GetCalendarAsync();
         }
     }
 }

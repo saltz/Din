@@ -9,6 +9,6 @@ namespace Din.Service.Clients.Interfaces
     {
         Task<IEnumerable<string>> GetCurrentTvShowsAsync();
         Task<bool> AddTvShowAsync(TCRequest tvShow);
-        Task<TCCalendarResponse> GetCalendar();
+        Task<IEnumerable<TCCalendarResponse>> GetCalendarAsync();
     }
 }

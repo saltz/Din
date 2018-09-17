@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Din.Data;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
 using Din.Service.DTO;
 using Din.Service.DTO.Account;
@@ -76,9 +77,9 @@ namespace Din.Service.Services.Concrete
             }
         }
 
-        public Task<CalendarDTO> GetTvShowCalendarAsync()
+        public async Task<IEnumerable<TCCalendarResponse>> GetTvShowCalendarAsync()
         {
-            throw new NotImplementedException();
+            return await _tvShowClient.GetCalendarAsync();
         }
     }
 }

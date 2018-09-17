@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Din.Data;
 using Din.Data.Entities;
+using Din.Service.Clients.ResponseObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Services.Concrete

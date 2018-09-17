@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -42,13 +43,17 @@ namespace Din.Service.Clients.Concrete
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
-        public async Task<TCCalendarResponse> GetCalendar()
+        public async Task<IEnumerable<TCCalendarResponse>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            //TODO
-            return JsonConvert.DeserializeObject<TCCalendarResponse>(
-                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", _config.Key)));
+            return JsonConvert.DeserializeObject<IEnumerable<TCCalendarResponse>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespanMonth())));
+        }
+
+        private string GetTimespanMonth()
+        {
+            return $"&start={DateTime.Now:MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
         }
     }
 }
