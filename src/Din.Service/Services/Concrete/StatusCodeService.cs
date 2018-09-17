@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
-using Din.Service.DTO;
+using Din.Service.Dto;
 using Din.Service.Services.Interfaces;
 
 namespace Din.Service.Services.Concrete
@@ -16,44 +16,44 @@ namespace Din.Service.Services.Concrete
             _client = client;
         }
 
-        public async Task<StatusCodeDTO> GenerateDataToDisplayAsync(int statusCode)
+        public async Task<StatusCodeDto> GenerateDataToDisplayAsync(int statusCode)
         {
-            var dto = new StatusCodeDTO
+            var Dto = new StatusCodeDto
             {
                 StatusCode = statusCode
             };
             switch (statusCode)
             {
                 case 400:
-                    dto.StatusMessage = "Te Fck did you do";
-                    dto.Gif =  await _client.GetRandomGifAsync(GiphyTag.Trending);
+                    Dto.StatusMessage = "Te Fck did you do";
+                    Dto.Gif =  await _client.GetRandomGifAsync(GiphyTag.Trending);
                     break;
                 case 401:
-                    dto.StatusMessage = "You're not supposed to do that";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry); 
+                    Dto.StatusMessage = "You're not supposed to do that";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry); 
                     break;
                 case 403:
-                    dto.StatusMessage = "No No No";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry);
+                    Dto.StatusMessage = "No No No";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Nicetry);
                     break;
                 case 404:
-                    dto.StatusMessage = "It's gone";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Funny);
+                    Dto.StatusMessage = "It's gone";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Funny);
                     break;
                 case 408:
-                    dto.StatusMessage = "The server timed out waiting for the request";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
+                    Dto.StatusMessage = "The server timed out waiting for the request";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
                 case 500:
-                    dto.StatusMessage = "Hmmm seems like I fucked up";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
+                    Dto.StatusMessage = "Hmmm seems like I fucked up";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
                 default:
-                    dto.StatusMessage = "Hmmm seems like I fucked up";
-                    dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
+                    Dto.StatusMessage = "Hmmm seems like I fucked up";
+                    Dto.Gif = await _client.GetRandomGifAsync(GiphyTag.Error);
                     break;
             }
-            return dto;
+            return Dto;
         }
     }
 }

@@ -1,0 +1,95 @@
+﻿#account-view-calendar {
+    height: 90%;
+}
+
+#account-view-calendar .account-view-container {
+    height: 85%;
+}
+
+
+#release-calendar {
+    margin: 2% auto;
+    background: rgba(49,70,89,.6);
+    padding: 15px;
+    box-shadow: 10px 10px 7px rgba(41,57,73,.9);
+}
+
+.fc-time {
+    display: none;
+}
+
+.fc-unthemed td {
+    border-color: #23313f;
+}
+
+.fc-unthemed th {
+    border-color: #23313f;
+}
+
+.fc-day-number {
+    color: #d0d2d5;
+}
+
+.fc-day-header {
+    color: #ffffff;
+}
+
+.fc-unthemed td.fc-today {
+    background: rgba(255, 168, 47, .3) !important;
+}
+
+.fc-today-button {
+    display: none;
+}
+
+.fc-button {
+    background: transparent;
+}
+
+.fc-state-default {
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.fc-left h2 {
+    color: #ffffff;
+}
+
+.fc-center {
+    width: 50%;
+}
+
+.legend {
+    width: 100%;
+}
+
+.legend-item {
+    float: left;
+    color: #d0d2d5;
+    width: 33.3%;
+}
+
+.legend-item p {
+    float: left;
+    padding-left: 5%;
+    font-size: 80%;
+}
+
+.legend-item .legend-item-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    float: left;
+}
+
+#today {
+    background: rgba(255, 168, 47, .6);
+}
+
+#downloaded {
+    background: rgba(0, 215, 124, .5);
+}
+
+#not-downloaded {
+    background: rgba(180, 50, 50, .5);
+}

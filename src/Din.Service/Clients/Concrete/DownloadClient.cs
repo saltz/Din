@@ -23,7 +23,7 @@ namespace Din.Service.Clients.Concrete
 
         private async Task Authenticate()
         {
-            var payload = new DCSingleParamRequest
+            var payload = new DcSingleParamRequest
             {
                 Id = 1,
                 Method = "auth.login",
@@ -49,9 +49,9 @@ namespace Din.Service.Clients.Concrete
             */
         }
 
-        public async Task<DCResponse> GetAllItemsAsync()
+        public async Task<DcResponse> GetAllItemsAsync()
         {
-            var payload = new DCSingleParamRequest
+            var payload = new DcSingleParamRequest
             {
                 Id = 1,
                 Method = "webapi.get_torrents",
@@ -62,7 +62,7 @@ namespace Din.Service.Clients.Concrete
 
             //TODO
             var response = await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
-            return new DCResponse();
+            return new DcResponse();
             /* OLD CODE
             try
             {
@@ -76,9 +76,9 @@ namespace Din.Service.Clients.Concrete
             */
         }
 
-        public async Task<DCResponseItem> GetItemStatusAsync(string itemHash)
+        public async Task<DcResponseItem> GetItemStatusAsync(string itemHash)
         {
-            var payload = new DCCParamCollectionRequest
+            var payload = new DcParamCollectionRequest
             {
                 Id = 1,
                 Method = "webapi.get_torrents",
@@ -100,7 +100,7 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
             //TODO
             var response = await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
-            return new DCResponseItem();
+            return new DcResponseItem();
 
             /* OLD CODE
             try
@@ -112,11 +112,6 @@ namespace Din.Service.Clients.Concrete
                 throw new DownloadClientException("Failed to get item status");
             }
             */
-        }
-
-        protected override string BuildUrl(string[] parameters)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

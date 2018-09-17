@@ -21,11 +21,16 @@
                 success: function () {
                     location.reload();
                 },
-                error: function () {
+                error: function (e) {
                     hideLoader();
-                    $('.log-status').addClass('wrong-entry');
+                    if (e["responseJSON"]["item"] === 1) {
+                        $('#username-input').addClass('wrong-entry');
+                    } else {
+                        $('#password-input').addClass('wrong-entry');
+                    }
                     $('#username').val("");
                     $('#password').val("");
+                    $('.alert').text(e["responseJSON"]["message"]);
                     $('.alert').fadeIn(500);
                     setTimeout("$('.alert').fadeOut(1500);", 3000);
                 }

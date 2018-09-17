@@ -2,7 +2,7 @@
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    public class ContentCalendarResponse
+    public abstract class ContentCalendarResponse
     {
         [JsonProperty("title")]
         public string Title { get; set; }

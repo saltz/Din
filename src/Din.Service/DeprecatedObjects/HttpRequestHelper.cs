@@ -21,7 +21,7 @@ namespace Din.ExternalModels.Utils
             _response = (HttpWebResponse)await _request.GetResponseAsync();
             using (var sr =
                 new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
-                _result = sr.ReadToEnd();
+                _result = sr.ReaDtoEnd();
             return _result;
         }
 
@@ -36,7 +36,7 @@ namespace Din.ExternalModels.Utils
                 _response = (HttpWebResponse)await _request.GetResponseAsync();
                 using (var sr =
                     new StreamReader(_response.GetResponseStream() ?? throw new InvalidOperationException()))
-                    _result = sr.ReadToEnd();
+                    _result = sr.ReaDtoEnd();
                 return new Tuple<int, string>((int)_response.StatusCode, _result);
             }
             catch

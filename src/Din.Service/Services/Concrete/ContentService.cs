@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace Din.Service.Services.Concrete
     public abstract class ContentService
     {
         private readonly DinContext _context;
+        public readonly IMapper Mapper;
 
-        protected ContentService(DinContext context)
+        protected ContentService(DinContext context, IMapper mapper)
         {
             _context = context;
+            Mapper = mapper;
         }
 
         protected async Task LogContentAdditionAsync(string title, int id)

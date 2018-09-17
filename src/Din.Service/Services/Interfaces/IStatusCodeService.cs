@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Din.Service.DTO;
+using Din.Service.Dto;
 
 namespace Din.Service.Services.Interfaces
 {
@@ -10,6 +10,6 @@ namespace Din.Service.Services.Interfaces
         /// </summary>
         /// <param name="statusCode">Http status code.</param>
         /// <returns>ViewModel</returns>
-        Task<StatusCodeDTO> GenerateDataToDisplayAsync(int statusCode);
+        Task<StatusCodeDto> GenerateDataToDisplayAsync(int statusCode);
     }
 }

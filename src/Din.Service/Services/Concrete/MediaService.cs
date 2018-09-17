@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.ResponseObjects;
-using Din.Service.DTO;
+using Din.Service.Dto;
 using Din.Service.Services.Interfaces;
 
 namespace Din.Service.Services.Concrete
@@ -26,7 +26,7 @@ namespace Din.Service.Services.Concrete
             _creationDate = DateTime.Now;
         }
 
-        public async Task<MediaDTO> GenerateBackgroundImages()
+        public async Task<MediaDto> GenerateBackgroundImages()
         {
             if (_imageCollection == null || _creationDate.AddDays(1) < DateTime.Now)
             {
@@ -34,15 +34,15 @@ namespace Din.Service.Services.Concrete
                 _imageCollection = await _unsplashClient.GetBackgroundCollection();
             }
 
-            return new MediaDTO
+            return new MediaDto
             {
                 BackgroundImageCollection = _imageCollection
             };
         }
 
-        public async Task<MediaDTO> GenerateGif(GiphyTag tag)
+        public async Task<MediaDto> GenerateGif(GiphyTag tag)
         {
-            return new MediaDTO
+            return new MediaDto
             {
                 Gif = await _giphyClient.GetRandomGifAsync(tag)
             };

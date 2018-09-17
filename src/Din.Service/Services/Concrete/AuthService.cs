@@ -7,6 +7,7 @@ using Din.Data;
 using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Services.Interfaces;
+using Din.Service.Utils;
 using Microsoft.EntityFrameworkCore;
 using UAParser;
 
@@ -17,26 +18,36 @@ namespace Din.Service.Services.Concrete
     {
         private readonly DinContext _context;
         private readonly IIpStackClient _ipStackClient;
+        private readonly IMapper _mapper;
 
-        public AuthService(DinContext context, IIpStackClient ipStackClient)
+        public AuthService(DinContext context, IIpStackClient ipStackClient, IMapper mapper)
         {
             _context = context;
             _ipStackClient = ipStackClient;
+            _mapper = mapper;
         }
 
         public async Task<ClaimsPrincipal> LoginAsync(string username, string password)
         {
-            var accountEntity = await _context.Account.FirstAsync(a => a.Username.Equals(username));
-
-            if (accountEntity == null || !BCrypt.Net.BCrypt.Verify(password, accountEntity.Hash)) return null;
-
-            var claims = new List<Claim>
+            try
             {
-                new Claim("ID", accountEntity.ID.ToString()),
-                new Claim(ClaimTypes.Role, accountEntity.Role.ToString())
-            };
+                var accountEntity = await _context.Account.FirstAsync(a => a.Username.Equals(username));
 
-            return new ClaimsPrincipal(new ClaimsIdentity(claims, "login"));
+                if (!BCrypt.Net.BCrypt.Verify(password, accountEntity.Hash))
+                    throw new LoginException("Password Incorrect", 2);
+
+                var claims = new List<Claim>
+                {
+                    new Claim("ID", accountEntity.ID.ToString()),
+                    new Claim(ClaimTypes.Role, accountEntity.Role.ToString())
+                };
+
+                return new ClaimsPrincipal(new ClaimsIdentity(claims, "login"));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new LoginException("Username incorrect", 1);
+            }
         }
 
         public async Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status)
@@ -57,7 +68,7 @@ namespace Din.Service.Services.Concrete
             {
                 var locationDto = await _ipStackClient.GetLocation(publicIp);
 
-                loginAttemptEntity.Location = Mapper.Map<LoginLocationEntity>(locationDto);
+                loginAttemptEntity.Location = _mapper.Map<LoginLocationEntity>(locationDto);
 
                 await _context.LoginAttempt.AddAsync(loginAttemptEntity);
                 await _context.SaveChangesAsync();

@@ -34,18 +34,15 @@ namespace Din.Controllers
             {
                 var loginResult = await _service.LoginAsync(username, password);
 
-                if (loginResult == null)
-                    throw new LoginException("Credentials Incorrect");
-
                 await HttpContext.SignInAsync(loginResult);
 
                 await _service.LogLoginAttempt(username, GetClientUaString(), GetClientIp(), LoginStatus.Success);
                 return RedirectToAction("Index", "Main");
             }
-            catch (LoginException)
+            catch (LoginException e)
             {
                 await _service.LogLoginAttempt(username, GetClientUaString(), GetClientIp(), LoginStatus.Failed);
-                return BadRequest();
+                return BadRequest(new {item = e.Identifier, message = e.Message});
             }
         }
 

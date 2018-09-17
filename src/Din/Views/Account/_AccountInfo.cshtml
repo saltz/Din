@@ -1,10 +1,90 @@
-﻿@model Din.ViewModels.AccountViewModel
+﻿@using Din.Data.Entities
+@model Din.ViewModels.AccountViewModel
 
 <div class="account-partial" id="account-view-info">
     <div class="row account-view-header">
         <h2>Information</h2>
     </div>
-    <div class="row account-view-container">
-        <h1>@Model.Data.Account.Username</h1>
+    <div class="row account-view-container container-fluid" style="margin-top: 5%">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="statistic-block rounded">
+                    <div class="color-bar"></div>
+                    <h4>Statistics</h4>
+                    <div style="margin-left: 10%" class="statistic-item">
+                        <i class="fas fa-film"></i>
+                        <p>@Model.Data.AddedContent.Where(_ => _.Type.Equals(ContentType.Movie)).ToArray().Count()</p>
+                        <p>Added</p>
+                    </div>
+                    <div class="statistic-item">
+                        <i class="fas fa-tv" style="transform: scale(0.8)"></i>
+                        <p>@Model.Data.AddedContent.Where(_ => _.Type.Equals(ContentType.TvShow)).ToArray().Count()</p>
+                        <p>Added</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="management-block rounded">
+                    <div class="color-bar"></div>
+                    <h4>Management</h4>
+                    <div class="management-item">
+                        <p>Invite a friend</p>
+                        <input id="invite-friend-input" type="email" name="email" placeholder="e-mail address"/>
+                        <button id="invite-friend-btn" disabled>Invite</button>
+                    </div>
+                    <div class="management-item">
+                        <p>Delete account</p>
+                        <input id="delete-account-input" type="text" name="delete-confirm" placeholder="type 'delete' to confirm"/>
+                        <button id="delete-account-btn" disabled >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="main-information-block rounded">
+                    <div class="color-bar"></div>
+                    <div class="row">
+                        <div class="main-information-section">
+                            <h3>Personal information</h3>
+                            <form>
+                                <div class="section-item">
+                                    <label>First name</label>
+                                    <input type="text" name="firstname" value="@Model.Data.User.FirstName"/>
+                                </div>
+                                <div class="section-item">
+                                    <label>Last name</label>
+                                    <input type="text" name="lastname" value="@Model.Data.User.LastName"/>
+                                </div>
+                                <button id="personal-section-btn" class="section-btn" type="submit">Update</button>
+                            </form>
+                        </div>
+                        <div class="section-seperator"></div>
+                        <div class="main-information-section">
+                            <h3>Account information</h3>
+                            <form>
+                                <div class="section-item">
+                                    <label>Account username</label>
+                                    <input type="text" name="accountUsername" value="@Model.Data.Account.Username"/>
+                                </div>
+                                <div class="section-item">
+                                    <label>Account role</label>
+                                    <input type="text" readonly disabled name="accountRole" value="@Model.Data.Account.Role"/>
+                                </div>
+                                <div class="section-item">
+                                    <label>Password</label>
+                                    <input type="password" name="password" placeholder="password"/>
+                                </div>
+                                <div class="section-item">
+                                    <label>Repeat password</label>
+                                    <input type="password" name="passwordRepeat" placeholder="password"/>
+                                </div>
+                                <button id="account-section-btn" class="section-btn" type="submit">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

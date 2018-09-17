@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Din.Service.Dto.Account;
+using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;using UAParser;
+using Microsoft.AspNetCore.Mvc;
+using UAParser;
 
 
 namespace Din.Controllers
@@ -14,16 +18,20 @@ namespace Din.Controllers
     {
         #region injections
 
-        private readonly IAccountService _service;
+        private readonly IAccountService _accountService;
+        private readonly IMovieService _movieService;
+        private readonly ITvShowService _tvShowService;
         private readonly IMapper _mapper;
 
         #endregion injections
 
         #region constructors
 
-        public AccountController(IAccountService service, IMapper mapper)
+        public AccountController(IAccountService accountService, IMovieService movieService, ITvShowService tvShowService, IMapper mapper)
         {
-            _service = service;
+            _accountService = accountService;
+            _movieService = movieService;
+            _tvShowService = tvShowService;
             _mapper = mapper;
         }
 
@@ -36,7 +44,7 @@ namespace Din.Controllers
         {
             var accountDataViewModel = new AccountViewModel
             {
-                Data = await _service.GetAccountDataAsync(GetCurrentSessionId()),
+                Data = await _accountService.GetAccountDataAsync(GetCurrentSessionId()),
                 ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
             };
 
@@ -50,15 +58,16 @@ namespace Din.Controllers
         }
 
         [Authorize, HttpGet]
-        public async Task<IActionResult> GetMovieCalendarAsync()
+        public async Task<IActionResult> GetReleaseCalendarAsync()
         {
-            throw new NotImplementedException();
-        }
+            var calendarDto = new CalendarDto
+            {
+                Items = (await _movieService.GetMovieCalendarAsync()).Concat(await _tvShowService.GetTvShowCalendarAsync()),
+                DateRange = new Tuple<DateTime, DateTime>(DateTime.Now, DateTime.Now.AddMonths(1))
+             
+            };
 
-        [Authorize, HttpGet]
-        public async Task<IActionResult> GetTvShowCalendarAsync()
-        {
-            throw new NotImplementedException();
+            return Ok(calendarDto);
         }
 
         #endregion endpoints

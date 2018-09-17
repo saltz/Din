@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
-using Din.Service.DTO;
-using Din.Service.DTO.Account;
-using Din.Service.DTO.Context;
+using Din.Service.Dto;
+using Din.Service.Dto.Account;
+using Din.Service.Dto.Context;
 using Din.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,17 +24,17 @@ namespace Din.Service.Services.Concrete
             _mapper = mapper;
         }
 
-        public async Task<DataDTO> GetAccountDataAsync(int id)
+        public async Task<DataDto> GetAccountDataAsync(int id)
         {
-            return new DataDTO
+            return new DataDto
             {
-                User = _mapper.Map<UserDTO>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
-                Account = _mapper.Map<AccountDTO>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
-                AddedContent = _mapper.Map<IEnumerable<AddedContentDTO>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
+                User = _mapper.Map<UserDto>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
+                Account = _mapper.Map<AccountDto>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
+                AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
             };
         }
 
-        public async Task<ResultDTO> UploadAccountImageAsync(int id, string name, byte[] data)
+        public async Task<ResultDto> UploadAccountImageAsync(int id, string name, byte[] data)
         {
             //TODO
             var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
@@ -47,23 +46,12 @@ namespace Din.Service.Services.Concrete
 
             await _context.SaveChangesAsync();
 
-            return new ResultDTO
+            return new ResultDto
             {
                 Title = "Profile picture updated",
                 TitleColor = "#00d77c",
                 Message = "Your profile picture is successfully uploaded"
             };
-        }
-
-        public async Task<CalendarDTO> GetMovieCalendarAsync()
-        {
-            throw new NotImplementedException();
-
-        }
-
-        public async Task<CalendarDTO> GetTvShowCalendarAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

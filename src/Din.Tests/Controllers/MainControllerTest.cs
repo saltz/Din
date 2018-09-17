@@ -1,5 +1,5 @@
 ﻿using Din.Controllers;
-using Din.Service.DTO;
+using Din.Service.Dto;
 using Din.Tests.Fixtures;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -33,7 +33,7 @@ namespace Din.Tests.Controllers
         [Fact]
         public void IndexAuthenticatedTest()
         {
-            _fixture.MockService.Setup(service => service.GenerateBackgroundImages()).ReturnsAsync(new MediaDTO());
+            _fixture.MockService.Setup(service => service.GenerateBackgroundImages()).ReturnsAsync(new MediaDto());
 
             var controller = new MainController(_fixture.MockService.Object)
             {

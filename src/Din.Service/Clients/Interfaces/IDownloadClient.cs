@@ -5,7 +5,7 @@ namespace Din.Service.Clients.Interfaces
 {
     public interface IDownloadClient
     {
-        Task<DCResponse> GetAllItemsAsync();
-        Task<DCResponseItem> GetItemStatusAsync(string itemHash);
+        Task<DcResponse> GetAllItemsAsync();
+        Task<DcResponseItem> GetItemStatusAsync(string itemHash);
     }
 }

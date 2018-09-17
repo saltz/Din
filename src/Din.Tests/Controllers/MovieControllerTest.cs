@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Din.Controllers;
-using Din.Service.DTO;
-using Din.Service.DTO.Content;
+using Din.Service.Dto;
+using Din.Service.Dto.Content;
 using Din.Tests.Fixtures;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +26,7 @@ namespace Din.Tests.Controllers
         public void SearchMovieAsyncTest()
         {
             const string query = "movie-title";
-            var movieDto = new MovieDTO
+            var movieDto = new MovieDto
             {
                 CurrentMovieCollection = new List<int>
                 {
@@ -46,7 +46,7 @@ namespace Din.Tests.Controllers
         [Fact]
         public void AddMovieAsyncTest()
         {
-            var resultDto = new ResultDTO
+            var resultDto = new ResultDto
             {
                 Title = "Success"
             };

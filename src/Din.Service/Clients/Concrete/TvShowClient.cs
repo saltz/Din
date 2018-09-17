@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -26,25 +27,33 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<TCTvShowResponse>>(await client.GetAsync(BuildUrl(new[] { _config.Url, "series", _config.Key })).Result.Content.ReadAsStringAsync());
+            var response = JsonConvert.DeserializeObject<List<TcTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
 
-            return response.Select(r => r.Title).AsEnumerable();
+            return response.Select(r => r.Title.ToLower()).AsEnumerable();
         }
 
-        public async Task<bool> AddTvShowAsync(TCRequest tvShow)
+        public async Task<bool> AddTvShowAsync(TcRequest tvShow)
         {
             tvShow.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
 
-            var response = await client.PostAsync(BuildUrl(new[] { _config.Url, "series", _config.Key }),
+            var response = await client.PostAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(tvShow)));
-            
+
             return response.StatusCode.Equals(HttpStatusCode.Created);
         }
 
-        protected override string BuildUrl(string[] parameters)
+        public async Task<IEnumerable<TcCalendarResponse>> GetCalendarAsync()
         {
-            return $"{parameters[0]}{parameters[1]}?apikey={parameters[2]}";
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<IEnumerable<TcCalendarResponse>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespanMonth())));
+        }
+
+        private string GetTimespanMonth()
+        {
+            return $"&start={DateTime.Now:MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
         }
     }
 }
