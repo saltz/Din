@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    public class TcCalendarResponse
+    public class TcCalendarResponse : ContentCalendarResponse
     {
         [JsonProperty("seasonNumber")]
         public int SeasonNumber { get; set; }

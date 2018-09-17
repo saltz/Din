@@ -10,6 +10,7 @@ using Din.Service.Config.Interfaces;
 using Din.Service.Dto;
 using Din.Service.Dto.Account;
 using Din.Service.Dto.Content;
+using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;

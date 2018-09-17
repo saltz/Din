@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Din.Service.Clients.ResponseObjects;
 
-namespace Din.Service.Dto.Account
+namespace Din.Service.DTO.Content
 {
     public class CalendarDto
     {
@@ -15,7 +14,7 @@ namespace Din.Service.Dto.Account
     {
         public string Title { get; set; }
         public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public bool Downloaded { get; set; }
+        public string TextColor { get; set; }
+        public string Color { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Din.Service.Clients.ResponseObjects;
-using Din.Service.Dto.Account;
+using Din.Service.DTO.Content;
 
 namespace Din.Mapping.Converters
 {
@@ -10,9 +10,10 @@ namespace Din.Mapping.Converters
         {
             return new CalendarItemDto
             {
-                Title = source.Series.Title,
+                Title = $"{source.Series.Title} \n S{source.SeasonNumber}E{source.EpisodeNumber} : {source.Title}",
                 Start = source.AirDate,
-                End = source.AirDate
+                TextColor = "#d0d2d5",
+                Color = source.HasFile ? "rgba(0, 215, 124, .5)" : "rgba(180, 50, 50, .5)"
             };
         }
     }

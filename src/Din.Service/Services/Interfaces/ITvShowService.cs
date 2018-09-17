@@ -4,6 +4,7 @@ using Din.Service.Clients.ResponseObjects;
 using Din.Service.Dto;
 using Din.Service.Dto.Account;
 using Din.Service.Dto.Content;
+using Din.Service.DTO.Content;
 using TMDbLib.Objects.Search;
 
 namespace Din.Service.Services.Interfaces

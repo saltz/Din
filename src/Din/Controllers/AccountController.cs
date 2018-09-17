@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Service.Dto.Account;
+using Din.Service.DTO.Content;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
