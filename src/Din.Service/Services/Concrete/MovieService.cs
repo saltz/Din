@@ -85,6 +85,7 @@ namespace Din.Service.Services.Concrete
         public async Task<CalendarDTO> GetMovieCalendarAsync()
         {
             var calendar = await _movieClient.GetCalendar();
+            return null;
         }
     }
 }

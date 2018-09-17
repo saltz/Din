@@ -19,18 +19,16 @@ namespace Din.Tests.Controllers
         public AccountControllerTest(AccountFixture fixture)
         {
             _fixture = fixture;
-            _mapper = new Mapper(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new EntityProfile());
-            }));
+            _mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile(new EntityProfile()); }));
         }
 
         [Fact]
         public void GetUserViewAsyncTest()
         {
-            _fixture.MockService.Setup(_ => _.GetAccountDataAsync(Convert.ToInt32(TestConsts.Id)))
+            _fixture.AccountServiceMock.Setup(_ => _.GetAccountDataAsync(Convert.ToInt32(TestConsts.Id)))
                 .ReturnsAsync(new DataDTO());
-            var controller = new AccountController(_fixture.MockService.Object, _mapper)
+            var controller = new AccountController(_fixture.AccountServiceMock.Object, _fixture.MovieServiceMock.Object,
+                _fixture.TvShowServiceMock.Object, _mapper)
             {
                 ControllerContext = _fixture.ControllerContextWithSession()
             };
@@ -40,6 +38,5 @@ namespace Din.Tests.Controllers
             var viewResult = Assert.IsType<PartialViewResult>(result);
             Assert.IsType<AccountViewModel>(viewResult.Model);
         }
-
     }
 }

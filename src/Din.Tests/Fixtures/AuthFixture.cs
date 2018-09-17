@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
+using System.Threading.Tasks;
 using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
 
 namespace Din.Tests.Fixtures
@@ -27,16 +27,28 @@ namespace Din.Tests.Fixtures
                 }, "login"));
         }
 
-        public ControllerContext AuthControllerContext()
+        public ControllerContext MockAuthenticationContext()
         {
-            //TODO
-            var httpContext = new Mock<HttpContext>();
-            httpContext.Setup(h => h.SignInAsync(Principal).IsCompletedSuccessfully);
-            var controllerContext = new ControllerContext
+            var msAuthServiceMock = new Mock<IAuthenticationService>();
+            msAuthServiceMock
+                .Setup(_ => _.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<string>(), It.IsAny<ClaimsPrincipal>(),
+                    It.IsAny<AuthenticationProperties>())).Returns(Task.FromResult((object) null));
+
+            var serviceProviderMock = new Mock<IServiceProvider>();
+            var urlHelperFactory = new Mock<IUrlHelperFactory>();
+
+            serviceProviderMock.Setup(_ => _.GetService(typeof(IAuthenticationService)))
+                .Returns(msAuthServiceMock.Object);
+            serviceProviderMock.Setup(s => s.GetService(typeof(IUrlHelperFactory)))
+                .Returns(urlHelperFactory.Object);
+
+            return new ControllerContext
             {
-                HttpContext = httpContext.Object
+                HttpContext = new DefaultHttpContext
+                {
+                    RequestServices = serviceProviderMock.Object
+                }
             };
-            return controllerContext;
         }
     }
 }
