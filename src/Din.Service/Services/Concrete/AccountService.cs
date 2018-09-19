@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Services.Concrete
 {
-    /// <inheritdoc />
-    public class AccountService : IAccountService
+    /// <inheritdoc cref="IAccountService" />
+    public class AccountService : BaseService, IAccountService
     {
         private readonly DinContext _context;
         private readonly IMapper _mapper;
@@ -45,13 +45,51 @@ namespace Din.Service.Services.Concrete
             };
 
             await _context.SaveChangesAsync();
+            return null;
+        }
 
-            return new ResultDto
+        public async Task<ResultDto> UpdatePersonalInformation(int id, UserDto user)
+        {
+            try
             {
-                Title = "Profile picture updated",
-                TitleColor = "#00d77c",
-                Message = "Your profile picture is successfully uploaded"
-            };
+                var userEntity = await _context.User.FirstAsync(u => u.Account.ID.Equals(id));
+                _context.Attach(userEntity);
+
+                userEntity.FirstName = user.FirstName;
+                userEntity.LastName = user.LastName;
+
+                await _context.SaveChangesAsync();
+
+                return GenerateResultDto("Update successful", "Your user information has been updated.",
+                    ResultDtoStatus.Successful);
+            }
+            catch
+            {
+                return GenerateResultDto("Update unsuccessful", "Something went wrong 😵 Try again later!",
+                    ResultDtoStatus.Unsuccessful);
+            }
+        }
+
+        public async Task<ResultDto> UpdateAccountInformation(int id, string username, string hash)
+        {
+            try
+            {
+                var accountEntity = await _context.Account.FirstAsync(a => a.ID.Equals(id));
+                _context.Attach(accountEntity);
+
+                accountEntity.Username = username;
+                accountEntity.Hash = hash;
+
+                await _context.SaveChangesAsync();
+
+                return GenerateResultDto("Update successful", "Your account information has been updated.",
+                    ResultDtoStatus.Successful);
+            }
+            catch
+            {
+                return GenerateResultDto("Update unsuccessful", "Something went wrong 😵 Try again later!",
+                    ResultDtoStatus.Unsuccessful);
+            }
         }
     }
 }

@@ -13,30 +13,26 @@ namespace Din.Service.Services.Concrete
     {
         private readonly IGiphyClient _giphyClient;
         private readonly IUnsplashClient _unsplashClient;
-
-        private DateTime _creationDate;
-        private ICollection<UnsplashResponseObject> _imageCollection;
+        private (DateTime DateGenerated, ICollection<UnsplashResponseObject> Collection) _unsplashData;
 
         public MediaService(IGiphyClient giphyClient, IUnsplashClient unsplashClient)
         {
-            //TODO Tuple<> and new way of dealing with tuples in c# 7+
-
             _giphyClient = giphyClient;
             _unsplashClient = unsplashClient;
-            _creationDate = DateTime.Now;
+            _unsplashData.DateGenerated = DateTime.Now;
         }
 
         public async Task<MediaDto> GenerateBackgroundImages()
         {
-            if (_imageCollection == null || _creationDate.AddDays(1) < DateTime.Now)
+            if (_unsplashData.Collection == null || _unsplashData.DateGenerated.AddDays(1) <= DateTime.Now)
             {
-                _creationDate = DateTime.Now;
-                _imageCollection = await _unsplashClient.GetBackgroundCollection();
+                _unsplashData.DateGenerated = DateTime.Now;
+                _unsplashData.Collection = await _unsplashClient.GetBackgroundCollection();
             }
 
             return new MediaDto
             {
-                BackgroundImageCollection = _imageCollection
+                BackgroundImageCollection = _unsplashData.Collection
             };
         }
 

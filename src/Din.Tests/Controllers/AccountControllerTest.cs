@@ -27,8 +27,7 @@ namespace Din.Tests.Controllers
         {
             _fixture.AccountServiceMock.Setup(_ => _.GetAccountDataAsync(Convert.ToInt32(TestConsts.Id)))
                 .ReturnsAsync(new DataDto());
-            var controller = new AccountController(_fixture.AccountServiceMock.Object, _fixture.MovieServiceMock.Object,
-                _fixture.TvShowServiceMock.Object, _mapper)
+            var controller = new AccountController(_fixture.AccountServiceMock.Object, _mapper)
             {
                 ControllerContext = _fixture.ControllerContextWithSession()
             };

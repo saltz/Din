@@ -60,21 +60,16 @@ namespace Din.Service.Services.Concrete
             if (await _tvShowClient.AddTvShowAsync(requestObj))
             {
                 await LogContentAdditionAsync(tvShow.Name, id);
-                return new ResultDto
-                {
-                    Title = "Tv Show Added Successfully",
-                    TitleColor = "#00d77c",
-                    Message = "The Movie has been added 🤩\nYou can track the progress under your account content tab."
-                };
+
+                return GenerateResultDto("Tv Show Added Successfully",
+                    "The Movie has been added 🤩\nYou can track the progress under your account content tab.",
+                    ResultDtoStatus.Successful);
             }
             else
             {
-                return new ResultDto
-                {
-                    Title = "Failed At adding Tv Show",
-                    TitleColor = "#b43232",
-                    Message = "Something went wrong 😵\nTry again later!"
-                };
+                return GenerateResultDto("Failed At adding Tv Show",
+                    "Something went wrong 😵\nTry again later!",
+                    ResultDtoStatus.Unsuccessful);
             }
         }
 

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Services.Concrete
 {
-    public abstract class ContentService
+    public abstract class ContentService : BaseService
     {
         private readonly DinContext _context;
-        public readonly IMapper Mapper;
+        protected readonly IMapper Mapper;
 
         protected ContentService(DinContext context, IMapper mapper)
         {
