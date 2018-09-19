@@ -4,8 +4,8 @@
         interval: 5000
     });
 
-    /* Donate link tooltop js */
-    $('.donate-container').tooltip();
+    /* tooltop js */
+    $('[data-toggle="tooltip"]').tooltip();
 
     /* Home Menu animations */
 

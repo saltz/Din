@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Data;
+using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Config.Interfaces;
@@ -65,7 +66,7 @@ namespace Din.Service.Services.Concrete
 
             if (await _movieClient.AddMovieAsync(requestObj))
             {
-                await LogContentAdditionAsync(movie.Title, id);
+                await LogContentAdditionAsync(movie.Title, id, ContentType.Movie);
 
                 return GenerateResultDto("Movie Added Successfully",
                     "The Movie has been added 🤩\nYou can track the progress under your account content tab.",
