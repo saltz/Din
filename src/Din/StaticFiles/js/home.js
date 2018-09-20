@@ -5,7 +5,9 @@
     });
 
     /* tooltop js */
-    $('[data-toggle="tooltip"]').tooltip();
+    $('body').tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 
     /* Home Menu animations */
 

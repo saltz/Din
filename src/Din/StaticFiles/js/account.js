@@ -1,7 +1,61 @@
 ﻿/* variables */
 
 var calendarData;
+var _URL = window.URL || window.webkitURL;
 
+/* Image uplaoding */
+
+$(document).delegate('#upload-input',
+    'change',
+    function () {
+        var file, img;
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.src = _URL.createObjectURL(file);
+            img.onload = function () {
+                if ((file.size / 1024) / 1024 > 6) {
+                    showImageAlert('This image file is to large (max 6MB)');
+                } else {
+                    $('#uploaded-img').attr('src', img.src);
+                    $('.upload-btn-submit').attr('disabled', false);
+                }
+            };
+            img.onerror = function () {
+                showImageAlert('This is not a valid image file: ' + file.type);
+            };
+        }
+    });
+
+$(document).delegate('.image-upload-form',
+    'submit',
+    function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showLoader();
+        $.ajax({
+            url: '/Account/UploadAccountImageAsync',
+            type: 'POST',
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function (view) {
+                hideLoader();
+                $('#upload-img').modal('hide');
+                $('div.ajax-div').replaceWith(view);
+                $('.ajax-div').modal('show');
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+function showImageAlert(text) {
+    $('.upload-btn-submit').attr('disabled', true);
+    $('.image-upload-form .alert').text(text);
+    $('.image-upload-form .alert').fadeIn(500);
+    setTimeout("$('.image-upload-form .alert').fadeOut(1500);", 3000);
+}
 
 /* Menu Highlighting */
 
@@ -160,7 +214,6 @@ function generateCalendar() {
 }
 
 function drawCalendar() {
-    console.log('drawing calendar');
     $('#release-calendar').fullCalendar({
         defaultView: 'month',
         events: calendarData.items,
@@ -182,7 +235,6 @@ function drawCalendar() {
 }
 
 function getCalendarData(callback) {
-    console.log('getting calendar data');
     $.ajax({
         url: '/Information/GetReleaseCalendarAsync',
         type: 'GET',

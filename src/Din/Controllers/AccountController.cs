@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Service.Dto.Context;
@@ -46,9 +47,22 @@ namespace Din.Controllers
         }
 
         [Authorize, HttpPost]
-        public async Task<IActionResult> UploadAccountImageAsync(IFormFile file)
+        public async Task<IActionResult> UploadAccountImageAsync(IFormFile image)
         {
-            throw new NotImplementedException();
+            if (image != null)
+            {
+                byte[] data;
+                using (var rs = image.OpenReadStream())
+                using (var ms = new MemoryStream())
+                {
+                    rs.CopyTo(ms);
+                    data = ms.ToArray();
+                }
+
+                return PartialView("~/Views/Main/Partials/_Result.cshtml", _mapper.Map<ResultViewModel>(await _service.UploadAccountImageAsync(GetCurrentSessionId(), image.FileName, data)));
+            }
+
+            return BadRequest();
         }
 
         [Authorize, HttpPost]

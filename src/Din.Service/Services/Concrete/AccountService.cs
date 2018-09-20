@@ -29,23 +29,42 @@ namespace Din.Service.Services.Concrete
             return new DataDto
             {
                 User = _mapper.Map<UserDto>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
-                Account = _mapper.Map<AccountDto>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
-                AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
+                Account = _mapper.Map<AccountDto>(await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id))),
+                AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>(
+                    (await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
             };
         }
 
         public async Task<ResultDto> UploadAccountImageAsync(int id, string name, byte[] data)
         {
-            //TODO
-            var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
-            account.Image = new AccountImageEntity
+            try
             {
-                Data = data,
-                Name = name
-            };
+                var accountEntity = await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id));
+                _context.Attach(accountEntity);
 
-            await _context.SaveChangesAsync();
-            return null;
+                if (accountEntity.Image != null)
+                {
+                    accountEntity.Image.Name = name;
+                    accountEntity.Image.Data = data;
+                }
+                else
+                {
+                    accountEntity.Image = new AccountImageEntity
+                    {
+                        Data = data,
+                        Name = name
+                    };
+                }
+
+                await _context.SaveChangesAsync();
+                return GenerateResultDto("Image uploaded successfully",
+                    "Your image is now visible on your account tab.", ResultDtoStatus.Successful);
+            }
+            catch
+            {
+                return GenerateResultDto("Image not uploaded", "Something went wrong on my side, try again later",
+                    ResultDtoStatus.Unsuccessful);
+            }
         }
 
         public async Task<ResultDto> UpdatePersonalInformation(int id, UserDto user)
