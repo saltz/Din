@@ -24,9 +24,9 @@
     color: white;
 }
 
-.user-section .user-picture { height: 12vw; }
+.user-section .user-picture { height: 12vw; }        
 
-.user-section .user-picture img {
+.user-section .user-picture .img-wrapper {
     height: 9vw;
     width: 9vw;
     border-radius: 50%;
@@ -35,10 +35,20 @@
     border: 3px solid #ff8d1c;
 }
 
-.user-section .user-info {
-    height: 4vw;
-    text-align: center;
+.user-section .user-picture .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
+
+.img-wrapper img:hover {
+    opacity: 0.3;
+    cursor: pointer;
+}
+    .user-section .user-info {
+        height: 4vw;
+        text-align: center;
+    }
 
     .user-section .user-info i {
         padding: 10px;

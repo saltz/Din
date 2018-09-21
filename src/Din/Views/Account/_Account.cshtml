@@ -12,11 +12,23 @@
     }
 }
 
-<div id="account" class="shadow p-3 mb-5 rounded partial-screen">
+<div id="account" class="shadow p-3 mb-5 rounded partial-screen ajax-div">
     <div class="left-container shadow rounded">
         <div class="user-section">
             <div class="user-picture">
-                <img src="" alt=""/>
+                <div class="img-wrapper" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<i class='fas fa-cloud-upload-alt' style='font-size:.5vw;margin-right:.3vw'></i><small style='font-size:.7vw'>Upload a image</small>">
+                    @{
+                        if (Model.Data.Account.Image != null)
+                        {
+                            var image = $"data:image;base64,{Convert.ToBase64String(Model.Data.Account.Image.Data)}";
+                            <img src="@image" alt="" data-toggle="modal" data-target="#upload-img" />
+                        }
+                        else
+                        {
+                            <img src="" alt="" data-toggle="modal" data-target="#upload-img" />
+                        }
+                    }
+                </div>
             </div>
             <div class="user-info">
                 <h3>@Model.Data.User.FirstName @Model.Data.User.LastName</h3>
@@ -48,6 +60,7 @@
     </div>
     <div class="data-pane shadow rounded">
         @{
+            await Html.RenderPartialAsync("~/Views/Account/_AccountUploadImg.cshtml");
             await Html.RenderPartialAsync("~/Views/Account/_AccountInfo.cshtml");
             await Html.RenderPartialAsync("~/Views/Account/_AccountAddedContent.cshtml");
             await Html.RenderPartialAsync("~/Views/Account/_AccountReleaseCalendar.cshtml");

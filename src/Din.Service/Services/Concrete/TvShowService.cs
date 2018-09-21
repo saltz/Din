@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Data;
+using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Config.Interfaces;
@@ -59,22 +60,17 @@ namespace Din.Service.Services.Concrete
 
             if (await _tvShowClient.AddTvShowAsync(requestObj))
             {
-                await LogContentAdditionAsync(tvShow.Name, id);
-                return new ResultDto
-                {
-                    Title = "Tv Show Added Successfully",
-                    TitleColor = "#00d77c",
-                    Message = "The Movie has been added 🤩\nYou can track the progress under your account content tab."
-                };
+                await LogContentAdditionAsync(tvShow.Name, id, ContentType.TvShow);
+
+                return GenerateResultDto("Tv Show Added Successfully",
+                    "The Movie has been added 🤩\nYou can track the progress under your account content tab.",
+                    ResultDtoStatus.Successful);
             }
             else
             {
-                return new ResultDto
-                {
-                    Title = "Failed At adding Tv Show",
-                    TitleColor = "#b43232",
-                    Message = "Something went wrong 😵\nTry again later!"
-                };
+                return GenerateResultDto("Failed At adding Tv Show",
+                    "Something went wrong 😵\nTry again later!",
+                    ResultDtoStatus.Unsuccessful);
             }
         }
 

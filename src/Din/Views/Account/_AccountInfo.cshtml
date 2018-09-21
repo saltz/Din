@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="main-information-section">
                             <h3>Personal information</h3>
-                            <form>
+                            <form class="user-information-form">
                                 <div class="section-item">
                                     <label>First name</label>
                                     <input type="text" name="firstname" value="@Model.Data.User.FirstName"/>
@@ -59,10 +59,10 @@
                                 <button id="personal-section-btn" class="section-btn" type="submit">Update</button>
                             </form>
                         </div>
-                        <div class="section-seperator"></div>
+                        <div class="section-separator"></div>
                         <div class="main-information-section">
                             <h3>Account information</h3>
-                            <form>
+                            <form class="account-information-form">
                                 <div class="section-item">
                                     <label>Account username</label>
                                     <input type="text" name="accountUsername" value="@Model.Data.Account.Username"/>
@@ -73,13 +73,13 @@
                                 </div>
                                 <div class="section-item">
                                     <label>Password</label>
-                                    <input type="password" name="password" placeholder="password"/>
+                                    <input id="account-password" type="password" name="password" placeholder="password"/>
                                 </div>
                                 <div class="section-item">
                                     <label>Repeat password</label>
-                                    <input type="password" name="passwordRepeat" placeholder="password"/>
+                                    <input id="account-valid-password" type="password" name="validPassword" placeholder="password"/>
                                 </div>
-                                <button id="account-section-btn" class="section-btn" type="submit">Update</button>
+                                <button id="account-section-btn" class="section-btn">Update</button>
                             </form>
                         </div>
                     </div>

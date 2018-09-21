@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Services.Concrete
 {
-    public abstract class ContentService
+    public abstract class ContentService : BaseService
     {
         private readonly DinContext _context;
-        public readonly IMapper Mapper;
+        protected readonly IMapper Mapper;
 
         protected ContentService(DinContext context, IMapper mapper)
         {
@@ -19,7 +19,7 @@ namespace Din.Service.Services.Concrete
             Mapper = mapper;
         }
 
-        protected async Task LogContentAdditionAsync(string title, int id)
+        protected async Task LogContentAdditionAsync(string title, int id, ContentType type)
         {
             var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
 
@@ -32,7 +32,8 @@ namespace Din.Service.Services.Concrete
                 Title = title,
                 DateAdded = DateTime.Now,
                 Status = ContentStatus.Queued,
-                Account = account
+                Account = account,
+                Type = type
             });
                 
             await _context.SaveChangesAsync();
