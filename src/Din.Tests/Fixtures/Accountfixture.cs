@@ -5,11 +5,11 @@ namespace Din.Tests.Fixtures
 {
     public class AccountFixture : BaseFixture
     {
-        public Mock<IAccountService> AccountServiceMock { get; set; }
+        public Mock<IAccountService> ServiceMock { get; set; }
 
         public AccountFixture()
         {
-            AccountServiceMock = new Mock<IAccountService>();
+            ServiceMock = new Mock<IAccountService>();
         }
     }
 }

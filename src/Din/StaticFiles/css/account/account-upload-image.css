@@ -2,7 +2,7 @@
     height: 100%;
 }
 
-.modal-body img {
+#upload-img .modal-body img {
     width: 8vw;
     height: 8vw;
     border: 2px solid #ff8d1c;

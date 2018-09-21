@@ -29,6 +29,7 @@ $(document).delegate('#upload-input',
 $(document).delegate('.image-upload-form',
     'submit',
     function (e) {
+        $('#upload-img').modal('hide');
         e.preventDefault();
         e.stopPropagation();
         showLoader();
@@ -40,7 +41,6 @@ $(document).delegate('.image-upload-form',
             processData: false,
             success: function (view) {
                 hideLoader();
-                $('#upload-img').modal('hide');
                 $('div.ajax-div').replaceWith(view);
                 $('.ajax-div').modal('show');
             },
