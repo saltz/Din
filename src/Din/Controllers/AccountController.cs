@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
-using Din.Service.Dto.Account;
-using Din.Service.DTO.Content;
+using Din.Service.Dto.Context;
 using Din.Service.Services.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -18,20 +17,16 @@ namespace Din.Controllers
     {
         #region injections
 
-        private readonly IAccountService _accountService;
-        private readonly IMovieService _movieService;
-        private readonly ITvShowService _tvShowService;
+        private readonly IAccountService _service;
         private readonly IMapper _mapper;
 
         #endregion injections
 
         #region constructors
 
-        public AccountController(IAccountService accountService, IMovieService movieService, ITvShowService tvShowService, IMapper mapper)
+        public AccountController(IAccountService service, IMapper mapper)
         {
-            _accountService = accountService;
-            _movieService = movieService;
-            _tvShowService = tvShowService;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -44,7 +39,7 @@ namespace Din.Controllers
         {
             var accountDataViewModel = new AccountViewModel
             {
-                Data = await _accountService.GetAccountDataAsync(GetCurrentSessionId()),
+                Data = await _service.GetAccountDataAsync(GetCurrentSessionId()),
                 ClientInfo = Parser.GetDefault().Parse(GetClientUaString())
             };
 
@@ -52,22 +47,42 @@ namespace Din.Controllers
         }
 
         [Authorize, HttpPost]
-        public async Task<IActionResult> UploadAccountImageAsync(IFormFile file)
+        public async Task<IActionResult> UploadAccountImageAsync(IFormFile image)
         {
-            throw new NotImplementedException();
+            if (image != null)
+            {
+                byte[] data;
+                using (var rs = image.OpenReadStream())
+                using (var ms = new MemoryStream())
+                {
+                    rs.CopyTo(ms);
+                    data = ms.ToArray();
+                }
+
+                return PartialView("~/Views/Main/Partials/_Result.cshtml", _mapper.Map<ResultViewModel>(await _service.UploadAccountImageAsync(GetCurrentSessionId(), image.FileName, data)));
+            }
+
+            return BadRequest();
         }
 
-        [Authorize, HttpGet]
-        public async Task<IActionResult> GetReleaseCalendarAsync()
+        [Authorize, HttpPost]
+        public async Task<IActionResult> UpdatePersonalInformation(string firstname, string lastname)
         {
-            var calendarDto = new CalendarDto
-            {
-                Items = (await _movieService.GetMovieCalendarAsync()).Concat(await _tvShowService.GetTvShowCalendarAsync()),
-                DateRange = new Tuple<DateTime, DateTime>(DateTime.Now, DateTime.Now.AddMonths(1))
-             
-            };
+            return PartialView("~/Views/Main/Partials/_Result.cshtml", _mapper.Map<ResultViewModel>(
+                await _service.UpdatePersonalInformation(GetCurrentSessionId(), new UserDto
+                {
+                    FirstName = firstname,
+                    LastName = lastname
+                })));
+        }
 
-            return Ok(calendarDto);
+        [Authorize, HttpPost]
+        public async Task<IActionResult> UpdateAccountInformation(string accountUsername, string validPassword)
+        {
+            var hash = validPassword != null ? BCrypt.Net.BCrypt.HashPassword(validPassword) : null;
+
+            return PartialView("~/Views/Main/Partials/_Result.cshtml", _mapper.Map<ResultViewModel>(
+                await _service.UpdateAccountInformation(GetCurrentSessionId(), accountUsername, hash)));
         }
 
         #endregion endpoints

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Din.Service.Services.Concrete
 {
-    /// <inheritdoc />
-    public class AccountService : IAccountService
+    /// <inheritdoc cref="IAccountService" />
+    public class AccountService : BaseService, IAccountService
     {
         private readonly DinContext _context;
         private readonly IMapper _mapper;
@@ -29,29 +29,86 @@ namespace Din.Service.Services.Concrete
             return new DataDto
             {
                 User = _mapper.Map<UserDto>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
-                Account = _mapper.Map<AccountDto>(await _context.Account.FirstAsync(a => a.ID.Equals(id))),
-                AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>((await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
+                Account = _mapper.Map<AccountDto>(await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id))),
+                AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>(
+                    (await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
             };
         }
 
         public async Task<ResultDto> UploadAccountImageAsync(int id, string name, byte[] data)
         {
-            //TODO
-            var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
-            account.Image = new AccountImageEntity
+            try
             {
-                Data = data,
-                Name = name
-            };
+                var accountEntity = await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id));
+                _context.Attach(accountEntity);
 
-            await _context.SaveChangesAsync();
+                if (accountEntity.Image != null)
+                {
+                    accountEntity.Image.Name = name;
+                    accountEntity.Image.Data = data;
+                }
+                else
+                {
+                    accountEntity.Image = new AccountImageEntity
+                    {
+                        Data = data,
+                        Name = name
+                    };
+                }
 
-            return new ResultDto
+                await _context.SaveChangesAsync();
+                return GenerateResultDto("Image uploaded successfully",
+                    "Your image is now visible on your account tab.", ResultDtoStatus.Successful);
+            }
+            catch
             {
-                Title = "Profile picture updated",
-                TitleColor = "#00d77c",
-                Message = "Your profile picture is successfully uploaded"
-            };
+                return GenerateResultDto("Image not uploaded", "Something went wrong on my side, try again later",
+                    ResultDtoStatus.Unsuccessful);
+            }
+        }
+
+        public async Task<ResultDto> UpdatePersonalInformation(int id, UserDto user)
+        {
+            try
+            {
+                var userEntity = await _context.User.FirstAsync(u => u.Account.ID.Equals(id));
+                _context.Attach(userEntity);
+
+                userEntity.FirstName = user.FirstName;
+                userEntity.LastName = user.LastName;
+
+                await _context.SaveChangesAsync();
+
+                return GenerateResultDto("Update successful", "Your user information has been updated.",
+                    ResultDtoStatus.Successful);
+            }
+            catch
+            {
+                return GenerateResultDto("Update unsuccessful", "Something went wrong 😵 Try again later!",
+                    ResultDtoStatus.Unsuccessful);
+            }
+        }
+
+        public async Task<ResultDto> UpdateAccountInformation(int id, string username, string hash)
+        {
+            try
+            {
+                var accountEntity = await _context.Account.FirstAsync(a => a.ID.Equals(id));
+                _context.Attach(accountEntity);
+
+                accountEntity.Username = username;
+                accountEntity.Hash = hash;
+
+                await _context.SaveChangesAsync();
+
+                return GenerateResultDto("Update successful", "Your account information has been updated.",
+                    ResultDtoStatus.Successful);
+            }
+            catch
+            {
+                return GenerateResultDto("Update unsuccessful", "Something went wrong 😵 Try again later!",
+                    ResultDtoStatus.Unsuccessful);
+            }
         }
     }
 }

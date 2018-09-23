@@ -48,12 +48,12 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
 
             return JsonConvert.DeserializeObject<IEnumerable<TcCalendarResponse>>(
-                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespanMonth())));
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespan())));
         }
 
-        private string GetTimespanMonth()
+        private string GetTimespan()
         {
-            return $"&start={DateTime.Now:MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
+            return $"&start={DateTime.Now.Date.AddDays(-14):MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
         }
     }
 }

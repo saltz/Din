@@ -1,0 +1,72 @@
+﻿#upload-img .modal-dialog .modal-content {
+    height: 100%;
+}
+
+#upload-img .modal-body img {
+    width: 8vw;
+    height: 8vw;
+    border: 2px solid #ff8d1c;
+    border-radius: 50%;
+}
+
+.modal-body form .upload-btn-wrapper {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+}
+
+.image-upload-form {
+    text-align: center;
+}
+
+.image-upload-form .alert {
+    font-size: .6vw;
+    margin: 0;
+    width: 80%;
+    margin-left: calc(50% - 40%);
+}
+
+    .modal-body form .upload-btn-wrapper .upload-btn {
+        background: transparent;
+        border: 1px solid #ff8d1c;
+        padding: 5px;
+        border-radius: 4px;
+        color: #d0d2d5;
+        font-size: .7vw;
+    }
+
+.modal-body form .upload-btn-submit {
+    background: transparent;
+    border: 1px solid rgba(6, 178, 105, .6);
+    padding: 5px;
+    border-radius: 4px;
+    color: #d0d2d5;
+    font-size: .7vw;
+    display: block;
+    margin: 2% auto;
+}
+
+    .modal-body form .upload-btn-submit:hover {
+        cursor: pointer;
+        color: rgba(6, 178, 105, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(6, 178, 105, 0.4);
+    }
+
+    .modal-body form .upload-btn-submit:disabled {
+        border: 1px solid #7a7e84 !important;
+    }
+
+        .modal-body form .upload-btn-submit:disabled:hover {
+            cursor: not-allowed;
+            color: #d0d2d5;
+            box-shadow: none;
+        }
+
+        .modal-body form .upload-btn-wrapper input {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
