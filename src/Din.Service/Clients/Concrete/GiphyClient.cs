@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;

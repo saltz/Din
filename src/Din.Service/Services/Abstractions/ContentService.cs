@@ -6,7 +6,7 @@ using Din.Data;
 using Din.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Din.Service.Services.Concrete
+namespace Din.Service.Services.Abstractions
 {
     public abstract class ContentService : BaseService
     {
@@ -19,9 +19,9 @@ namespace Din.Service.Services.Concrete
             Mapper = mapper;
         }
 
-        protected async Task LogContentAdditionAsync(string title, int id, ContentType type)
+        protected async Task LogContentAdditionAsync(string title, int accountId, ContentType type, int foreignId)
         {
-            var account = await _context.Account.FirstAsync(a => a.ID.Equals(id));
+            var account = await _context.Account.FirstAsync(a => a.ID.Equals(accountId));
 
             if(account.AddedContent == null)
                 account.AddedContent = new List<AddedContentEntity>();
@@ -29,6 +29,7 @@ namespace Din.Service.Services.Concrete
             _context.Attach(account);
             account.AddedContent.Add(new AddedContentEntity
             {
+                ForeignId = foreignId,
                 Title = title,
                 DateAdded = DateTime.Now,
                 Status = ContentStatus.Queued,
@@ -41,8 +42,7 @@ namespace Din.Service.Services.Concrete
 
         protected string GenerateTitleSlug(string title, DateTime date)
         {
-            var slug = title.ToLower().Replace(" ", "-") + "-";
-            return $"{slug}{date.Year.ToString().ToLower()}";
+            return $"{title.ToLower().Replace(" ", "-")}-{date.Year.ToString().ToLower()}";
         }     
 
         //private async Task<List<AddedContent>> PerformUpdateAsync(Account account)

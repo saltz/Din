@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Data;
@@ -10,6 +11,7 @@ using Din.Service.Config.Interfaces;
 using Din.Service.Dto;
 using Din.Service.Dto.Content;
 using Din.Service.DTO.Content;
+using Din.Service.Services.Abstractions;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
@@ -33,7 +35,7 @@ namespace Din.Service.Services.Concrete
         {
             return new MovieDto
             {
-                CurrentMovieCollection = await _movieClient.GetCurrentMoviesAsync(),
+                CurrentMovieCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.Id),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchMovieAsync(query)).Results
             };
         }
@@ -66,7 +68,7 @@ namespace Din.Service.Services.Concrete
 
             if (await _movieClient.AddMovieAsync(requestObj))
             {
-                await LogContentAdditionAsync(movie.Title, id, ContentType.Movie);
+                await LogContentAdditionAsync(movie.Title, id, ContentType.Movie, movie.Id);
 
                 return GenerateResultDto("Movie Added Successfully",
                     "The Movie has been added 🤩\nYou can track the progress under your account content tab.",

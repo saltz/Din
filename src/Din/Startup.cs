@@ -2,6 +2,7 @@
 using Din.Config;
 using Din.Data;
 using Din.Mapping.Profiles;
+using Din.Service.BackgroundServices.Concrete;
 using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
@@ -10,12 +11,13 @@ using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Din
 {
@@ -86,6 +88,10 @@ namespace Din
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
 
+
+            //Background Services
+            services.AddSingleton<IHostedService, ContentUpdateService>();
+
             //Initialize Mapper Profiles
             var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
@@ -112,7 +118,7 @@ namespace Din
                 routes.MapRoute("Login", "",
                     defaults: new {controller = "Authentication", action = "LoginAsync"});
                 routes.MapRoute("Logout", "Logout",
-                    defaults: new {controller = "Main", action = "Exit"});
+                    defaults: new {controller = "Authentication", action = "logoutAsync"});
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");

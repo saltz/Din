@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
-namespace Din.Service.Clients.Concrete
+namespace Din.Service.Clients.Abstractions
 {
     public abstract class BaseClient
     {

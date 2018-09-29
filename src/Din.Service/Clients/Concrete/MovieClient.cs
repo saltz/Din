@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
@@ -23,13 +23,11 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IEnumerable<int>> GetCurrentMoviesAsync()
+        public async Task<IEnumerable<McMovieResponse>> GetCurrentMoviesAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<McMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
-
-            return response.Select(r => r.Id).AsEnumerable();
+            return JsonConvert.DeserializeObject<IEnumerable<McMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
         }
 
         public async Task<bool> AddMovieAsync(McRequest movie)

@@ -5,6 +5,8 @@ namespace Din.Service.Clients.ResponseObjects
 {
     public class McCalendarResponse : ContentCalendarResponse
     {
+        [JsonProperty("tmdbid")]
+        public int Id { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
         [JsonProperty("inCinemas")]
