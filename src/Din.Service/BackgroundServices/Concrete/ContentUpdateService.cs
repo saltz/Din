@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Din.Data;
@@ -12,7 +13,7 @@ namespace Din.Service.BackgroundServices.Concrete
 {
     public class ContentUpdateService : ScheduledProcessor
     {
-        protected override string Schedule => "*/1 * * * *";
+        protected override string Schedule => "*/5 * * * *";
 
         public ContentUpdateService(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
@@ -24,13 +25,19 @@ namespace Din.Service.BackgroundServices.Concrete
             var movieClient = serviceProvider.GetService<IMovieClient>();
             var tvShowClient = serviceProvider.GetService<ITvShowClient>();
 
-            await UpdateStatusMovieObjects(context, movieClient);
-            await UpdateStatusTvShowObjects(context, tvShowClient);
+            var content = await context.AddedContent.ToListAsync();
+            content.RemoveAll(c => c.Status.Equals(ContentStatus.Done));
+
+            await UpdateStatusMovieObjects(content, movieClient);
+            await UpdateStatusTvShowObjects(content, tvShowClient);
+
+            await context.SaveChangesAsync();
         }
 
-        private async Task UpdateStatusMovieObjects(DinContext context, IMovieClient movieClient)
+        private async Task UpdateStatusMovieObjects(List<AddedContentEntity> content, IMovieClient movieClient)
         {
-            var content = await context.AddedContent.Where(ac => ac.Type.Equals(ContentType.Movie)).ToListAsync();
+            content = content.Where(c => c.Type.Equals(ContentType.Movie)).ToList();
+
             var movieCollection = (await movieClient.GetCurrentMoviesAsync()).ToList();
 
             foreach (var c in content)
@@ -38,28 +45,54 @@ namespace Din.Service.BackgroundServices.Concrete
                 if (movieCollection.First(i => i.Id.Equals(c.ForeignId)).Downloaded)
                 {
                     c.Status = ContentStatus.Done;
-                    break;
+                    continue;
                 }
 
                 if (DateTime.Now >= c.DateAdded.AddDays(3))
                 {
                     c.Status = ContentStatus.NotAvailable;
-                    break;
                 }
 
-                //if in download system : downloading
-
+                //TODO check download system
             }
         }
 
-        private async Task UpdateStatusTvShowObjects(DinContext context, ITvShowClient tvShowClient)
+        private async Task UpdateStatusTvShowObjects(List<AddedContentEntity> content, ITvShowClient tvShowClient)
         {
-            var content = await context.AddedContent.Where(ac => ac.Type.Equals(ContentType.TvShow)).ToListAsync();
+            content = content.Where(c => c.Type.Equals(ContentType.TvShow)).ToList();
+
             var tvShowCollection = (await tvShowClient.GetCurrentTvShowsAsync()).ToList();
 
             foreach (var c in content)
             {
+                var show = tvShowCollection.First(i => i.Id.Equals(c.ForeignId));
+                show.Seasons.Remove(show.Seasons.First(s => s.SeasonsNumber.Equals(0)));
 
+                var seasonCheck = 0;
+
+                foreach (var s in show.Seasons)
+                {
+                    if (s.Statistics.EpisodeCount.Equals(s.Statistics.TotalEpisodeCount))
+                    {
+                        seasonCheck++;
+                        continue;
+                    }
+
+                    break;
+                }
+
+                if (seasonCheck.Equals(show.Seasons.Count))
+                {
+                    c.Status = ContentStatus.Done;
+                    continue;
+                }
+
+                if (DateTime.Now >= c.DateAdded.AddDays(3))
+                {
+                    c.Status = ContentStatus.NotAvailable;
+                }
+
+                //TODO check download system
             }
         }
     }
