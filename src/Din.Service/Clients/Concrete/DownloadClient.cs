@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
@@ -13,12 +14,12 @@ namespace Din.Service.Clients.Concrete
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IDownloadClientConfig _config;
+        private bool _authenticated;
 
         public DownloadClient(IHttpClientFactory httpClientFactory, IDownloadClientConfig config)
         {
             _httpClientFactory = httpClientFactory;
             _config = config;
-            Authenticate().Wait(); //TODO check singleton
         }
 
         private async Task Authenticate()
@@ -47,10 +48,17 @@ namespace Din.Service.Clients.Concrete
                 throw new DownloadClientException("Error occured while authenticating");
             }
             */
+
+            _authenticated = true;
         }
 
         public async Task<DcResponse> GetAllItemsAsync()
         {
+            if (!_authenticated)
+            {
+                await Authenticate();
+            }
+
             var payload = new DcSingleParamRequest
             {
                 Id = 1,
@@ -62,6 +70,7 @@ namespace Din.Service.Clients.Concrete
 
             //TODO
             var response = await client.PostAsync(_config.Url, new StringContent(JsonConvert.SerializeObject(payload)));
+
             return new DcResponse();
             /* OLD CODE
             try
@@ -78,6 +87,11 @@ namespace Din.Service.Clients.Concrete
 
         public async Task<DcResponseItem> GetItemStatusAsync(string itemHash)
         {
+            if (!_authenticated)
+            {
+                await Authenticate();
+            }
+
             var payload = new DcParamCollectionRequest
             {
                 Id = 1,

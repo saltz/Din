@@ -30,7 +30,7 @@
                 if (!i.Title.Equals(m.Title)) continue;
                 if (!m.Downloaded) continue;
                 i.Status = ContentStatus.Done;
-                break;
+                break; 
             }
 
             return content;

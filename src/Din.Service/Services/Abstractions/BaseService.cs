@@ -1,6 +1,6 @@
 ﻿using Din.Service.Dto;
 
-namespace Din.Service.Services.Concrete
+namespace Din.Service.Services.Abstractions
 {
     public abstract class BaseService
     {

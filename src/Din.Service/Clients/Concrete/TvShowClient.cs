@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
@@ -23,13 +24,11 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IEnumerable<string>> GetCurrentTvShowsAsync()
+        public async Task<IEnumerable<TcTvShowResponse>> GetCurrentTvShowsAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<TcTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());
-
-            return response.Select(r => r.Title.ToLower()).AsEnumerable();
+            return JsonConvert.DeserializeObject<IEnumerable<TcTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());       
         }
 
         public async Task<bool> AddTvShowAsync(TcRequest tvShow)
