@@ -8,6 +8,7 @@ using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete
@@ -27,10 +28,19 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<McMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
+            return JsonConvert.DeserializeObject<IEnumerable<McMovieResponse>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
         }
 
-        public async Task<bool> AddMovieAsync(McRequest movie)
+        public async Task<McMovieResponse> GetMovieByIdAsync(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<McMovieResponse>(
+                await client.GetStringAsync(BuildUrl(_config.Url, $"movie/{id}", $"?apikey={_config.Key}")));
+        }
+
+        public async Task<(bool status, int systemId)> AddMovieAsync(McRequest movie)
         {
             movie.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
@@ -38,7 +48,7 @@ namespace Din.Service.Clients.Concrete
             var response = await client.PostAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(movie)));
 
-            return response.StatusCode.Equals(HttpStatusCode.Created);
+            return (response.StatusCode.Equals(HttpStatusCode.Created), JsonConvert.DeserializeObject<McMovieResponse>(await response.Content.ReadAsStringAsync()).SystemId);
         }
 
         public async Task<IEnumerable<McCalendarResponse>> GetCalendarAsync()
@@ -46,8 +56,10 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
 
             return JsonConvert.DeserializeObject<IEnumerable<McCalendarResponse>>(
-                    await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespan())));
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}",
+                    GetTimespan())));
         }
+
         private string GetTimespan()
         {
             return $"&start={DateTime.Now.AddDays(-14):MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";

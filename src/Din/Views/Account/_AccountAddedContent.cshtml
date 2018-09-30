@@ -63,9 +63,21 @@
                                     <div class="custom-col-5">
                                         <p>@TimeSpan.FromSeconds(e.Eta).ToString(@"hh\:mm\:ss")</p>
                                     </div>
-                                }
-                                else if (e.Status.Equals(ContentStatus.NotAvailable))
-                                {
+                                    }
+                                    else if (e.Status.Equals(ContentStatus.Stuck))
+                                    {
+                                        <div class="custom-col-5">
+                                            <p>@e.Status</p>
+                                        </div>
+                                        <div class="custom-col-5">
+                                            <p>@(e.Percentage * 100)%</p>
+                                        </div>
+                                        <div class="custom-col-5">
+                                            <p>There is some trouble downloading the remaining files</p>
+                                        </div>
+                                    }
+                                    else if (e.Status.Equals(ContentStatus.NotAvailable))
+                                    {
                                     <div class="custom-col-3">
                                         <p>The content can not be downloaded at this time 💩 (check the release calendar)</p>
                                     </div>

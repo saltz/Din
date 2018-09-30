@@ -28,10 +28,19 @@ namespace Din.Service.Clients.Concrete
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<TcTvShowResponse>>(await client.GetAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")).Result.Content.ReadAsStringAsync());       
+            return JsonConvert.DeserializeObject<IEnumerable<TcTvShowResponse>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")));
         }
 
-        public async Task<bool> AddTvShowAsync(TcRequest tvShow)
+        public async Task<TcTvShowResponse> GetTvShowByIdAsync(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<TcTvShowResponse>(
+                await client.GetStringAsync(BuildUrl(_config.Url, $"series/{id}", $"?apikey={_config.Key}")));
+        }
+
+        public async Task<(bool status, int systemId)> AddTvShowAsync(TcRequest tvShow)
         {
             tvShow.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
@@ -39,7 +48,8 @@ namespace Din.Service.Clients.Concrete
             var response = await client.PostAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(tvShow)));
 
-            return response.StatusCode.Equals(HttpStatusCode.Created);
+            return (response.StatusCode.Equals(HttpStatusCode.Created),
+                JsonConvert.DeserializeObject<TcTvShowResponse>(await response.Content.ReadAsStringAsync()).SystemId);
         }
 
         public async Task<IEnumerable<TcCalendarResponse>> GetCalendarAsync()
@@ -47,7 +57,8 @@ namespace Din.Service.Clients.Concrete
             var client = _httpClientFactory.CreateClient();
 
             return JsonConvert.DeserializeObject<IEnumerable<TcCalendarResponse>>(
-                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespan())));
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}",
+                    GetTimespan())));
         }
 
         private string GetTimespan()

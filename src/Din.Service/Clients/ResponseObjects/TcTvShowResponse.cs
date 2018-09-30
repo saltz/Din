@@ -5,8 +5,8 @@ namespace Din.Service.Clients.ResponseObjects
 {
     public class TcTvShowResponse
     {
-        [JsonProperty("tvdbId")] public int Id { get; set; }
-
+        [JsonProperty("id")] public int SystemId { get; set; }
+        [JsonProperty("tvdbId")] public int TvdbId { get; set; }
         [JsonProperty("title")] public string Title { get; set; }
         [JsonProperty("status")] public string Status { get; set; }
         [JsonProperty("seasons")] public ICollection<TcTvShowResponseSeason> Seasons { get; set; }

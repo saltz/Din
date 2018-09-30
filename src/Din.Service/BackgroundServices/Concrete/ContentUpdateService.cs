@@ -25,30 +25,34 @@ namespace Din.Service.BackgroundServices.Concrete
             var movieClient = serviceProvider.GetService<IMovieClient>();
             var tvShowClient = serviceProvider.GetService<ITvShowClient>();
 
-            var content = await context.AddedContent.ToListAsync();
-            content.RemoveAll(c => c.Status.Equals(ContentStatus.Done));
-
-            await UpdateStatusMovieObjects(content, movieClient);
-            await UpdateStatusTvShowObjects(content, tvShowClient);
+            await UpdateStatusMovieObjects(context, movieClient);
+            await UpdateStatusTvShowObjects(context, tvShowClient);
 
             await context.SaveChangesAsync();
         }
 
-        private async Task UpdateStatusMovieObjects(List<AddedContentEntity> content, IMovieClient movieClient)
+        private async Task UpdateStatusMovieObjects(DinContext context, IMovieClient movieClient)
         {
-            content = content.Where(c => c.Type.Equals(ContentType.Movie)).ToList();
-
-            var movieCollection = (await movieClient.GetCurrentMoviesAsync()).ToList();
+            var content = await context.AddedContent.Where(c =>
+                c.Type.Equals(ContentType.Movie) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
+            var now = DateTime.Now;
 
             foreach (var c in content)
             {
-                if (movieCollection.First(i => i.Id.Equals(c.ForeignId)).Downloaded)
+                var movie = await movieClient.GetMovieByIdAsync(c.SystemId);
+                if (movie.Downloaded)
                 {
                     c.Status = ContentStatus.Done;
                     continue;
                 }
 
-                if (DateTime.Now >= c.DateAdded.AddDays(3))
+                if (now >= c.DateAdded.AddDays(2) && c.Percentage > 0.0)
+                {
+                    c.Status = ContentStatus.Stuck;
+                    continue;
+                }
+
+                if (now >= c.DateAdded.AddDays(3))
                 {
                     c.Status = ContentStatus.NotAvailable;
                 }
@@ -57,42 +61,57 @@ namespace Din.Service.BackgroundServices.Concrete
             }
         }
 
-        private async Task UpdateStatusTvShowObjects(List<AddedContentEntity> content, ITvShowClient tvShowClient)
+        private async Task UpdateStatusTvShowObjects(DinContext context, ITvShowClient tvShowClient)
         {
-            content = content.Where(c => c.Type.Equals(ContentType.TvShow)).ToList();
-
-            var tvShowCollection = (await tvShowClient.GetCurrentTvShowsAsync()).ToList();
+            var content = await context.AddedContent.Where(c => c.Type.Equals(ContentType.TvShow) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
+            var now = DateTime.Now;
 
             foreach (var c in content)
             {
-                var show = tvShowCollection.First(i => i.Id.Equals(c.ForeignId));
+                var show = await tvShowClient.GetTvShowByIdAsync(c.SystemId);
                 show.Seasons.Remove(show.Seasons.First(s => s.SeasonsNumber.Equals(0)));
 
-                var seasonCheck = 0;
+                var seasonsDone = 0;
+                var seasonPercentage = new List<double>();
 
                 foreach (var s in show.Seasons)
                 {
                     if (s.Statistics.EpisodeCount.Equals(s.Statistics.TotalEpisodeCount))
                     {
-                        seasonCheck++;
+                        seasonsDone++;
                         continue;
                     }
 
-                    break;
+                    seasonPercentage.Add(Convert.ToDouble(s.Statistics.EpisodeCount) /
+                                         (Convert.ToDouble(s.Statistics.TotalEpisodeCount) / 100));
                 }
 
-                if (seasonCheck.Equals(show.Seasons.Count))
+                if (seasonsDone.Equals(show.Seasons.Count))
                 {
                     c.Status = ContentStatus.Done;
                     continue;
                 }
 
-                if (DateTime.Now >= c.DateAdded.AddDays(3))
+                var showPercentage = Math.Round((seasonPercentage.Sum() / seasonPercentage.Count) / 100, 2);
+
+                if (now <= c.DateAdded.AddDays(2) && showPercentage > 0.0)
+                {
+                    c.Status = ContentStatus.Downloading;
+                    c.Percentage = showPercentage;
+                    continue;
+                }
+
+                if (now >= c.DateAdded.AddDays(2) && showPercentage > 0.0)
+                {
+                    c.Status = ContentStatus.Stuck;
+                    c.Percentage = showPercentage;
+                    continue;
+                }
+
+                if (now >= c.DateAdded.AddDays(5))
                 {
                     c.Status = ContentStatus.NotAvailable;
                 }
-
-                //TODO check download system
             }
         }
     }

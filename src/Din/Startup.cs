@@ -118,7 +118,7 @@ namespace Din
                 routes.MapRoute("Login", "",
                     defaults: new {controller = "Authentication", action = "LoginAsync"});
                 routes.MapRoute("Logout", "Logout",
-                    defaults: new {controller = "Authentication", action = "logoutAsync"});
+                    defaults: new {controller = "Main", action = "Exit"});
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");

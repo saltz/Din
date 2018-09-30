@@ -59,9 +59,11 @@ namespace Din.Service.Services.Concrete
                 Seasons = seasons
             };
 
-            if (await _tvShowClient.AddTvShowAsync(requestObj))
+            var response = await _tvShowClient.AddTvShowAsync(requestObj);
+
+            if (response.status)
             {
-                await LogContentAdditionAsync(tvShow.Name, id, ContentType.TvShow, Convert.ToInt32(requestObj.TvShowId));
+                await LogContentAdditionAsync(tvShow.Name, id, ContentType.TvShow, Convert.ToInt32(requestObj.TvShowId), response.systemId);
 
                 return GenerateResultDto("Tv Show Added Successfully",
                     "The Movie has been added 🤩\nYou can track the progress under your account content tab.",

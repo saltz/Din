@@ -19,7 +19,7 @@ namespace Din.Service.Services.Abstractions
             Mapper = mapper;
         }
 
-        protected async Task LogContentAdditionAsync(string title, int accountId, ContentType type, int foreignId)
+        protected async Task LogContentAdditionAsync(string title, int accountId, ContentType type, int foreignId, int systemId)
         {
             var account = await _context.Account.FirstAsync(a => a.ID.Equals(accountId));
 
@@ -30,6 +30,7 @@ namespace Din.Service.Services.Abstractions
             account.AddedContent.Add(new AddedContentEntity
             {
                 ForeignId = foreignId,
+                SystemId = systemId,
                 Title = title,
                 DateAdded = DateTime.Now,
                 Status = ContentStatus.Queued,

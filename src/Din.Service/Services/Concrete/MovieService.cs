@@ -35,12 +35,12 @@ namespace Din.Service.Services.Concrete
         {
             return new MovieDto
             {
-                CurrentMovieCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.Id),
+                CurrentMovieCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.TmdbId),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchMovieAsync(query)).Results
             };
         }
 
-        public async Task<ResultDto> AddMovieAsync(SearchMovie movie, int id)
+        public async Task<ResultDto> AddMovieAsync(SearchMovie movie, int accountId)
         {
             var movieDate = Convert.ToDateTime(movie.ReleaseDate);
             var requestObj = new McRequest
@@ -66,9 +66,11 @@ namespace Din.Service.Services.Concrete
                 }
             };
 
-            if (await _movieClient.AddMovieAsync(requestObj))
+            var result = await _movieClient.AddMovieAsync(requestObj);
+
+            if (result.status)
             {
-                await LogContentAdditionAsync(movie.Title, id, ContentType.Movie, movie.Id);
+                await LogContentAdditionAsync(movie.Title, accountId, ContentType.Movie, movie.Id, result.systemId);
 
                 return GenerateResultDto("Movie Added Successfully",
                     "The Movie has been added 🤩\nYou can track the progress under your account content tab.",
