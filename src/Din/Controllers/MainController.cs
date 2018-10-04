@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Din.Service.Clients.Concrete;
-using Din.Service.Services.Interfaces;
+using Din.Service.Generators.Interfaces;
 using Din.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -11,15 +11,15 @@ namespace Din.Controllers
     {
         #region injections
 
-        private readonly IMediaService _service;
+        private readonly IMediaGenerator _generator;
 
         #endregion injections
 
         #region constructors
 
-        public MainController(IMediaService service)
+        public MainController(IMediaGenerator generator)
         {
-            _service = service;
+            _generator = generator;
         }
 
         #endregion constructors
@@ -30,13 +30,13 @@ namespace Din.Controllers
         public async Task<IActionResult> Index()
         {
             if (HttpContext.User.Identity.AuthenticationType == null) return View("Index");
-            var model = new MediaViewModel {Media = await _service.GenerateBackgroundImages()};
+            var model = new MediaViewModel {Media = await _generator.GenerateBackgroundImages()};
             return View("Home", model);
         }
 
         public async Task<IActionResult> Exit()
         {
-            return View("Logout", new MediaViewModel {Media = await _service.GenerateGif(GiphyTag.Bye)});
+            return View("Logout", new MediaViewModel {Media = await _generator.GenerateGif(GiphyTag.Bye)});
         }
 
         #endregion endpoints

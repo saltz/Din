@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Din.Service.Clients.ResponseObjects;
 using Din.Service.Dto;
-using Din.Service.Dto.Account;
 using Din.Service.Dto.Content;
 using Din.Service.DTO.Content;
 using TMDbLib.Objects.Search;
@@ -16,7 +14,7 @@ namespace Din.Service.Services.Interfaces
         /// </summary>
         /// <param name="query">The Tv Show title or a part of it.</param>
         /// <returns>ViewModel containing collections of existing movies and query results.</returns>
-        Task<TvShowDto> SearchTvShowAsync(string query);
+        Task<SearchResultDto<string, SearchTv>> SearchTvShowAsync(string query);
 
         /// <summary>
         /// Adds TvShow to the system.

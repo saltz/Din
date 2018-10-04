@@ -1,6 +1,6 @@
 ﻿@using Newtonsoft.Json
 
-@model Din.ViewModels.TvShowResultsViewModel
+@model Din.ViewModels.SearchResultViewModel<string, TMDbLib.Objects.Search.SearchTv>
 
 @if (Model.QueryCollection.Count.Equals(0))
 {
@@ -62,7 +62,7 @@ else
                                     </p>
                                     <div class="add-button">
                                         @{
-                                            if (Model.CurrentTvShowCollection.Contains(show.Name.ToLower()))
+                                            if (Model.CurrentCollection.Contains(show.Name.ToLower()))
                                             {
                                                 <button disabled type="button" class="btn btn-default">Already Exists</button>
                                             }

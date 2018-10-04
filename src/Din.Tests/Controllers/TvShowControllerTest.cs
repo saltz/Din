@@ -26,21 +26,21 @@ namespace Din.Tests.Controllers
         public void SearchTvShowAsync()
         {
             const string query = "TvShowTitle";
-            var tvShowDto = new TvShowDto
+            var resultDto = new SearchResultDto<string, SearchTv>()
             {
-                CurrentTvShowCollection = new List<string>
+                CurrentCollection = new List<string>
                 {
                     "True Detective"
                 },
                 QueryCollection = new List<SearchTv>()
             };
-            _fixture.MockService.Setup(_ => _.SearchTvShowAsync(query)).ReturnsAsync(tvShowDto);
+            _fixture.MockService.Setup(_ => _.SearchTvShowAsync(query)).ReturnsAsync(resultDto);
             var controller = new TvShowController(_fixture.MockService.Object, _fixture.Mapper);
 
             var result = controller.SearchTvShowAsync(query);
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
-            Assert.IsType<TvShowResultsViewModel>(viewResult.Model);
+            Assert.IsType<SearchResultViewModel<string, SearchTv>>(viewResult.Model);
         }
 
         [Fact]

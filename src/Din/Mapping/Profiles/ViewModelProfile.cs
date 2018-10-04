@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Din.Service.Dto.Content;
 using Din.ViewModels;
+using TMDbLib.Objects.Search;
 
 namespace Din.Mapping.Profiles
 {
@@ -8,8 +9,8 @@ namespace Din.Mapping.Profiles
     {
         public ViewModelProfile()
         {
-            CreateMap<MovieResultsViewModel, MovieDto>();
-            CreateMap<TvShowResultsViewModel, TvShowDto>();
+            CreateMap<SearchResultViewModel<int, SearchMovie>, SearchResultDto<int, SearchMovie>>();
+            CreateMap<SearchResultViewModel<string, SearchTv>, SearchResultDto<string, SearchTv>>();
         }
     }
 }
