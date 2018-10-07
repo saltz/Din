@@ -20,11 +20,11 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<ICollection<UnsplashResponseObject>> GetBackgroundCollection()
+        public async Task<ICollection<UnsplashResponse>> GetBackgroundCollection()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return new List<UnsplashResponseObject>(JsonConvert.DeserializeObject<ICollection<UnsplashResponseObject>>(
+            return new List<UnsplashResponse>(JsonConvert.DeserializeObject<ICollection<UnsplashResponse>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, $"?client_id={_config.Key}", "&query=nature&orientation=landscape&count=20&featured"))));
         }
     }

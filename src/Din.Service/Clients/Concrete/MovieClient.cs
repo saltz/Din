@@ -8,7 +8,6 @@ using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
-using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete

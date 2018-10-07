@@ -98,9 +98,10 @@ namespace Din
             //Initialize Mapper Profiles
             var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new ViewModelProfile());
-                cfg.AddProfile(new EntityProfile());
-                cfg.AddProfile(new DtoProfile());
+                cfg.AddProfile(new ViewModelToDtoProfile());
+                cfg.AddProfile(new ResponseToDtoProfile());
+                cfg.AddProfile(new EntityToDtoProfile());
+                cfg.AddProfile(new DtoToEntityProfile());
             }));
 
             services.AddSingleton<IMapper>(mapper);

@@ -5,9 +5,9 @@ using TMDbLib.Objects.Search;
 
 namespace Din.Mapping.Profiles
 {
-    public class ViewModelProfile : Profile
+    public class ViewModelToDtoProfile : Profile
     {
-        public ViewModelProfile()
+        public ViewModelToDtoProfile()
         {
             CreateMap<SearchResultViewModel<int, SearchMovie>, SearchResultDto<int, SearchMovie>>();
             CreateMap<SearchResultViewModel<string, SearchTv>, SearchResultDto<string, SearchTv>>();

@@ -26,8 +26,8 @@ namespace Din.Tests.Controllers
             _fixture = fixture;
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new EntityProfile());
-                cfg.AddProfile(new ViewModelProfile());
+                cfg.AddProfile(new DtoToEntityProfile());
+                cfg.AddProfile(new ViewModelToDtoProfile());
             }));
         }
 

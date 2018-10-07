@@ -13,7 +13,7 @@ namespace Din.Service.Generators.Concrete
     {
         private readonly IGiphyClient _giphyClient;
         private readonly IUnsplashClient _unsplashClient;
-        private (DateTime DateGenerated, ICollection<UnsplashResponseObject> Collection) _unsplashData;
+        private (DateTime DateGenerated, ICollection<UnsplashResponse> Collection) _unsplashData;
 
         public MediaGenerator(IGiphyClient giphyClient, IUnsplashClient unsplashClient)
         {
