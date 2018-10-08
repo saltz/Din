@@ -31,11 +31,11 @@ namespace Din.Service.Services.Concrete
             _tmdbKey = config.Key;
         }
 
-        public async Task<MovieDto> SearchMovieAsync(string query)
+        public async Task<SearchResultDto<int, SearchMovie>> SearchMovieAsync(string query)
         {
-            return new MovieDto
+            return new SearchResultDto<int, SearchMovie>()
             {
-                CurrentMovieCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.TmdbId),
+                CurrentCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.TmdbId),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchMovieAsync(query)).Results
             };
         }

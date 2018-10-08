@@ -26,7 +26,7 @@ namespace Din.Controllers
             if (string.IsNullOrEmpty(query)) return BadRequest();
 
             return PartialView("~/Views/Main/Partials/_MovieResults.cshtml",
-                      _mapper.Map<MovieResultsViewModel>(await _service.SearchMovieAsync(query)));
+                      _mapper.Map<SearchResultViewModel<int, SearchMovie>>(await _service.SearchMovieAsync(query)));
         }
 
         [HttpPost, Authorize]

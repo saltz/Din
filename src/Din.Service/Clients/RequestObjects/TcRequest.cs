@@ -6,7 +6,7 @@ namespace Din.Service.Clients.RequestObjects
     public class TcRequest : ContentRequestObject
     {
         [JsonProperty("tvdbid")] public string TvShowId { get; set; }
-        [JsonProperty("seasons")] public List<TcRequestSeason> Seasons { get; set; }
+        [JsonProperty("seasons")] public ICollection<TcRequestSeason> Seasons { get; set; }
     }
 
     public class TcRequestSeason

@@ -2,9 +2,9 @@
 using Din.Service.Clients.Concrete;
 using Din.Service.Dto;
 
-namespace Din.Service.Services.Interfaces
+namespace Din.Service.Generators.Interfaces
 {
-    public interface IMediaService
+    public interface IMediaGenerator
     {
         Task<MediaDto> GenerateBackgroundImages();
         Task<MediaDto> GenerateGif(GiphyTag tag);

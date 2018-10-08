@@ -5,17 +5,17 @@ using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Dto;
-using Din.Service.Services.Interfaces;
+using Din.Service.Generators.Interfaces;
 
-namespace Din.Service.Services.Concrete
+namespace Din.Service.Generators.Concrete
 {
-    public class MediaService : IMediaService
+    public class MediaGenerator : IMediaGenerator
     {
         private readonly IGiphyClient _giphyClient;
         private readonly IUnsplashClient _unsplashClient;
-        private (DateTime DateGenerated, ICollection<UnsplashResponseObject> Collection) _unsplashData;
+        private (DateTime DateGenerated, ICollection<UnsplashResponse> Collection) _unsplashData;
 
-        public MediaService(IGiphyClient giphyClient, IUnsplashClient unsplashClient)
+        public MediaGenerator(IGiphyClient giphyClient, IUnsplashClient unsplashClient)
         {
             _giphyClient = giphyClient;
             _unsplashClient = unsplashClient;
@@ -24,9 +24,11 @@ namespace Din.Service.Services.Concrete
 
         public async Task<MediaDto> GenerateBackgroundImages()
         {
-            if (_unsplashData.Collection == null || _unsplashData.DateGenerated.AddDays(1) <= DateTime.Now)
+            var now = DateTime.Now;
+
+            if (_unsplashData.Collection == null || _unsplashData.DateGenerated.AddDays(1) <= now)
             {
-                _unsplashData.DateGenerated = DateTime.Now;
+                _unsplashData.DateGenerated = now;
                 _unsplashData.Collection = await _unsplashClient.GetBackgroundCollection();
             }
 

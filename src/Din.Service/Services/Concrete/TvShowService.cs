@@ -30,11 +30,11 @@ namespace Din.Service.Services.Concrete
             _tmdbKey = config.Key;
         }
 
-        public async Task<TvShowDto> SearchTvShowAsync(string query)
+        public async Task<SearchResultDto<string, SearchTv>> SearchTvShowAsync(string query)
         {
-            return new TvShowDto
+            return new SearchResultDto<string, SearchTv>
             {
-                CurrentTvShowCollection = (await _tvShowClient.GetCurrentTvShowsAsync()).Select(t => t.Title.ToLower()),
+                CurrentCollection = (await _tvShowClient.GetCurrentTvShowsAsync()).Select(t => t.Title.ToLower()),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchTvShowAsync(query)).Results
             };
         }

@@ -29,10 +29,10 @@ namespace Din.Service.Services.Concrete
         {
             return new DataDto
             {
-                User = _mapper.Map<UserDto>(await _context.User.FirstAsync(u => u.Account.ID.Equals(id))),
-                Account = _mapper.Map<AccountDto>(await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id))),
+                User = _mapper.Map<UserDto>(await _context.User.FirstAsync(u => u.Account.Id.Equals(id))),
+                Account = _mapper.Map<AccountDto>(await _context.Account.Include(a => a.Image).FirstAsync(a => a.Id.Equals(id))),
                 AddedContent = _mapper.Map<IEnumerable<AddedContentDto>>(
-                    (await _context.AddedContent.Where(ac => ac.Account.ID.Equals(id)).ToListAsync()).AsEnumerable())
+                    (await _context.AddedContent.Where(ac => ac.Account.Id.Equals(id)).ToListAsync()).AsEnumerable())
             };
         }
 
@@ -40,7 +40,7 @@ namespace Din.Service.Services.Concrete
         {
             try
             {
-                var accountEntity = await _context.Account.Include(a => a.Image).FirstAsync(a => a.ID.Equals(id));
+                var accountEntity = await _context.Account.Include(a => a.Image).FirstAsync(a => a.Id.Equals(id));
                 _context.Attach(accountEntity);
 
                 if (accountEntity.Image != null)
@@ -72,7 +72,7 @@ namespace Din.Service.Services.Concrete
         {
             try
             {
-                var userEntity = await _context.User.FirstAsync(u => u.Account.ID.Equals(id));
+                var userEntity = await _context.User.FirstAsync(u => u.Account.Id.Equals(id));
                 _context.Attach(userEntity);
 
                 userEntity.FirstName = user.FirstName;
@@ -94,7 +94,7 @@ namespace Din.Service.Services.Concrete
         {
             try
             {
-                var accountEntity = await _context.Account.FirstAsync(a => a.ID.Equals(id));
+                var accountEntity = await _context.Account.FirstAsync(a => a.Id.Equals(id));
                 _context.Attach(accountEntity);
 
                 accountEntity.Username = username;

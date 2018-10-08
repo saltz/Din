@@ -2,7 +2,7 @@
 
 namespace Din.Service.Clients.ResponseObjects
 {
-    public class UnsplashResponseObject
+    public class UnsplashResponse
     {
         [JsonProperty("urls")]
         public UnsplashFileTypes FileTypes { get; set; }

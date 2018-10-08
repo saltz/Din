@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
+using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
 using Din.Service.Dto.Context;
 using Newtonsoft.Json;
@@ -19,10 +20,10 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<LoginLocationDto> GetLocation(string ip)
+        public async Task<IpStackResponse> GetLocation(string ip)
         {
             var client = _httpClientFactory.CreateClient();
-            return JsonConvert.DeserializeObject<LoginLocationDto>(await client.GetStringAsync(BuildUrl(_config.Url, ip, $"?access_key={_config.Key}")));
+            return JsonConvert.DeserializeObject<IpStackResponse>(await client.GetStringAsync(BuildUrl(_config.Url, ip, $"?access_key={_config.Key}")));
         }
     }
 }

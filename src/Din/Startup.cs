@@ -7,6 +7,8 @@ using Din.Service.Clients.Concrete;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Config.Concrete;
 using Din.Service.Config.Interfaces;
+using Din.Service.Generators.Concrete;
+using Din.Service.Generators.Interfaces;
 using Din.Service.Services.Concrete;
 using Din.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -73,7 +75,6 @@ namespace Din
             services.AddSingleton<ITMDBClientConfig>(new TMDBClientConfig(Configuration["TMDBClient:Key"]));
 
             //Inject Services
-            services.AddSingleton<IMediaService, MediaService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<ITvShowService, TvShowService>();
@@ -88,6 +89,8 @@ namespace Din
             services.AddTransient<ITvShowClient, TvShowClient>();
             services.AddTransient<IUnsplashClient, UnsplashClient>();
 
+            //Inject Generators
+            services.AddSingleton<IMediaGenerator, MediaGenerator>();
 
             //Background Services
             services.AddSingleton<IHostedService, ContentUpdateService>();
@@ -95,9 +98,10 @@ namespace Din
             //Initialize Mapper Profiles
             var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new ViewModelProfile());
-                cfg.AddProfile(new EntityProfile());
-                cfg.AddProfile(new DtoProfile());
+                cfg.AddProfile(new ViewModelToDtoProfile());
+                cfg.AddProfile(new ResponseToDtoProfile());
+                cfg.AddProfile(new EntityToDtoProfile());
+                cfg.AddProfile(new DtoToEntityProfile());
             }));
 
             services.AddSingleton<IMapper>(mapper);

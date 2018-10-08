@@ -15,7 +15,7 @@ namespace Din.Tests.Fixtures
             MockService = new Mock<ITvShowService>();
             Mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new ViewModelProfile());
+                cfg.AddProfile(new ViewModelToDtoProfile());
             }));
         }
     }

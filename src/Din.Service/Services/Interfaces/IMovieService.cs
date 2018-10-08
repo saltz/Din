@@ -16,7 +16,7 @@ namespace Din.Service.Services.Interfaces
         /// </summary>
         /// <param name="query">The movie title or a part of it.</param>
         /// <returns>ViewModel containing collections of existing movies and query results.</returns>
-        Task<MovieDto> SearchMovieAsync(string query);
+        Task<SearchResultDto<int, SearchMovie>> SearchMovieAsync(string query);
 
         /// <summary>
         /// Adds movie to the system.

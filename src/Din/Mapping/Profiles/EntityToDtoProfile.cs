@@ -4,9 +4,9 @@ using Din.Service.Dto.Context;
 
 namespace Din.Mapping.Profiles
 {
-    public class EntityProfile : Profile
+    public class EntityToDtoProfile : Profile
     {
-        public EntityProfile()
+        public EntityToDtoProfile()
         {
             CreateMap<UserEntity, UserDto>();
             CreateMap<AccountEntity, AccountDto>();

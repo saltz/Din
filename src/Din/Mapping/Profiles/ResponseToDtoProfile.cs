@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using Din.Data.Entities;
 using Din.Mapping.Converters;
 using Din.Service.Clients.ResponseObjects;
-using Din.Service.Dto.Account;
 using Din.Service.Dto.Context;
 using Din.Service.DTO.Content;
 
 namespace Din.Mapping.Profiles
 {
-    public class DtoProfile : Profile
+    public class ResponseToDtoProfile : Profile
     {
-        public DtoProfile()
+        public ResponseToDtoProfile()
         {
-            CreateMap<LoginLocationDto, LoginLocationEntity>();
+            CreateMap<IpStackResponse, LoginLocationDto>();
             CreateMap<McCalendarResponse, CalendarItemDto>().ConvertUsing<McCalendarConverter>();
             CreateMap<TcCalendarResponse, CalendarItemDto>().ConvertUsing<TcCalendarConverter>();
         }
