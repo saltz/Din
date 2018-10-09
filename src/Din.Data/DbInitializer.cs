@@ -7,7 +7,6 @@ namespace Din.Data
     {
         public static void Initialize(DinContext context)
         {
-            context.Database.Migrate();
             context.Database.EnsureCreated();
             context.SaveChanges();
         }
