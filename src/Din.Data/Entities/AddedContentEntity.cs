@@ -5,7 +5,9 @@ namespace Din.Data.Entities
 
     public class AddedContentEntity
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public int SystemId { get; set; }
+        public int ForeignId { get; set; }
         public string Title { get; set; }
         public ContentType Type { get; set; }
         public DateTime DateAdded { get; set; }
@@ -27,6 +29,7 @@ namespace Din.Data.Entities
         NotAvailable,
         Queued,
         Downloading,
+        Stuck,
         Done
     }
 }

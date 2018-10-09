@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Din.Service.Dto.Context;
-using UAParser;
 
 namespace Din.Service.Dto.Account
 {

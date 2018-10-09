@@ -26,7 +26,7 @@ namespace Din.Controllers
             if (string.IsNullOrEmpty(query)) return RedirectToAction("Index", "Main");
 
             return PartialView("~/Views/Main/Partials/_TvShowResults.cshtml",
-                _mapper.Map<TvShowResultsViewModel>(await _service.SearchTvShowAsync(query)));
+                _mapper.Map<SearchResultViewModel<string, SearchTv>>(await _service.SearchTvShowAsync(query)));
         }
 
         [HttpPost, Authorize]

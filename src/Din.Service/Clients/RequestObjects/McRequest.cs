@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Din.Service.Clients.RequestObjects.Abstractions;
+using Newtonsoft.Json;
 
 namespace Din.Service.Clients.RequestObjects
 {
-    public class McRequest : ContentRequestObject
+    public class McRequest : ContentRequest
     {
         [JsonProperty("year")] public int Year { get; set; }
         [JsonProperty("tmdbid")] public int TmdbId { get; set; }

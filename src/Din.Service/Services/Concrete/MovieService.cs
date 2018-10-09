@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.RequestObjects.Abstractions;
 using Din.Service.Config.Interfaces;
 using Din.Service.Dto;
 using Din.Service.Dto.Content;
 using Din.Service.DTO.Content;
+using Din.Service.Services.Abstractions;
 using Din.Service.Services.Interfaces;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
@@ -29,16 +32,16 @@ namespace Din.Service.Services.Concrete
             _tmdbKey = config.Key;
         }
 
-        public async Task<MovieDto> SearchMovieAsync(string query)
+        public async Task<SearchResultDto<int, SearchMovie>> SearchMovieAsync(string query)
         {
-            return new MovieDto
+            return new SearchResultDto<int, SearchMovie>()
             {
-                CurrentMovieCollection = await _movieClient.GetCurrentMoviesAsync(),
+                CurrentCollection = (await _movieClient.GetCurrentMoviesAsync()).Select(m => m.TmdbId),
                 QueryCollection = (await new TMDbClient(_tmdbKey).SearchMovieAsync(query)).Results
             };
         }
 
-        public async Task<ResultDto> AddMovieAsync(SearchMovie movie, int id)
+        public async Task<ResultDto> AddMovieAsync(SearchMovie movie, int accountId)
         {
             var movieDate = Convert.ToDateTime(movie.ReleaseDate);
             var requestObj = new McRequest
@@ -50,9 +53,9 @@ namespace Din.Service.Services.Concrete
                 TitleSlug = GenerateTitleSlug(movie.Title, movieDate),
                 Monitored = true,
                 TmdbId = movie.Id,
-                Images = new List<ContentRequestObjectImage>
+                Images = new List<ContentRequestImage>
                 {
-                    new ContentRequestObjectImage
+                    new ContentRequestImage
                     {
                         CoverType = "poster",
                         Url = movie.PosterPath
@@ -64,9 +67,11 @@ namespace Din.Service.Services.Concrete
                 }
             };
 
-            if (await _movieClient.AddMovieAsync(requestObj))
+            var result = await _movieClient.AddMovieAsync(requestObj);
+
+            if (result.status)
             {
-                await LogContentAdditionAsync(movie.Title, id, ContentType.Movie);
+                await LogContentAdditionAsync(movie.Title, accountId, ContentType.Movie, movie.Id, result.systemId);
 
                 return GenerateResultDto("Movie Added Successfully",
                     "The Movie has been added 🤩\nYou can track the progress under your account content tab.",

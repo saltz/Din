@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
@@ -19,11 +20,11 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<ICollection<UnsplashResponseObject>> GetBackgroundCollection()
+        public async Task<ICollection<UnsplashItem>> GetBackgroundCollection()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return new List<UnsplashResponseObject>(JsonConvert.DeserializeObject<ICollection<UnsplashResponseObject>>(
+            return new List<UnsplashItem>(JsonConvert.DeserializeObject<ICollection<UnsplashItem>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, $"?client_id={_config.Key}", "&query=nature&orientation=landscape&count=20&featured"))));
         }
     }

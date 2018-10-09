@@ -6,6 +6,7 @@ using AutoMapper;
 using Din.Data;
 using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
+using Din.Service.Dto.Context;
 using Din.Service.Services.Interfaces;
 using Din.Service.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace Din.Service.Services.Concrete
 
                 var claims = new List<Claim>
                 {
-                    new Claim("ID", accountEntity.ID.ToString()),
+                    new Claim("ID", accountEntity.Id.ToString()),
                     new Claim(ClaimTypes.Role, accountEntity.Role.ToString())
                 };
 
@@ -53,7 +54,7 @@ namespace Din.Service.Services.Concrete
         public async Task LogLoginAttempt(string username, string userAgentString, string publicIp, LoginStatus status)
         {
             var clientInfo = Parser.GetDefault().Parse(userAgentString);
-            var loginAttemptEntity = new LoginAttemptEntity
+            var loginAttemptDto = new LoginAttemptDto
             {
                 Username = username,
                 Device = clientInfo.Device.Family,
@@ -66,16 +67,14 @@ namespace Din.Service.Services.Concrete
 
             try
             {
-                var locationDto = await _ipStackClient.GetLocation(publicIp);
+                loginAttemptDto.Location = _mapper.Map<LoginLocationDto>(await _ipStackClient.GetLocation(publicIp));
 
-                loginAttemptEntity.Location = _mapper.Map<LoginLocationEntity>(locationDto);
-
-                await _context.LoginAttempt.AddAsync(loginAttemptEntity);
+                await _context.LoginAttempt.AddAsync(_mapper.Map<LoginAttemptEntity>(loginAttemptDto));
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
-                await _context.LoginAttempt.AddAsync(loginAttemptEntity);
+                await _context.LoginAttempt.AddAsync(_mapper.Map<LoginAttemptEntity>(loginAttemptDto));
                 await _context.SaveChangesAsync();
             }
         }

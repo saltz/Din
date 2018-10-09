@@ -234,6 +234,10 @@ function drawCalendar() {
     }
 }
 
+function drawErrorCalendar() {
+    $('#release-calendar').append('<h2>Failed at obtaining calendar infomation</h2>');
+}
+
 function getCalendarData(callback) {
     $.ajax({
         url: '/Information/GetReleaseCalendarAsync',
@@ -245,6 +249,7 @@ function getCalendarData(callback) {
         },
         error: function(error) {
             console.log(error);
+            drawErrorCalendar();
         }
     });
 }

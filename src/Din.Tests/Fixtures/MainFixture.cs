@@ -1,15 +1,15 @@
-﻿using Din.Service.Services.Interfaces;
+﻿using Din.Service.Generators.Interfaces;
 using Moq;
 
 namespace Din.Tests.Fixtures
 {
     public class MainFixture : BaseFixture
     {
-        public Mock<IMediaService> MockService { get; }
+        public Mock<IMediaGenerator> MockService { get; }
 
         public MainFixture()
         {
-            MockService = new Mock<IMediaService>();
+            MockService = new Mock<IMediaGenerator>();
         }
     }
 }

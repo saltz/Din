@@ -1,6 +1,6 @@
 ﻿@using Newtonsoft.Json
 
-@model Din.ViewModels.MovieResultsViewModel
+@model Din.ViewModels.SearchResultViewModel<int, TMDbLib.Objects.Search.SearchMovie>
 
 @if (Model.QueryCollection.Count.Equals(0))
 {
@@ -62,7 +62,7 @@ else
                                     </p>
                                     <div class="add-button">
                                         @{
-                                            if (Model.CurrentMovieCollection.Contains(movie.Id))
+                                            if (Model.CurrentCollection.Contains(movie.Id))
                                             {
                                                 <button disabled type="button" class="btn btn-default">Already Exists</button>
                                             }

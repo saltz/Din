@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
-namespace Din.Service.Clients.Concrete
+namespace Din.Service.Clients.Abstractions
 {
     public abstract class BaseClient
     {
@@ -16,6 +15,11 @@ namespace Din.Service.Clients.Concrete
             }
 
             return sb.ToString();
+        }
+
+        protected string GetCalendarTimeSpan()
+        {
+            return $"&start={DateTime.Today.AddDays(-14):yyyy-MM-dd}&end={DateTime.Today.AddMonths(1):yyyy-MM-dd}";
         }
     }
 }

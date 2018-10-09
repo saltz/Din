@@ -1,4 +1,4 @@
-﻿namespace Din.Service.Config.Concrete
+﻿namespace Din.Service.Config.Abstractions
 {
     public abstract class BaseClientConfig
     {

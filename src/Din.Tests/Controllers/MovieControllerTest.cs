@@ -26,21 +26,21 @@ namespace Din.Tests.Controllers
         public void SearchMovieAsyncTest()
         {
             const string query = "movie-title";
-            var movieDto = new MovieDto
+            var resultDto = new SearchResultDto<int, SearchMovie>
             {
-                CurrentMovieCollection = new List<int>
+                CurrentCollection = new List<int>
                 {
                     1, 2
                 },
                 QueryCollection = new List<SearchMovie>()
             };
-            _fixture.MockService.Setup(_ => _.SearchMovieAsync(query)).ReturnsAsync(movieDto);
+            _fixture.MockService.Setup(_ => _.SearchMovieAsync(query)).ReturnsAsync(resultDto);
             var controller = new MovieController(_fixture.MockService.Object, _fixture.Mapper);
 
             var result = controller.SearchMovieAsync(query);
 
             var viewResult = Assert.IsType<PartialViewResult>(result.Result);
-            Assert.IsType<MovieResultsViewModel>(viewResult.Model);
+            Assert.IsType<SearchResultViewModel<int, SearchMovie>>(viewResult.Model);
         }
 
         [Fact]

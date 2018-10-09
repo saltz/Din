@@ -4,9 +4,9 @@ using Din.Service.DTO.Content;
 
 namespace Din.Mapping.Converters
 {
-    public class TcCalendarConverter : ITypeConverter<TcCalendarResponse, CalendarItemDto>
+    public class TcCalendarConverter : ITypeConverter<TcCalendar, CalendarItemDto>
     {
-        public CalendarItemDto Convert(TcCalendarResponse source, CalendarItemDto destination, ResolutionContext context)
+        public CalendarItemDto Convert(TcCalendar source, CalendarItemDto destination, ResolutionContext context)
         {
             return new CalendarItemDto
             {

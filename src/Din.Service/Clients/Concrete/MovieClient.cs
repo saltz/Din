@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Din.Service.Clients.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
+using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete
@@ -23,16 +24,23 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IEnumerable<int>> GetCurrentMoviesAsync()
+        public async Task<IEnumerable<McMovie>> GetCurrentMoviesAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            var response = JsonConvert.DeserializeObject<List<McMovieResponse>>(await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
-
-            return response.Select(r => r.Id).AsEnumerable();
+            return JsonConvert.DeserializeObject<IEnumerable<McMovie>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
         }
 
-        public async Task<bool> AddMovieAsync(McRequest movie)
+        public async Task<McMovie> GetMovieByIdAsync(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<McMovie>(
+                await client.GetStringAsync(BuildUrl(_config.Url, $"movie/{id}", $"?apikey={_config.Key}")));
+        }
+
+        public async Task<(bool status, int systemId)> AddMovieAsync(McRequest movie)
         {
             movie.RootFolderPath = _config.SaveLocation;
             var client = _httpClientFactory.CreateClient();
@@ -40,19 +48,24 @@ namespace Din.Service.Clients.Concrete
             var response = await client.PostAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(movie)));
 
-            return response.StatusCode.Equals(HttpStatusCode.Created);
+            return (response.StatusCode.Equals(HttpStatusCode.Created), JsonConvert.DeserializeObject<McMovie>(await response.Content.ReadAsStringAsync()).SystemId);
         }
 
-        public async Task<IEnumerable<McCalendarResponse>> GetCalendarAsync()
+        public async Task<IEnumerable<McCalendar>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<McCalendarResponse>>(
-                    await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}", GetTimespan())));
+            return JsonConvert.DeserializeObject<IEnumerable<McCalendar>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}",
+                    GetCalendarTimeSpan())));
         }
-        private string GetTimespan()
+
+        public async Task<IEnumerable<McQueueItem>> GetQueue()
         {
-            return $"&start={DateTime.Now.AddDays(-14):MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<IEnumerable<McQueueItem>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "queue", $"?apikey={_config.Key}")));
         }
     }
 }
