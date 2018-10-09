@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Din.Service.Clients.RequestObjects.Abstractions;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.RequestObjects
 {
-    public class TcRequest : ContentRequestObject
+    public class TcRequest : ContentRequest
     {
         [JsonProperty("tvdbid")] public string TvShowId { get; set; }
         [JsonProperty("seasons")] public ICollection<TcRequestSeason> Seasons { get; set; }

@@ -6,6 +6,6 @@ namespace Din.Service.Clients.Interfaces
 {
     public interface IUnsplashClient
     {
-        Task<ICollection<UnsplashResponse>> GetBackgroundCollection();
+        Task<ICollection<UnsplashItem>> GetBackgroundCollection();
     }
 }

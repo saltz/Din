@@ -6,7 +6,7 @@
     <div class="carousel-inner" role="listbox">
         @{
             var image = Model.Media.BackgroundImageCollection.First();
-            var collectionCopy = new List<UnsplashResponse>(Model.Media.BackgroundImageCollection);
+            var collectionCopy = new List<UnsplashItem>(Model.Media.BackgroundImageCollection);
             <div class="carousel-item active"><img src="@image.FileTypes.Regular" /></div>
             collectionCopy.Remove(image);
             foreach (var i in collectionCopy)

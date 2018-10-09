@@ -19,11 +19,11 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<GiphyResponse> GetRandomGifAsync(GiphyTag tag)
+        public async Task<GiphyItem> GetRandomGifAsync(GiphyTag tag)
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<GiphyResponse>(await client
+            return JsonConvert.DeserializeObject<GiphyItem>(await client
                 .GetStringAsync(BuildUrl(_config.Url, $"?api_key={_config.Key}", $"&tag={tag.ToString().ToLower()}", "&rating=G")));
         }
     }

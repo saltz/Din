@@ -5,6 +5,6 @@ namespace Din.Service.Clients.Interfaces
 {
     public interface IIpStackClient
     {
-        Task<IpStackResponse> GetLocation(string ip);
+        Task<IpStackLocation> GetLocation(string ip);
     }
 }

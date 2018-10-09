@@ -7,6 +7,7 @@ using Din.Data;
 using Din.Data.Entities;
 using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
+using Din.Service.Clients.RequestObjects.Abstractions;
 using Din.Service.Config.Interfaces;
 using Din.Service.Dto;
 using Din.Service.Dto.Content;
@@ -52,9 +53,9 @@ namespace Din.Service.Services.Concrete
                 TitleSlug = GenerateTitleSlug(movie.Title, movieDate),
                 Monitored = true,
                 TmdbId = movie.Id,
-                Images = new List<ContentRequestObjectImage>
+                Images = new List<ContentRequestImage>
                 {
-                    new ContentRequestObjectImage
+                    new ContentRequestImage
                     {
                         CoverType = "poster",
                         Url = movie.PosterPath

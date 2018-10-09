@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,19 +22,19 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IEnumerable<TcTvShowResponse>> GetCurrentTvShowsAsync()
+        public async Task<IEnumerable<TcTvShow>> GetCurrentTvShowsAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<TcTvShowResponse>>(
+            return JsonConvert.DeserializeObject<IEnumerable<TcTvShow>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, "series", $"?apikey={_config.Key}")));
         }
 
-        public async Task<TcTvShowResponse> GetTvShowByIdAsync(int id)
+        public async Task<TcTvShow> GetTvShowByIdAsync(int id)
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<TcTvShowResponse>(
+            return JsonConvert.DeserializeObject<TcTvShow>(
                 await client.GetStringAsync(BuildUrl(_config.Url, $"series/{id}", $"?apikey={_config.Key}")));
         }
 
@@ -49,21 +47,24 @@ namespace Din.Service.Clients.Concrete
                 new StringContent(JsonConvert.SerializeObject(tvShow)));
 
             return (response.StatusCode.Equals(HttpStatusCode.Created),
-                JsonConvert.DeserializeObject<TcTvShowResponse>(await response.Content.ReadAsStringAsync()).SystemId);
+                JsonConvert.DeserializeObject<TcTvShow>(await response.Content.ReadAsStringAsync()).SystemId);
         }
 
-        public async Task<IEnumerable<TcCalendarResponse>> GetCalendarAsync()
+        public async Task<IEnumerable<TcCalendar>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<TcCalendarResponse>>(
+            return JsonConvert.DeserializeObject<IEnumerable<TcCalendar>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}",
-                    GetTimespan())));
+                    GetCalendarTimeSpan())));
         }
 
-        private string GetTimespan()
+        public async Task<IEnumerable<TcQueueItem>> GetQueue()
         {
-            return $"&start={DateTime.Now.Date.AddDays(-14):MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<IEnumerable<TcQueueItem>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "queue", $"?apikey={_config.Key}")));
         }
     }
 }

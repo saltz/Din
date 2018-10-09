@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Din.Service.Clients.Abstractions
 {
@@ -14,6 +15,11 @@ namespace Din.Service.Clients.Abstractions
             }
 
             return sb.ToString();
+        }
+
+        protected string GetCalendarTimeSpan()
+        {
+            return $"&start={DateTime.Today.AddDays(-14):yyyy-MM-dd}&end={DateTime.Today.AddMonths(1):yyyy-MM-dd}";
         }
     }
 }

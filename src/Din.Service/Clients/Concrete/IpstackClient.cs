@@ -20,10 +20,10 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IpStackResponse> GetLocation(string ip)
+        public async Task<IpStackLocation> GetLocation(string ip)
         {
             var client = _httpClientFactory.CreateClient();
-            return JsonConvert.DeserializeObject<IpStackResponse>(await client.GetStringAsync(BuildUrl(_config.Url, ip, $"?access_key={_config.Key}")));
+            return JsonConvert.DeserializeObject<IpStackLocation>(await client.GetStringAsync(BuildUrl(_config.Url, ip, $"?access_key={_config.Key}")));
         }
     }
 }

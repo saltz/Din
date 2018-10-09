@@ -35,15 +35,27 @@ namespace Din.Service.BackgroundServices.Concrete
         {
             var content = await context.AddedContent.Where(c =>
                 c.Type.Equals(ContentType.Movie) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
+            var queue = (await movieClient.GetQueue()).ToList();
             var now = DateTime.Now;
+
 
             foreach (var c in content)
             {
                 var movie = await movieClient.GetMovieByIdAsync(c.SystemId);
+                var item = queue.Find(q => q.Movie.SystemId.Equals(c.SystemId));
+
+
                 if (movie.Downloaded)
                 {
                     c.Status = ContentStatus.Done;
                     continue;
+                }
+
+                if (item != null)
+                {
+                    c.Status = ContentStatus.Downloading;
+                    c.Percentage = Math.Round(1 - (item.SizeLeft / item.Size), 2);
+                    c.Eta = (int) item.TimeLeft.TotalSeconds;
                 }
 
                 if (now >= c.DateAdded.AddDays(2) && c.Percentage > 0.0)
@@ -56,8 +68,6 @@ namespace Din.Service.BackgroundServices.Concrete
                 {
                     c.Status = ContentStatus.NotAvailable;
                 }
-
-                //TODO check download system
             }
         }
 
@@ -94,11 +104,10 @@ namespace Din.Service.BackgroundServices.Concrete
 
                 var showPercentage = Math.Round((seasonPercentage.Sum() / seasonPercentage.Count) / 100, 2);
 
-                if (now <= c.DateAdded.AddDays(2) && showPercentage > 0.0)
+                if (showPercentage > 0.0)
                 {
                     c.Status = ContentStatus.Downloading;
                     c.Percentage = showPercentage;
-                    continue;
                 }
 
                 if (now >= c.DateAdded.AddDays(2) && showPercentage > 0.0)

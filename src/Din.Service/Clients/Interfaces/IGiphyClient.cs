@@ -6,6 +6,6 @@ namespace Din.Service.Clients.Interfaces
 {
     public interface IGiphyClient
     {
-        Task<GiphyResponse> GetRandomGifAsync(GiphyTag tag);
+        Task<GiphyItem> GetRandomGifAsync(GiphyTag tag);
     }
 }

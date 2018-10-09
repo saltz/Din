@@ -8,6 +8,7 @@ using Din.Service.Clients.Interfaces;
 using Din.Service.Clients.RequestObjects;
 using Din.Service.Clients.ResponseObjects;
 using Din.Service.Config.Interfaces;
+using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 
 namespace Din.Service.Clients.Concrete
@@ -23,19 +24,19 @@ namespace Din.Service.Clients.Concrete
             _config = config;
         }
 
-        public async Task<IEnumerable<McMovieResponse>> GetCurrentMoviesAsync()
+        public async Task<IEnumerable<McMovie>> GetCurrentMoviesAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<McMovieResponse>>(
+            return JsonConvert.DeserializeObject<IEnumerable<McMovie>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}")));
         }
 
-        public async Task<McMovieResponse> GetMovieByIdAsync(int id)
+        public async Task<McMovie> GetMovieByIdAsync(int id)
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<McMovieResponse>(
+            return JsonConvert.DeserializeObject<McMovie>(
                 await client.GetStringAsync(BuildUrl(_config.Url, $"movie/{id}", $"?apikey={_config.Key}")));
         }
 
@@ -47,21 +48,24 @@ namespace Din.Service.Clients.Concrete
             var response = await client.PostAsync(BuildUrl(_config.Url, "movie", $"?apikey={_config.Key}"),
                 new StringContent(JsonConvert.SerializeObject(movie)));
 
-            return (response.StatusCode.Equals(HttpStatusCode.Created), JsonConvert.DeserializeObject<McMovieResponse>(await response.Content.ReadAsStringAsync()).SystemId);
+            return (response.StatusCode.Equals(HttpStatusCode.Created), JsonConvert.DeserializeObject<McMovie>(await response.Content.ReadAsStringAsync()).SystemId);
         }
 
-        public async Task<IEnumerable<McCalendarResponse>> GetCalendarAsync()
+        public async Task<IEnumerable<McCalendar>> GetCalendarAsync()
         {
             var client = _httpClientFactory.CreateClient();
 
-            return JsonConvert.DeserializeObject<IEnumerable<McCalendarResponse>>(
+            return JsonConvert.DeserializeObject<IEnumerable<McCalendar>>(
                 await client.GetStringAsync(BuildUrl(_config.Url, "calendar", $"?apikey={_config.Key}",
-                    GetTimespan())));
+                    GetCalendarTimeSpan())));
         }
 
-        private string GetTimespan()
+        public async Task<IEnumerable<McQueueItem>> GetQueue()
         {
-            return $"&start={DateTime.Now.AddDays(-14):MM-dd-yyyy}&end={DateTime.Now.AddMonths(1):MM-dd-yyyy}";
+            var client = _httpClientFactory.CreateClient();
+
+            return JsonConvert.DeserializeObject<IEnumerable<McQueueItem>>(
+                await client.GetStringAsync(BuildUrl(_config.Url, "queue", $"?apikey={_config.Key}")));
         }
     }
 }

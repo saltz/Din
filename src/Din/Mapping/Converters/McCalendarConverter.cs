@@ -4,14 +4,10 @@ using Din.Service.DTO.Content;
 
 namespace Din.Mapping.Converters
 {
-    public class McCalendarConverter : ITypeConverter<McCalendarResponse, CalendarItemDto>
+    public class McCalendarConverter : ITypeConverter<McCalendar, CalendarItemDto>
     {
-        public CalendarItemDto Convert(McCalendarResponse source, CalendarItemDto destination, ResolutionContext context)
+        public CalendarItemDto Convert(McCalendar source, CalendarItemDto destination, ResolutionContext context)
         {
-            if (source.Downloaded)
-            {
-
-            }
             return new CalendarItemDto
             {
                 Title = source.Title,

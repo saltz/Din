@@ -5,7 +5,7 @@ namespace Din.Service.Dto
 {
     public class MediaDto
     {
-        public ICollection<UnsplashResponse> BackgroundImageCollection { get; set; }
-        public GiphyResponse Gif { get; set; }
+        public ICollection<UnsplashItem> BackgroundImageCollection { get; set; }
+        public GiphyItem Gif { get; set; }
     }
 }

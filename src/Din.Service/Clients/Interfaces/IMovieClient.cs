@@ -7,9 +7,10 @@ namespace Din.Service.Clients.Interfaces
 {
     public interface IMovieClient
     {
-        Task<IEnumerable<McMovieResponse>> GetCurrentMoviesAsync();
-        Task<McMovieResponse> GetMovieByIdAsync(int id);
+        Task<IEnumerable<McMovie>> GetCurrentMoviesAsync();
+        Task<McMovie> GetMovieByIdAsync(int id);
         Task<(bool status, int systemId)> AddMovieAsync(McRequest movie);
-        Task<IEnumerable<McCalendarResponse>> GetCalendarAsync();
+        Task<IEnumerable<McCalendar>> GetCalendarAsync();
+        Task<IEnumerable<McQueueItem>> GetQueue();
     }
 }

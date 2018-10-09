@@ -82,7 +82,6 @@ namespace Din
             services.AddTransient<IStatusCodeService, StatusCodeService>();
 
             //Injecting Clients
-            services.AddTransient<IDownloadClient, DownloadClient>();
             services.AddTransient<IGiphyClient, GiphyClient>();
             services.AddTransient<IIpStackClient, IpStackClient>();
             services.AddTransient<IMovieClient, MovieClient>();

@@ -10,9 +10,9 @@ namespace Din.Mapping.Profiles
     {
         public ResponseToDtoProfile()
         {
-            CreateMap<IpStackResponse, LoginLocationDto>();
-            CreateMap<McCalendarResponse, CalendarItemDto>().ConvertUsing<McCalendarConverter>();
-            CreateMap<TcCalendarResponse, CalendarItemDto>().ConvertUsing<TcCalendarConverter>();
+            CreateMap<IpStackLocation, LoginLocationDto>();
+            CreateMap<McCalendar, CalendarItemDto>().ConvertUsing<McCalendarConverter>();
+            CreateMap<TcCalendar, CalendarItemDto>().ConvertUsing<TcCalendarConverter>();
         }
     }
 }
