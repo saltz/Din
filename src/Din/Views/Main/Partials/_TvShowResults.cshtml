@@ -64,11 +64,11 @@ else
                                         @{
                                             if (Model.CurrentCollection.Contains(show.Name.ToLower()))
                                             {
-                                                <button disabled type="button" class="btn btn-default">Already Exists</button>
+                                                <button disabled type="button" class="btn">Already Exists</button>
                                             }
                                             else
                                             {
-                                                <button data-model="@JsonConvert.SerializeObject(show)" class="btn btn-primary add-tvshow">Add Tv Show</button>
+                                                <button data-model="@JsonConvert.SerializeObject(show)" class="btn add-tvshow">Add Tv Show</button>
                                                 <input class="selected-movie" name="selected-movie"/>
                                             }
                                         }

@@ -8,12 +8,14 @@ using Din.Service.BackgroundServices.Abstractions;
 using Din.Service.Clients.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Din.Service.BackgroundServices.Concrete
 {
     public class ContentUpdateService : ScheduledProcessor
     {
         protected override string Schedule => "*/5 * * * *";
+        private ILogger<ContentUpdateService> _logger;
 
         public ContentUpdateService(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
@@ -21,6 +23,10 @@ namespace Din.Service.BackgroundServices.Concrete
 
         public override async Task ProcessInScope(IServiceProvider serviceProvider)
         {
+            _logger = serviceProvider.GetService<ILogger<ContentUpdateService>>();
+
+            _logger.LogInformation("Starting content update cycle");
+
             var context = serviceProvider.GetService<DinContext>();
             var movieClient = serviceProvider.GetService<IMovieClient>();
             var tvShowClient = serviceProvider.GetService<ITvShowClient>();
@@ -29,98 +35,124 @@ namespace Din.Service.BackgroundServices.Concrete
             await UpdateStatusTvShowObjects(context, tvShowClient);
 
             await context.SaveChangesAsync();
+
+            _logger.LogInformation("End of content update cycle");
         }
 
         private async Task UpdateStatusMovieObjects(DinContext context, IMovieClient movieClient)
         {
-            var content = await context.AddedContent.Where(c =>
-                c.Type.Equals(ContentType.Movie) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
-            var queue = (await movieClient.GetQueue()).ToList();
-            var now = DateTime.Now;
-
-
-            foreach (var c in content)
+            try
             {
-                var movie = await movieClient.GetMovieByIdAsync(c.SystemId);
-                var item = queue.Find(q => q.Movie.SystemId.Equals(c.SystemId));
+                var content = await context.AddedContent.Where(c =>
+                    c.Type.Equals(ContentType.Movie) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
+                var queue = (await movieClient.GetQueue()).ToList();
+                var now = DateTime.Now;
 
+                _logger.LogInformation($"Updating: {content.Count} movies");
 
-                if (movie.Downloaded)
+                foreach (var c in content)
                 {
-                    c.Status = ContentStatus.Done;
-                    continue;
-                }
+                    var movie = await movieClient.GetMovieByIdAsync(c.SystemId);
+                    var item = queue.Find(q => q.Movie.SystemId.Equals(c.SystemId));
 
-                if (item != null)
-                {
-                    c.Status = ContentStatus.Downloading;
-                    c.Percentage = Math.Round(1 - (item.SizeLeft / item.Size), 2);
-                    c.Eta = (int) item.TimeLeft.TotalSeconds;
-                }
 
-                if (now >= c.DateAdded.AddDays(2) && c.Percentage > 0.0)
-                {
-                    c.Status = ContentStatus.Stuck;
-                    continue;
-                }
+                    if (movie.Downloaded)
+                    {
+                        c.Status = ContentStatus.Done;
+                        continue;
+                    }
 
-                if (now >= c.DateAdded.AddDays(3))
-                {
-                    c.Status = ContentStatus.NotAvailable;
+                    if (item != null)
+                    {
+                        c.Status = ContentStatus.Downloading;
+                        c.Percentage = Math.Round(1 - (item.SizeLeft / item.Size), 2);
+                        c.Eta = (int) item.TimeLeft.TotalSeconds;
+                    }
+
+                    if (now >= c.DateAdded.AddDays(2) && c.Percentage > 0.0)
+                    {
+                        c.Status = ContentStatus.Stuck;
+                        continue;
+                    }
+
+                    if (now >= c.DateAdded.AddDays(3))
+                    {
+                        c.Status = ContentStatus.NotAvailable;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Updating movies encounterd error: {e.Message}");
             }
         }
 
         private async Task UpdateStatusTvShowObjects(DinContext context, ITvShowClient tvShowClient)
         {
-            var content = await context.AddedContent.Where(c => c.Type.Equals(ContentType.TvShow) && !c.Status.Equals(ContentStatus.Done)).ToListAsync();
-            var now = DateTime.Now;
-
-            foreach (var c in content)
+            try
             {
-                var show = await tvShowClient.GetTvShowByIdAsync(c.SystemId);
-                show.Seasons.Remove(show.Seasons.First(s => s.SeasonsNumber.Equals(0)));
+                var content = await context.AddedContent
+                    .Where(c => c.Type.Equals(ContentType.TvShow) && !c.Status.Equals(ContentStatus.Done))
+                    .ToListAsync();
+                var now = DateTime.Now;
 
-                var seasonsDone = 0;
-                var seasonPercentage = new List<double>();
+                _logger.LogInformation($"Updating: {content.Count} tvshows");
 
-                foreach (var s in show.Seasons)
+                foreach (var c in content)
                 {
-                    if (s.Statistics.EpisodeCount.Equals(s.Statistics.TotalEpisodeCount))
+                    var show = await tvShowClient.GetTvShowByIdAsync(c.SystemId);
+                    var pilotSeason = show.Seasons.FirstOrDefault(s => s.SeasonsNumber.Equals(0));
+
+                    if (pilotSeason != null)
                     {
-                        seasonsDone++;
+                        show.Seasons.Remove(pilotSeason);
+                    }
+
+                    var seasonsDone = 0;
+                    var seasonPercentage = new List<double>();
+
+                    foreach (var s in show.Seasons)
+                    {
+                        if (s.Statistics.EpisodeCount.Equals(s.Statistics.TotalEpisodeCount))
+                        {
+                            seasonsDone++;
+                            continue;
+                        }
+
+                        seasonPercentage.Add(Convert.ToDouble(s.Statistics.EpisodeCount) /
+                                             (Convert.ToDouble(s.Statistics.TotalEpisodeCount) / 100));
+                    }
+
+                    if (seasonsDone.Equals(show.Seasons.Count))
+                    {
+                        c.Status = ContentStatus.Done;
                         continue;
                     }
 
-                    seasonPercentage.Add(Convert.ToDouble(s.Statistics.EpisodeCount) /
-                                         (Convert.ToDouble(s.Statistics.TotalEpisodeCount) / 100));
-                }
+                    var showPercentage = Math.Round((seasonPercentage.Sum() / seasonPercentage.Count) / 100, 2);
 
-                if (seasonsDone.Equals(show.Seasons.Count))
-                {
-                    c.Status = ContentStatus.Done;
-                    continue;
-                }
+                    if (showPercentage > 0.0)
+                    {
+                        c.Status = ContentStatus.Downloading;
+                        c.Percentage = showPercentage;
+                    }
 
-                var showPercentage = Math.Round((seasonPercentage.Sum() / seasonPercentage.Count) / 100, 2);
+                    if (now >= c.DateAdded.AddDays(2) && showPercentage > 0.0)
+                    {
+                        c.Status = ContentStatus.Stuck;
+                        c.Percentage = showPercentage;
+                        continue;
+                    }
 
-                if (showPercentage > 0.0)
-                {
-                    c.Status = ContentStatus.Downloading;
-                    c.Percentage = showPercentage;
+                    if (now >= c.DateAdded.AddDays(5))
+                    {
+                        c.Status = ContentStatus.NotAvailable;
+                    }
                 }
-
-                if (now >= c.DateAdded.AddDays(2) && showPercentage > 0.0)
-                {
-                    c.Status = ContentStatus.Stuck;
-                    c.Percentage = showPercentage;
-                    continue;
-                }
-
-                if (now >= c.DateAdded.AddDays(5))
-                {
-                    c.Status = ContentStatus.NotAvailable;
-                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Updating tvshows encounterd error: {e.Message}");
             }
         }
     }

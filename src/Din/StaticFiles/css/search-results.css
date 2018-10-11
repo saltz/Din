@@ -117,14 +117,15 @@ div.item.card p.overview {
     text-decoration: none;
 }
 
-.add-button button {
+.add-button .btn {
     margin-top: 10px;
     margin-left: 150px;
+    color: #ffffff;
     background: #4f5b66;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.add-button .btn-primary:hover {
+.add-button .btn:enabled:hover {
     background: #ff8d1c;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
