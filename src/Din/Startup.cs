@@ -92,7 +92,7 @@ namespace Din
             services.AddSingleton<IMediaGenerator, MediaGenerator>();
 
             //Background Services
-            services.AddSingleton<IHostedService, ContentUpdateService>();
+            //services.AddSingleton<IHostedService, ContentUpdateService>();
 
             //Initialize Mapper Profiles
             var mapper = new Mapper(new MapperConfiguration(cfg =>
